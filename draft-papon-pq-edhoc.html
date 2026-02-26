@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>TODO - Your title</title>
-<meta content="Your Name Here" name="author">
+<title>Post-Quantum EDHOC - Initiator and Responder using signature and/or KEM</title>
+<meta content="Clément Papon" name="author">
+<meta content="Cristina Onete" name="author">
 <meta content="
        TODO Abstract 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
-<meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
-<meta content="sparkling distributed ledger" name="keyword">
-<meta content="draft-todo-yourname-protocol-latest" name="ietf.draft">
+<meta content="EDHOC" name="keyword">
+<meta content="Post-Quantum" name="keyword">
+<meta content="Authentication Key Exchange" name="keyword">
+<meta content="draft-papon-pq-edhoc-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.31.0
     Python 3.12.12
@@ -28,7 +29,7 @@
     requests 2.32.5
     wcwidth 0.3.0
 -->
-<link href="draft-todo-yourname-protocol.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-papon-pq-edhoc.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1046,11 +1047,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TODO - Abbreviation</td>
+<td class="center">PQ-EDHOC - Sign and KEM</td>
 <td class="right">February 2026</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Here</td>
+<td class="left">Papon &amp; Onete</td>
 <td class="center">Expires 30 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1059,9 +1060,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-todo-yourname-protocol-latest</dd>
+<dd class="internet-draft">draft-papon-pq-edhoc-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2026-02-26" class="published">26 February 2026</time>
@@ -1070,34 +1071,23 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
 <dd class="expires"><time datetime="2026-08-30">30 August 2026</time></dd>
-<dt class="label-authors">Author:</dt>
+<dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">Y. N. Here</div>
-<div class="org">Your Organization Here</div>
+      <div class="author-name">C. Papon</div>
+<div class="org">XLIM UMR CNRS 7252 - Limoges University</div>
+</div>
+<div class="author">
+      <div class="author-name">C. Onete</div>
+<div class="org">XLIM UMR CNRS 7252 - Limoges University</div>
 </div>
 </dd>
 </dl>
 </div>
-<h1 id="title">TODO - Your title</h1>
+<h1 id="title">Post-Quantum EDHOC - Initiator and Responder using signature and/or KEM</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-</section>
-<section class="note rfcEditorRemove" id="section-note.1">
-      <h2 id="name-about-this-document">
-<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
-      </h2>
-<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
-<p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/">https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">
-        Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
-<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1148,25 +1138,62 @@ svg :is([fill="white"], [fill^="#fff"]) {
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-terminology-and-requirement" class="internal xref">Terminology and Requirements Language</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-definitions" class="internal xref">Definitions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.1">
+                    <p id="section-toc.1-1.1.2.2.2.1.1" class="keepWithNext"><a href="#section-1.2.1" class="auto internal xref">1.2.1</a>.  <a href="#name-kems-key-encapsulation-mech" class="internal xref">KEMs (Key Encapsulation Mechanisms)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.2">
+                    <p id="section-toc.1-1.1.2.2.2.2.1" class="keepWithNext"><a href="#section-1.2.2" class="auto internal xref">1.2.2</a>.  <a href="#name-digital-signature" class="internal xref">Digital Signature</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-post-quantum-edhoc-when-the" class="internal xref">Post-Quantum EDHOC when the Initiator knows the Responder (PQ-EDHOC-IKR)</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-motivation" class="internal xref">Motivation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-pq-edhoc-ikr-protocol-overv" class="internal xref">PQ-EDHOC-IKR protocol overview</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.1">
+                    <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref">2.2.1</a>.  <a href="#name-pq-edhoc-ikr-protocol-descr" class="internal xref">PQ-EDHOC-IKR protocol description</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1177,18 +1204,157 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">This document aims to present new alternatives for making the Ephemeral Diffie-Hellman Over COSE (EDHOC) protocol quantum-resistant, by optimizing the number of messages and using a combination of KEM and signature, as well as Post-Quantum Cryptography cipher suites, for secure key exchange and authentication.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">We have two objectives here. Firstly, building on <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, we propose a version of the EDHOC protocol where the Initiator knows the Responder, but in a scenario where the Initiator authenticates with a signature (ML-DSA) and the Responder with a KEM (ML-KEM).
+Secondly, based on <span>[<a href="#I-D.pocero-authkem-edhoc" class="cite xref">I-D.pocero-authkem-edhoc</a>]</span>, we aim to propose a version of the protocol that requires, depending on the case, either only 3 or 4 mandatory messages, but with additional computational overhead for (at least) one of the two parties.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<div id="terminology-and-requirements-language">
+<section id="section-1.1">
+        <h3 id="name-terminology-and-requirement">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-terminology-and-requirement" class="section-name selfRef">Terminology and Requirements Language</a>
+        </h3>
+<p id="section-1.1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as described in <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> and <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Readers are expected to be familiar with the terms and concepts described in EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, CBOR <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>, CBOR Sequences <span>[<a href="#RFC8742" class="cite xref">RFC8742</a>]</span>, COSE Structures and Processing <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> and COSE Algorithms <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="conventions-and-definitions">
+<div id="definitions">
+<section id="section-1.2">
+        <h3 id="name-definitions">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-definitions" class="section-name selfRef">Definitions</a>
+        </h3>
+<div id="kems-key-encapsulation-mechanisms">
+<section id="section-1.2.1">
+          <h4 id="name-kems-key-encapsulation-mech">
+<a href="#section-1.2.1" class="section-number selfRef">1.2.1. </a><a href="#name-kems-key-encapsulation-mech" class="section-name selfRef">KEMs (Key Encapsulation Mechanisms)</a>
+          </h4>
+<p id="section-1.2.1-1">TODO<a href="#section-1.2.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="digital-signature">
+<section id="section-1.2.2">
+          <h4 id="name-digital-signature">
+<a href="#section-1.2.2" class="section-number selfRef">1.2.2. </a><a href="#name-digital-signature" class="section-name selfRef">Digital Signature</a>
+          </h4>
+<p id="section-1.2.2-1">TODO<a href="#section-1.2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="post-quantum-edhoc-when-the-initiator-knows-the-responder-pq-edhoc-ikr">
 <section id="section-2">
-      <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      <h2 id="name-post-quantum-edhoc-when-the">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-post-quantum-edhoc-when-the" class="section-name selfRef">Post-Quantum EDHOC when the Initiator knows the Responder (PQ-EDHOC-IKR)</a>
       </h2>
 <p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div id="motivation">
+<section id="section-2.1">
+        <h3 id="name-motivation">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-motivation" class="section-name selfRef">Motivation</a>
+        </h3>
+<p id="section-2.1-1">In <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, the authors adopt an EDHOC approach for use cases where the Initiator already knows the identity of the Responder, in a post-quantum version using ephemeral and static KEMs for authentication. The Initiator, knowing the long-term public key of the Responder, can derive the shared-secret (ss_R) and compute a key, then encrypt part of the first message. It can thus send its identity directly and securely authenticate itself, since only the Responder with its long-term secret key can decrypt the first message. Knowing the Initiator's identity, the Responder can derive the second shared-secret (ss_I) and continue the key derivation schedule. Sending the encrypted second message allows it to securely confirm its identity to the Initiator.
+We propose here an approach for the same scenario, i.e., the Initiator already knows the Responder, but this time the Initiator will authenticate with a signature. As a result, the first message does not need to be partially encrypted. Instead, during the third message, the Initiator calculates a MAC and signs it. Upon receiving the encrypted third message, the Responder, after decryption, authenticates the Initiator in the usual EDHOC manner.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="pq-edhoc-ikr-protocol-overview">
+<section id="section-2.2">
+        <h3 id="name-pq-edhoc-ikr-protocol-overv">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-pq-edhoc-ikr-protocol-overv" class="section-name selfRef">PQ-EDHOC-IKR protocol overview</a>
+        </h3>
+<div id="pq-edhoc-ikr-protocol-description">
+<section id="section-2.2.1">
+          <h4 id="name-pq-edhoc-ikr-protocol-descr">
+<a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-pq-edhoc-ikr-protocol-descr" class="section-name selfRef">PQ-EDHOC-IKR protocol description</a>
+          </h4>
+<p id="section-2.2.1-1">We present here a high-level description of our PQ-EDHOC-IKR where the Initiator authenticates with a signature and the Repsonder with a KEM.<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1-2">I                                                         R
+  ---                                                       ---
+   |   METHOD, SUITES_I, kem.pk_eph, kem.ct_R, C_I, EAD_1    |
+   +---------------------------------------------------------&gt;
+   |                        message_1                        |
+   |                                                         |
+   |  kem.ct_eph, Enc(KEYSTREAM_2, ID_CRED_R, MAC_2, EAD_2)  |
+   &lt;---------------------------------------------------------+
+   |                        message_2                        |
+   |                                                         |
+   |           AEAD(ID_CRED_I, Signature_3, EAD_3)           |
+   +---------------------------------------------------------&gt;
+   |                        message_3                        |
+   |                                                         |
+   |                       AEAD(EAD_4)                       |
+   &lt;- - - - - - - - - - - - - - - - - - - - - - - - - - - - -+
+   |                        message_4                        |<a href="#section-2.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.2.1-3">Figure 1: PK-EDHOC-IKR (I sign, R kem) message flow
+Legend:
+--------&gt; mandatory message
+-- - - -&gt; optional message<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
+<div id="formating-and-sending-message1">
+<section id="section-2.2.1.1">
+            <h5 id="name-formating-and-sending-messa">
+<a href="#section-2.2.1.1" class="section-number selfRef">2.2.1.1. </a><a href="#name-formating-and-sending-messa" class="section-name selfRef">Formating and sending message_1</a>
+            </h5>
+<p id="section-2.2.1.1-1">As in the usual EDHOC protocol, the first message (message_1) consists of: 
+ - METHOD -&gt; as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> it is an integer specifying the authentication method the Initiator wants to use.
+ - SUITES_I -&gt; it consists of an ordered set of algorithms supported by the Initiator and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
+ - C_I (and also as C_R, which will appears later) -&gt; the Connection Identifiiers chosen by the Initiator (C_I) and by the Responder (C_R) as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
+ - EAD_1 (and also EAD_2, EAD_3 and EAD_4, which will appear later) -&gt; External Authorization Data, respectively included in message_1, message_2, message_3 (and optionnaly) message_4, and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
+ - kem.pk_eph -&gt; the Ephemeral KEM public key generated by the Initiator.
+ - kem.ct_R -&gt; based on the Responder long-term KEM public key, the Initiator computes ss_R and kem.ct_R with the KEM.Encapsulation algorithm. He keeps secret ss_R to compute, later, PRK_3e2m, and sends kem.ct_R to the Responder.<a href="#section-2.2.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="processing-message1-formating-and-sending-message2">
+<section id="section-2.2.1.2">
+            <h5 id="name-processing-message_1-format">
+<a href="#section-2.2.1.2" class="section-number selfRef">2.2.1.2. </a><a href="#name-processing-message_1-format" class="section-name selfRef">Processing message_1, formating and sending message_2</a>
+            </h5>
+<p id="section-2.2.1.2-1">On the reception of the first message, the Responder first recovers ss_R thanks to his long-term KEM secret key kem.sk_R and kem.ct_R, using the KEM.Decapsulation algorithm (if the decapsulation process fails, he aborts). He then proceeds as in the original EDHOC protocol with elements METHOD, SUITES_I, C_I and EAD_1. Finally, using kem.pk_eph and the KEM.Encapsulation algorithm, he computes the ephemeral ciphertext kem.ct_eph and the ephemeral shared-secret ss_eph.<a href="#section-2.2.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.2-2">The Responder select its Connection Identifier C_R as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. He then computes:<a href="#section-2.2.1.2-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.2-3">
+<pre>
+- TH_2 = H(kem.ct_eph, H(message_1)).
+
+- PRK_2e = EDHOC_Extract(TH_2, ss_eph) -&gt; the salt SHALL be TH_2 and the IKM SHALL be the ephemeral shared-secret ss_eph.
+</pre><a href="#section-2.2.1.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.2-4">And also, as in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>:<a href="#section-2.2.1.2-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.2-5">
+<pre>
+- KEYSTREAM_2 = EDHOC_KDF(PRK_2e,0,TH_2,plaintext_length)
+- SALT_3e2m = EDHOC_KDF(PRK_2e,1,TH_2,hash_length)
+</pre><a href="#section-2.2.1.2-5" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.2-6">Compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>, the computation of PRK_3e2m is modified as follows :<a href="#section-2.2.1.2-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.2-7">
+<pre>
+- PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R).
+</pre><a href="#section-2.2.1.2-7" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.2-8">The Responder now computes MAC_2 and assembles PLAINTEXT_2:<a href="#section-2.2.1.2-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.2-9">
+<pre>
+- MAC_2 = EDHOC_KDF(PRK_3e2m, 2, C_R, ID_CRED_R, TH_2, EAD_2, mac_length_2).
+- PLAINTEXT_2 = (C_R, ID_CRED_R, MAC_2, EAD_2).
+</pre><a href="#section-2.2.1.2-9" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.2-10">So the second message consists of:
+    - kem.ct_eph -&gt; the ephemeral ciphertext obtained with kem.pk_eph.
+    - CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2.<a href="#section-2.2.1.2-10" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="processing-message2-formating-and-sending-message3">
+<section id="section-2.2.1.3">
+            <h5 id="name-processing-message_2-format">
+<a href="#section-2.2.1.3" class="section-number selfRef">2.2.1.3. </a><a href="#name-processing-message_2-format" class="section-name selfRef">Processing message_2, formating and sending message_3.</a>
+          </h5>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="security-considerations">
@@ -1207,21 +1373,85 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-normative-references">
+<div id="sec-combined-references">
 <section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-5.1">
+        <h3 id="name-normative-references">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
+<dt id="I-D.pocero-authkem-edhoc">[I-D.pocero-authkem-edhoc]</dt>
+        <dd>
+<span class="refAuthor">Fraile, L. P.</span>, <span class="refAuthor">Koulamas, C.</span>, <span class="refAuthor">Fournaris, A. P.</span>, and <span class="refAuthor">E. Haleplidis</span>, <span class="refTitle">"KEM-based Authentication for EDHOC"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-pocero-authkem-edhoc-01</span>, <time datetime="2025-10-24" class="refDate">24 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-pocero-authkem-edhoc-01">https://datatracker.ietf.org/doc/html/draft-pocero-authkem-edhoc-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.pocero-authkem-ikr-edhoc">[I-D.pocero-authkem-ikr-edhoc]</dt>
+        <dd>
+<span class="refAuthor">Fraile, L. P.</span>, <span class="refAuthor">Koulamas, C.</span>, <span class="refAuthor">Fournaris, A. P.</span>, and <span class="refAuthor">E. Haleplidis</span>, <span class="refTitle">"KEM-based Authentication for EDHOC in Initiator-Known Responder (IKR) Scenarios"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-pocero-authkem-ikr-edhoc-01</span>, <time datetime="2026-01-20" class="refDate">20 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-pocero-authkem-ikr-edhoc-01">https://datatracker.ietf.org/doc/html/draft-pocero-authkem-ikr-edhoc-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.spm-lake-pqsuites">[I-D.spm-lake-pqsuites]</dt>
+        <dd>
+<span class="refAuthor">Selander, G.</span> and <span class="refAuthor">J. P. Mattsson</span>, <span class="refTitle">"Quantum-Resistant Cipher Suites for EDHOC"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-spm-lake-pqsuites-01</span>, <time datetime="2025-10-20" class="refDate">20 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-spm-lake-pqsuites-01">https://datatracker.ietf.org/doc/html/draft-spm-lake-pqsuites-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC5116">[RFC5116]</dt>
+        <dd>
+<span class="refAuthor">McGrew, D.</span>, <span class="refTitle">"An Interface and Algorithms for Authenticated Encryption"</span>, <span class="seriesInfo">RFC 5116</span>, <span class="seriesInfo">DOI 10.17487/RFC5116</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5116">https://www.rfc-editor.org/rfc/rfc5116</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8392">[RFC8392]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"CBOR Web Token (CWT)"</span>, <span class="seriesInfo">RFC 8392</span>, <span class="seriesInfo">DOI 10.17487/RFC8392</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8392">https://www.rfc-editor.org/rfc/rfc8392</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8742">[RFC8742]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR) Sequences"</span>, <span class="seriesInfo">RFC 8742</span>, <span class="seriesInfo">DOI 10.17487/RFC8742</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8742">https://www.rfc-editor.org/rfc/rfc8742</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8949">[RFC8949]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9052">[RFC9052]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="seriesInfo">STD 96</span>, <span class="seriesInfo">RFC 9052</span>, <span class="seriesInfo">DOI 10.17487/RFC9052</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9052">https://www.rfc-editor.org/rfc/rfc9052</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9360">[RFC9360]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Header Parameters for Carrying and Referencing X.509 Certificates"</span>, <span class="seriesInfo">RFC 9360</span>, <span class="seriesInfo">DOI 10.17487/RFC9360</span>, <time datetime="2023-02" class="refDate">February 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9360">https://www.rfc-editor.org/rfc/rfc9360</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9528">[RFC9528]</dt>
+      <dd>
+<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Preuß Mattsson, J.</span>, and <span class="refAuthor">F. Palombini</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC)"</span>, <span class="seriesInfo">RFC 9528</span>, <span class="seriesInfo">DOI 10.17487/RFC9528</span>, <time datetime="2024-03" class="refDate">March 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9528">https://www.rfc-editor.org/rfc/rfc9528</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 </dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-5.2">
+        <h3 id="name-informative-references">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC9053">[RFC9053]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Initial Algorithms"</span>, <span class="seriesInfo">RFC 9053</span>, <span class="seriesInfo">DOI 10.17487/RFC9053</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9053">https://www.rfc-editor.org/rfc/rfc9053</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9794">[RFC9794]</dt>
+      <dd>
+<span class="refAuthor">Driscoll, F.</span>, <span class="refAuthor">Parsons, M.</span>, and <span class="refAuthor">B. Hale</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="seriesInfo">RFC 9794</span>, <span class="seriesInfo">DOI 10.17487/RFC9794</span>, <time datetime="2025-06" class="refDate">June 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9794">https://www.rfc-editor.org/rfc/rfc9794</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="acknowledgments">
@@ -1234,15 +1464,23 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </div>
 <div id="authors-addresses">
 <section id="appendix-B">
-      <h2 id="name-authors-address">
-<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Your Name Here</span></div>
-<div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Clément Papon</span></div>
+<div dir="auto" class="left"><span class="org">XLIM UMR CNRS 7252 - Limoges University</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:your.email@example.com" class="email">your.email@example.com</a>
+<a href="mailto:clement.papon@unilim.fr" class="email">clement.papon@unilim.fr</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Cristina Onete</span></div>
+<div dir="auto" class="left"><span class="org">XLIM UMR CNRS 7252 - Limoges University</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:maria-cristina.onete@unilim.fr" class="email">maria-cristina.onete@unilim.fr</a>
 </div>
 </address>
 </section>
