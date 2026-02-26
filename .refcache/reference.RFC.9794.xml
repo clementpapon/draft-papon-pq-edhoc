@@ -1,0 +1,14 @@
+<reference anchor="RFC9794" target="https://www.rfc-editor.org/info/rfc9794">
+  <front>
+    <title>Terminology for Post-Quantum Traditional Hybrid Schemes</title>
+    <author fullname="F. Driscoll" initials="F." surname="Driscoll"/>
+    <author fullname="M. Parsons" initials="M." surname="Parsons"/>
+    <author fullname="B. Hale" initials="B." surname="Hale"/>
+    <date month="June" year="2025"/>
+    <abstract>
+      <t>One aspect of the transition to post-quantum algorithms in cryptographic protocols is the development of hybrid schemes that incorporate both post-quantum and traditional asymmetric algorithms. This document defines terminology for such schemes. It is intended to be used as a reference and, hopefully, to ensure consistency and clarity across different protocols, standards, and organisations.</t>
+    </abstract>
+  </front>
+  <seriesInfo name="RFC" value="9794"/>
+  <seriesInfo name="DOI" value="10.17487/RFC9794"/>
+</reference>

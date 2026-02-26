@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reference anchor="I-D.pocero-authkem-ikr-edhoc" target="https://datatracker.ietf.org/doc/html/draft-pocero-authkem-ikr-edhoc-01">
+   <front>
+      <title>KEM-based Authentication for EDHOC in Initiator-Known Responder (IKR) Scenarios</title>
+      <author initials="L. P." surname="Fraile" fullname="Lidia Pocero Fraile">
+         <organization>ISI, R.C. ATHENA</organization>
+      </author>
+      <author initials="C." surname="Koulamas" fullname="Christos Koulamas">
+         <organization>ISI, R.C. ATHENA</organization>
+      </author>
+      <author initials="A. P." surname="Fournaris" fullname="Apostolos P. Fournaris">
+         <organization>ISI, R.C. ATHENA</organization>
+      </author>
+      <author initials="E." surname="Haleplidis" fullname="Evangelos Haleplidis">
+         <organization>ISI, R.C. ATHENA</organization>
+      </author>
+      <date month="January" day="20" year="2026" />
+      <abstract>
+	 <t>   This document specifies a more efficient variant of a Key
+   Encapsulation Mechanism (KEM)-based authentication method for the
+   Ephemeral Diffie-Hellman Over COSE (EDHOC) lightweight protocol,
+   designed for the specific scenario in which the Initiator has prior
+   knowledge of the Responder’s credentials, a case commonly found in
+   constrained environments.  Improving upon the approach described in
+   KEM-based Authentication for EDHOC, this method uses only a mandatory
+   three-message handshake to enable signature-free post-quantum
+   authentication when PQC KEMs, such as the NIST-standardized ML-KEM,
+   are employed, while still providing mutual authentication, forward
+   secrecy, and a degree of identity protection.
+
+	 </t>
+      </abstract>
+   </front>
+   <seriesInfo name="Internet-Draft" value="draft-pocero-authkem-ikr-edhoc-01" />
+   
+</reference>
