@@ -69,8 +69,8 @@ Readers are expected to be familiar with the terms and concepts described in EDH
 
 ### KEMs (Key Encapsulation Mechanisms)
 TODO
- 
-### Digital Signature 
+
+### Digital Signature
 TODO
 
 # Post-Quantum EDHOC when the Initiator knows the Responder (PQ-EDHOC-IKR)
@@ -114,7 +114,7 @@ Legend:
 
 #### Formating and sending message_1
 
-As in the usual EDHOC protocol, the first message (message_1) consists of: 
+As in the usual EDHOC protocol, the first message (message_1) consists of:
  - METHOD -> as specified in [RFC9528] it is an integer specifying the authentication method the Initiator wants to use.
  - SUITES_I -> it consists of an ordered set of algorithms supported by the Initiator and formatted as specified in [RFC9528].
  - C_I (and also as C_R, which will appears later) -> the Connection Identifiiers chosen by the Initiator (C_I) and by the Responder (C_R) as specified in [RFC9528].
@@ -126,15 +126,15 @@ As in the usual EDHOC protocol, the first message (message_1) consists of:
 
 On the reception of the first message, the Responder first recovers ss_R thanks to his long-term KEM secret key kem.sk_R and kem.ct_R, using the KEM.Decapsulation algorithm (if the decapsulation process fails, he aborts). He then proceeds as in the original EDHOC protocol with elements METHOD, SUITES_I, C_I and EAD_1. Finally, using kem.pk_eph and the KEM.Encapsulation algorithm, he computes the ephemeral ciphertext kem.ct_eph and the ephemeral shared-secret ss_eph.
 
-The Responder select its Connection Identifier C_R as specified in [RFC9528]. He then computes: 
+The Responder select its Connection Identifier C_R as specified in [RFC9528]. He then computes:
 
     - TH_2 = H(kem.ct_eph, H(message_1)).
-    
+
     - PRK_2e = EDHOC_Extract(TH_2, ss_eph) -> the salt SHALL be TH_2 and the IKM SHALL be the ephemeral shared-secret ss_eph.
-    
+
 And also, as in [RFC9528]:
 
-    - KEYSTREAM_2 = EDHOC_KDF(PRK_2e,0,TH_2,plaintext_length) 
+    - KEYSTREAM_2 = EDHOC_KDF(PRK_2e,0,TH_2,plaintext_length)
     - SALT_3e2m = EDHOC_KDF(PRK_2e,1,TH_2,hash_length)
 
 Compared to [RFC9528], the computation of PRK_3e2m is modified as follows :
@@ -153,7 +153,7 @@ So the second message consists of:
 
 #### Processing message_2, formating and sending message_3.
 
- 
+
 
 # Security Considerations
 
