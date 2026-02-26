@@ -102,7 +102,7 @@ We present here a high-level description of our PQ-EDHOC-IKR where the Initiator
    <- - - - - - - - - - - - - - - - - - - - - - - - - - - - -+
    |                        message_4                        |
 
-```markdown
+```
 
 Figure 1: PK-EDHOC-IKR (I sign, R kem) message flow
 
