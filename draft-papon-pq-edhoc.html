@@ -1512,7 +1512,8 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">Â
                |
   +----+   +---+---+   +--------+   +------+   +-----+
   |ss_R|--&gt;|Extract|--&gt;|PRK_3e2m|--&gt;|Expand|--&gt;|MAC_2|
-  +----+   +-------+   +---+----+   +------+   +-----+    PLAINTEXT_3
+  +----+   +-------+   +---+----+   +------+   +-----+
+                           |                              PLAINTEXT_3
                            |                                   |
                            |        +------+   +--------+   +--+-+
                            +--------|Expand|--&gt;|K_3/IV_3|--&gt;|AEAD|
@@ -1522,12 +1523,15 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">Â
                            |            |              +-------+----+
                            |            |              |CIPHERTEXT_3|
                            |            |              +------------+
+                           |            |
                            |   +--------+---------------------------+
                            |   |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
                            |   +------------------------------------+
+                           |
                            |       +------+   +-----+   +-----------+
                            +-------|Expand|--&gt;|MAC_3|--&gt;|SIGNATURE_3|
                            |       +------+   +-----+   +-----------+
+                           |
                            |                              PLAINTEXT_4
                            |                                   |
                            |        +------+   +--------+   +--+-+
@@ -1538,9 +1542,11 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">Â
                            |            |              +-------+----+
                            |            |              |CIPHERTEXT_4|
                            |            |              +------------+
+                           |            |
                            |   +--------+---------------------------+
                            |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
                            |   +--------+---------------------------+
+                           |            |
                            |            |
                            |        +---+--+   +-------+
                            +--------|Expand|--&gt;|PRK_out|
