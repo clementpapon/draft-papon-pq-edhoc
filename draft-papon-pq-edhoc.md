@@ -14,9 +14,6 @@ keyword:
   - Post-Quantum
   - Authentication Key Exchange
 
-abstract: |
-  TODO abstract
-
 author:
   - fullname: Clément Papon
     organization: XLIM UMR CNRS 7252 - Limoges University
@@ -40,6 +37,10 @@ normative:
 informative:
     RFC9053: RFC9053
     RFC9794: RFC9794
+
+--- abstract
+
+TODO Abstract
 
 --- middle
 
@@ -176,5 +177,5 @@ This document has no IANA actions.
 {{RFC9053}}
 {{RFC9794}}
 # Acknowledgments
-
+{:numbered="false"}
 TODO acknowledge.
