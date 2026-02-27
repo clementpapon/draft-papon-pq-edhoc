@@ -27,9 +27,7 @@ normative:
     I-D.spm-lake-pqsuites: I-D.spm-lake-pqsuites
     I-D.pocero-authkem-edhoc: I-D.pocero-authkem-edhoc
     I-D.pocero-authkem-ikr-edhoc: I-D.pocero-authkem-ikr-edhoc
-    RFC2119: RFC2119
     RFC5116: RFC5116
-    RFC8174: RFC8174
     RFC8392: RFC8392
     RFC8742: RFC8742
     RFC8949: RFC8949
@@ -41,7 +39,7 @@ informative:
     RFC9053: RFC9053
     RFC9794: RFC9794
 
----
+--- middle
 
 # Abstract
 
@@ -56,8 +54,8 @@ We have two objectives here. Firstly, building on {{I-D.pocero-authkem-ikr-edhoc
 Secondly, based on {{I-D.pocero-authkem-edhoc}}, we aim to propose a version of the protocol that requires, depending on the case, either only 3 or 4 mandatory messages, but with additional computational overhead for (at least) one of the two parties.
 
 ## Terminology and Requirements Language
+{::boilerplate bcp14-tagged}
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in {{RFC211}} and {{RFC8174}} when, and only when, they appear in all capitals, as shown here.
 
 Readers are expected to be familiar with the terms and concepts described in EDHOC {{RFC9528}}, CBOR {{RFC8949}}, CBOR Sequences {{RFC8742}}, COSE Structures and Processing {{RFC9052}} and COSE Algorithms {{RFC9053}}.
 
@@ -161,7 +159,25 @@ TODO Security
 
 This document has no IANA actions.
 
+--- back
 
+#References
+## Normative References 
+
+    {{I-D.spm-lake-pqsuites:}}
+    {{I-D.pocero-authkem-edhoc}}
+    {{I-D.pocero-authkem-ikr-edhoc}}
+    {{RFC5116}}
+    {{RFC8392}}
+    {{RFC8742}}
+    {{RFC8949}}
+    {{RFC9052}}
+    {{RFC9360}}
+    {{RFC9528}}
+
+## Informative References
+    {{RFC9053}}
+    {{RFC9794}}
 # Acknowledgments
 
 TODO acknowledge.
