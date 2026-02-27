@@ -83,7 +83,7 @@ We propose here an approach for the same scenario, i.e., the Initiator already k
 
 We present here a high-level description of our PQ-EDHOC-IKR where the Initiator authenticates with a signature and the Repsonder with a KEM.
 
-```text
+```
    I                                                         R
   ---                                                       ---
    |   METHOD, SUITES_I, kem.pk_eph, kem.ct_R, C_I, EAD_1    |
