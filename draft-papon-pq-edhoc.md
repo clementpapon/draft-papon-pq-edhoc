@@ -216,9 +216,9 @@ which is the desired session key, and the authentication process is fully achiev
 In this section we summarize the key derivation operations that appears throughout the protocol.
 
 ~~~~~~~~~~~
-          +-------------------------------+
-          |TH_2=H(kem.ct_eph,H(message_1))|
-          +-------+-----------------------+               PLAINTEXT_1
+          +--------------------------------+
+          |TH_2=H(kem.ct_eph, H(message_1))|
+          +-------+------------------------+              PLAINTEXT_1
                  |                                               |
   +------+   +---+---+   +------+   +------+   +-----------+   +-+-+
   |ss_eph|-->|Extract|-->|PRK_2e|-->|Expand|-->|KEYSTREAM_2|-->|XOR|
@@ -382,7 +382,7 @@ So the second message then consists of:
   - `CIPHERTEXT_2`;
   - `SIGNATURE_2`.
 
-==Important note:== let us mention that the element signed by the Responder, for security considerations during the security analysis, coulb be subject to slight changes. However, it serves here to illustrate the principle proposed here.
+**Important note:** let us mention that the element signed by the Responder, for security considerations during the security analysis, coulb be subject to slight changes. However, it serves here to illustrate the principle proposed here.
 
 #### Processing `message_2`, formatting and sending `message_3`.
 
@@ -458,6 +458,76 @@ With this element, using the EDHOC_KDF, they both obtain:
   - `PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)`
 
 which is the desired session key, and the authentication process is fully achieved.
+
+
+### Associated key derivation schedule
+
+In this section we present the key derivation schedule of the previously described protocol version.
+
+~~~~~~~~~~
+          +--------------------------------+
+          |TH_2=H(kem.ct_eph, H(message_1))|
+          +------+----------------------+--+              PLAINTEXT_1
+                 |                      |                        |
+  +------+   +---+---+   +------+   +---+--+   +-----------+   +-+-+
+  |ss_eph|-->|Extract|-->|PRK_2e|-->|Expand|-->|KEYSTREAM_2|-->|XOR|
+  +------+   +-------+   +---+--+   +---+--+   +-----------+   +-+-+
+                             |                                   |
+                             |                                   v
+                             |                         +---------+--+
+                             |                         |CIPHERTEXT_2|
+                             |                         +------------+
+                             |
+                             |     +------+   +-----+   +-----------+
+                             +-----|Expand|-->|MAC_2|-->|SIGNATURE_3|
+                             |     +------+   +-----+   +-----------+
+                             |
+         +-----+---+   +---+--+
+         |SALT_3e2m|<--|Expand|
+         +-----+---+   +---+--+                           PLAINTEXT_3
+               |                                               |
+  +----+   +---+---+   +--------+   +------+   +--------+   +--+-+
+  |ss_R|-->|Extract|-->|PRK_3e2m|-->|Expand|-->|K_3/IV_3|-->|AEAD|
+  +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_3|
+                           |            |              +------------+
+                           |            |
+                           |   +--------+---------------------------+
+                           |   |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
+                           |   +------------------------------------+
+                           |
+                           |       +------+   +-----+   +-----------+
+                           +-------|Expand|-->|MAC_3|-->|SIGNATURE_3|
+                           |       +------+   +-----+   +-----------+
+                           |
+                           |                              PLAINTEXT_4
+                           |                                   |
+                           |        +------+   +--------+   +--+-+
+               message_4?  +--------|Expand|-->|K_4/IV_4|-->|AEAD|
+                           |        +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_4|
+                           |            |              +------------+
+                           |            |
+                           |   +--------+---------------------------+
+                           |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
+                           |   +--------+---------------------------+
+                           |            |
+                           |            |
+                           |        +---+--+   +-------+
+                           +--------|Expand|-->|PRK_out|
+                                    +------+   +-------+
+~~~~~~~~~~
+Figure 4: PQ-EDHOC, I signs - R KEM & Signs key derivation schedule.
+
+### Analysis
+
+TODO an analysis of the tradeoff, the protocol advantage and disadvantage (no mac on the Responder side, but a signature).
 
 
 ## Second case: Initiator KEM and signs, Responder signs
