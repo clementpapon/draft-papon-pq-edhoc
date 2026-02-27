@@ -43,11 +43,6 @@ informative:
 
 --- middle
 
-# Abstract
-
-TODO Abstract
-
-
 # Introduction
 
 This document aims to present new alternatives for making the Ephemeral Diffie-Hellman Over COSE (EDHOC) protocol quantum-resistant, by optimizing the number of messages and using a combination of KEM and signature, as well as Post-Quantum Cryptography cipher suites, for secure key exchange and authentication.
@@ -164,7 +159,7 @@ This document has no IANA actions.
 --- back
 
 # References
-## Normative References 
+## Normative References
 
 {{I-D.spm-lake-pqsuites}}
 {{I-D.pocero-authkem-edhoc}}
