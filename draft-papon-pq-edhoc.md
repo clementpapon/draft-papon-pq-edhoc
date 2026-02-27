@@ -157,8 +157,6 @@ TODO Security
 
 This document has no IANA actions.
 
---- back
-
 # References
 ## Normative References
 
@@ -176,6 +174,8 @@ This document has no IANA actions.
 ## Informative References
 {{RFC9053}}
 {{RFC9794}}
+
+--- back
 # Acknowledgments
 {:numbered="false"}
 TODO acknowledge.
