@@ -75,6 +75,8 @@ Table of Contents
      2.2.  PQ-EDHOC-IKR protocol overview
        2.2.1.  PQ-EDHOC-IKR protocol description
        2.2.2.  Key Derivation Schedule
+       2.2.3.  Additional explainations
+     2.3.  Analysis
    3.  Second protocol
    4.  Security Considerations
    5.  IANA Considerations
@@ -268,9 +270,9 @@ Table of Contents
 2.2.1.3.  Processing message_2, formatting and sending message_3.
 
    On reception of the second message, the Initiator, using kemp.ct_eph,
-   can compute the ephemeral shared-secretss_eph.  As the Responder did,
-   he computesTH_2,PRK_2eandKEYSTREAM_2.  He can now decipher and
-   retrieve :PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2`.
+   can compute the ephemeral shared-secret ss_eph.  As the Responder
+   did, he computes TH_2, PRK_2e and KEYSTREAM_2.  He can now decipher
+   and retrieve : PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2.
 
    Thanks to ID_CRED_R, the Initiator verifies the validity of the long-
    term KEM public key of the Responder, kemp.pk_R, and computes
@@ -421,6 +423,14 @@ Table of Contents
                                        +------+   +-------+
 
    Figure 2: PK-EDHOC-IKR (I sign, R kem) key derivation schedule.
+
+2.2.3.  Additional explainations
+
+   TODO some other explainations.
+
+2.3.  Analysis
+
+   TODO efficiency and optimization analysis.
 
 3.  Second protocol
 
