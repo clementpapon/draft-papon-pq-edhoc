@@ -1176,6 +1176,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.1">
                     <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref">2.2.1</a>.  <a href="#name-pq-edhoc-ikr-protocol-descr" class="internal xref">PQ-EDHOC-IKR protocol description</a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.2">
+                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="auto internal xref">2.2.2</a>.  <a href="#name-key-derivation-schedule" class="internal xref">Key Derivation Schedule</a></p>
+</li>
                 </ul>
 </li>
             </ul>
@@ -1409,7 +1412,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
                 <p id="section-2.2.1.3-5.3.1"><code>IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length)</code>;<a href="#section-2.2.1.3-5.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.2.1.3-5.4">
-                <p id="section-2.2.1.3-5.4.1">'MAC_3 = EDHOC_KDF(PRK_3e2m, 6, ID_CRED_I, TH_3, EAD_3, mac_length_3)`.<a href="#section-2.2.1.3-5.4.1" class="pilcrow">¶</a></p>
+                <p id="section-2.2.1.3-5.4.1"><code>MAC_3 = EDHOC_KDF(PRK_3e2m, 6, ID_CRED_I, TH_3, EAD_3, mac_length_3)</code>.<a href="#section-2.2.1.3-5.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-2.2.1.3-6">In this version of the protocol, the Initiator authenticates itself to the Responder with a signature:<a href="#section-2.2.1.3-6" class="pilcrow">¶</a></p>
@@ -1418,7 +1421,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
                 <p id="section-2.2.1.3-7.1.1"><code>SIGNATURE_3 = DS.Sign(sign.sk_I, (ID_CRED_I, TH_3, EAD_3, MAC_3, sign_length))</code><a href="#section-2.2.1.3-7.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-2.2.1.3-8">where <code>sign.sk_I</code>is the long-term signing private key of the Initiator.<a href="#section-2.2.1.3-8" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.3-8">where <code>sign.sk_I</code> is the long-term signing private key of the Initiator.<a href="#section-2.2.1.3-8" class="pilcrow">¶</a></p>
 <p id="section-2.2.1.3-9">Setting <code>PLAINTEXT_3 = (ID_CRED_I, SIGNATURE_3, EAD_3)</code>, the Initiator ciphers <code>PLAINTEXT_3</code> with the AEAD encryption algorithm negociated in <code>SUITES_I</code>.<a href="#section-2.2.1.3-9" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1470,12 +1473,81 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-2.2.1.6-3">With that element, using the EDHOC_KDF, they both obtain:<a href="#section-2.2.1.6-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2.1.6-4.1">
-                <p id="section-2.2.1.6-4.1.1">`PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)'<a href="#section-2.2.1.6-4.1.1" class="pilcrow">¶</a></p>
+                <p id="section-2.2.1.6-4.1.1"><code>PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)</code><a href="#section-2.2.1.6-4.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-2.2.1.6-5">which is the desired session key, and the authentication process is fully achieved.<a href="#section-2.2.1.6-5" class="pilcrow">¶</a></p>
 </section>
 </div>
+</section>
+</div>
+<div id="key-derivation-schedule">
+<section id="section-2.2.2">
+          <h4 id="name-key-derivation-schedule">
+<a href="#section-2.2.2" class="section-number selfRef">2.2.2. </a><a href="#name-key-derivation-schedule" class="section-name selfRef">Key Derivation Schedule</a>
+          </h4>
+<p id="section-2.2.2-1">In this section we summarize the key derivation operations that appears throughout the protocol.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
+<div class="breakable lang-~ sourcecode" id="section-2.2.2-2">
+<pre>
+          +-------------------------------+
+          |TH_2=H(kem.ct_eph,H(message_1))|
+          +-------+-----------------------+               PLAINTEXT_1
+                 |                                               |
+  +------+   +---+---+   +------+   +------+   +-----------+   +-+-+
+  |ss_eph|--&gt;|Extract|--&gt;|PRK_2e|--&gt;|Expand|--&gt;|KEYSTREAM_2|--&gt;|XOR|
+  +------+   +-------+   +---+--+   +---+--+   +-----------+   +-+-+
+                             |          |                        |
+                             |          |                        v
+                             |        +-+--+           +---------+--+
+                             |        |TH_2|           |CIPHERTEXT_2|
+                             |        +--+-+           +------------+
+                         +---+--+        |
+                         |Expand|--------+
+                         +---+--+
+                            |
+                            |
+                      +-----+---+
+               +------|SALT_3e2m|
+               |      +---------+
+               |
+  +----+   +---+---+   +--------+   +------+   +-----+
+  |ss_R|--&gt;|Extract|--&gt;|PRK_3e2m|--&gt;|Expand|--&gt;|MAC_2|
+  +----+   +-------+   +---+----+   +------+   +-----+    PLAINTEXT_3
+                           |                                   |
+                           |        +------+   +--------+   +--+-+
+                           +--------|Expand|--&gt;|K_3/IV_3|--&gt;|AEAD|
+                           |        +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_3|
+                           |            |              +------------+
+                           |   +--------+---------------------------+
+                           |   |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
+                           |   +------------------------------------+
+                           |       +------+   +-----+   +-----------+
+                           +-------|Expand|--&gt;|MAC_3|--&gt;|SIGNATURE_3|
+                           |       +------+   +-----+   +-----------+
+                           |                              PLAINTEXT_4
+                           |                                   |
+                           |        +------+   +--------+   +--+-+
+               message_4?  +--------|Expand|--&gt;|K_4/IV_4|--&gt;|AEAD|
+                           |        +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_4|
+                           |            |              +------------+
+                           |   +--------+---------------------------+
+                           |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
+                           |   +--------+---------------------------+
+                           |            |
+                           |        +---+--+   +-------+
+                           +--------|Expand|--&gt;|PRK_out|
+                                    +------+   +-------+
+</pre><a href="#section-2.2.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.2-3">Figure 2: PK-EDHOC-IKR (I sign, R kem) key derivation schedule.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
