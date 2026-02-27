@@ -1204,6 +1204,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.2">
                     <p id="section-toc.1-1.3.2.2.2.2.1"><a href="#section-3.2.2" class="auto internal xref">3.2.2</a>.  <a href="#name-protocol-description" class="internal xref">Protocol description</a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.3">
+                    <p id="section-toc.1-1.3.2.2.2.3.1"><a href="#section-3.2.3" class="auto internal xref">3.2.3</a>.  <a href="#name-associated-key-derivation-s" class="internal xref">Associated key derivation schedule</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.4">
+                    <p id="section-toc.1-1.3.2.2.2.4.1"><a href="#section-3.2.4" class="auto internal xref">3.2.4</a>.  <a href="#name-analysis-2" class="internal xref">Analysis</a></p>
+</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
@@ -1517,9 +1523,9 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-2.2.2-1">In this section we summarize the key derivation operations that appears throughout the protocol.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
 <div class="breakable lang-~ sourcecode" id="section-2.2.2-2">
 <pre>
-          +-------------------------------+
-          |TH_2=H(kem.ct_eph,H(message_1))|
-          +-------+-----------------------+               PLAINTEXT_1
+          +--------------------------------+
+          |TH_2=H(kem.ct_eph, H(message_1))|
+          +-------+------------------------+              PLAINTEXT_1
                  |                                               |
   +------+   +---+---+   +------+   +------+   +-----------+   +-+-+
   |ss_eph|--&gt;|Extract|--&gt;|PRK_2e|--&gt;|Expand|--&gt;|KEYSTREAM_2|--&gt;|XOR|
@@ -1740,7 +1746,7 @@ In a second step, using <code>kem.pk_eph</code> and the <code>KEM.Encapsulation<
                 <p id="section-3.2.2.2-12.3.1"><code>SIGNATURE_2</code>.<a href="#section-3.2.2.2-12.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-3.2.2.2-13">==Important note:== let us mention that the element signed by the Responder, for security considerations during the security analysis, coulb be subject to slight changes. However, it serves here to illustrate the principle proposed here.<a href="#section-3.2.2.2-13" class="pilcrow">¶</a></p>
+<p id="section-3.2.2.2-13"><strong>Important note:</strong> let us mention that the element signed by the Responder, for security considerations during the security analysis, coulb be subject to slight changes. However, it serves here to illustrate the principle proposed here.<a href="#section-3.2.2.2-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="processing-message2-formatting-and-sending-message3-1">
@@ -1857,6 +1863,84 @@ With <code>PLAINTEXT_3</code>, he calculates <code>MAC_3</code>on his side, and 
 <p id="section-3.2.2.6-5">which is the desired session key, and the authentication process is fully achieved.<a href="#section-3.2.2.6-5" class="pilcrow">¶</a></p>
 </section>
 </div>
+</section>
+</div>
+<div id="associated-key-derivation-schedule">
+<section id="section-3.2.3">
+          <h4 id="name-associated-key-derivation-s">
+<a href="#section-3.2.3" class="section-number selfRef">3.2.3. </a><a href="#name-associated-key-derivation-s" class="section-name selfRef">Associated key derivation schedule</a>
+          </h4>
+<p id="section-3.2.3-1">In this section we present the key derivation schedule of the previously described protocol version.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.2.3-2">
+<pre>
+          +--------------------------------+
+          |TH_2=H(kem.ct_eph, H(message_1))|
+          +------+----------------------+--+              PLAINTEXT_1
+                 |                      |                        |
+  +------+   +---+---+   +------+   +---+--+   +-----------+   +-+-+
+  |ss_eph|--&gt;|Extract|--&gt;|PRK_2e|--&gt;|Expand|--&gt;|KEYSTREAM_2|--&gt;|XOR|
+  +------+   +-------+   +---+--+   +---+--+   +-----------+   +-+-+
+                             |                                   |
+                             |                                   v
+                             |                         +---------+--+
+                             |                         |CIPHERTEXT_2|
+                             |                         +------------+
+                             |
+                             |     +------+   +-----+   +-----------+
+                             +-----|Expand|--&gt;|MAC_2|--&gt;|SIGNATURE_3|
+                             |     +------+   +-----+   +-----------+
+                             |
+         +-----+---+   +---+--+
+         |SALT_3e2m|&lt;--|Expand|
+         +-----+---+   +---+--+                           PLAINTEXT_3
+               |                                               |
+  +----+   +---+---+   +--------+   +------+   +--------+   +--+-+
+  |ss_R|--&gt;|Extract|--&gt;|PRK_3e2m|--&gt;|Expand|--&gt;|K_3/IV_3|--&gt;|AEAD|
+  +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_3|
+                           |            |              +------------+
+                           |            |
+                           |   +--------+---------------------------+
+                           |   |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
+                           |   +------------------------------------+
+                           |
+                           |       +------+   +-----+   +-----------+
+                           +-------|Expand|--&gt;|MAC_3|--&gt;|SIGNATURE_3|
+                           |       +------+   +-----+   +-----------+
+                           |
+                           |                              PLAINTEXT_4
+                           |                                   |
+                           |        +------+   +--------+   +--+-+
+               message_4?  +--------|Expand|--&gt;|K_4/IV_4|--&gt;|AEAD|
+                           |        +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_4|
+                           |            |              +------------+
+                           |            |
+                           |   +--------+---------------------------+
+                           |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
+                           |   +--------+---------------------------+
+                           |            |
+                           |            |
+                           |        +---+--+   +-------+
+                           +--------|Expand|--&gt;|PRK_out|
+                                    +------+   +-------+
+</pre><a href="#section-3.2.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3.2.3-3">Figure 4: PQ-EDHOC, I signs - R KEM &amp; Signs key derivation schedule.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="analysis-1">
+<section id="section-3.2.4">
+          <h4 id="name-analysis-2">
+<a href="#section-3.2.4" class="section-number selfRef">3.2.4. </a><a href="#name-analysis-2" class="section-name selfRef">Analysis</a>
+          </h4>
+<p id="section-3.2.4-1">TODO an analysis of the tradeoff, the protocol advantage and disadvantage (no mac on the Responder side, but a signature).<a href="#section-3.2.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
