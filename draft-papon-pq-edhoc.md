@@ -14,14 +14,13 @@ keyword:
   - Post-Quantum
   - Authentication Key Exchange
 
-abstract: 
+abstract: |
   TODO abstract
-  
+
 author:
   - fullname: Clément Papon
     organization: XLIM UMR CNRS 7252 - Limoges University
     email: clement.papon@unilim.fr
-
   - fullname: Cristina Onete
     organization: XLIM UMR CNRS 7252 - Limoges University
     email: maria-cristina.onete@unilim.fr
@@ -110,7 +109,7 @@ Figure 1: PK-EDHOC-IKR (I sign, R kem) message flow
 
 #### Formatting and sending message_1
 
-As in the usual EDHOC protocol, the first message (message_1) consists of: 
+As in the usual EDHOC protocol, the first message (message_1) consists of:
   - METHOD -> as specified in {{RFC9528}} it is an integer specifying the authentication method the Initiator wants to use.
   - SUITES_I -> it consists of an ordered set of algorithms supported by the Initiator and formatted as specified in {{RFC9528}}.
   - C_I (and also as C_R, which will appears later) -> the Connection Identifiers chosen by the Initiator (C_I) and by the Responder (C_R) as specified in [RFC9528].
@@ -126,12 +125,12 @@ On the reception of the first message, the Responder first recovers ss_R thanks 
 The Responder select its Connection Identifier C_R as specified in {{RFC9528}}. He then computes:
 
   - TH_2 = H(kem.ct_eph, H(message_1)).
-    
+
   - PRK_2e = EDHOC_Extract(TH_2, ss_eph) -> the salt SHALL be TH_2 and the IKM SHALL be the ephemeral shared-secret ss_eph.
-    
+
 And also, as in {{RFC9528}}:
 
-  - KEYSTREAM_2 = EDHOC_KDF(PRK_2e,0,TH_2,plaintext_length) 
+  - KEYSTREAM_2 = EDHOC_KDF(PRK_2e,0,TH_2,plaintext_length)
   - SALT_3e2m = EDHOC_KDF(PRK_2e,1,TH_2,hash_length)
 
 
