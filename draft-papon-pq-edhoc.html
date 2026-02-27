@@ -8,7 +8,7 @@
 <meta content="Clément Papon" name="author">
 <meta content="Cristina Onete" name="author">
 <meta content="
-       TODO Abstract 
+       This document specifies two extensions to the Ephemeral Diffie-Hellman over COSE (EDHOC). These two protocol versions aim to provide quantum-resistance to the original EDHOC protocol, while reducing message-complexity with respect to parallel drafts. The document defines: (1) a 3-message quantum-resistant EDHOC proposal when the Initiator knows the Responder; in this version, the Initiator authenticates using a signature, while the Responder uses a KEM; (2) a 3-or-4-message quantum-resistant EDHOC proposal, which proposes a tradeoff between message-complexity and computational overhead. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="EDHOC" name="keyword">
@@ -1087,7 +1087,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Post-Quantum EDHOC - Initiator and Responder using signature and/or KEM</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document specifies two extensions to the Ephemeral Diffie-Hellman over COSE (EDHOC). These two protocol versions aim to provide quantum-resistance to the original EDHOC protocol, while reducing message-complexity with respect to parallel drafts. The document defines: (1) a 3-message quantum-resistant EDHOC proposal when the Initiator knows the Responder; in this version, the Initiator authenticates using a signature, while the Responder uses a KEM; (2) a 3-or-4-message quantum-resistant EDHOC proposal, which proposes a tradeoff between message-complexity and computational overhead.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1181,30 +1181,25 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-second-protocol" class="internal xref">Second protocol</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-references" class="internal xref">References</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-references-2" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
                 <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-informative-references-2" class="internal xref">Informative References</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
@@ -1220,9 +1215,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">This document aims to present new alternatives for making the Ephemeral Diffie-Hellman Over COSE (EDHOC) protocol quantum-resistant, by optimizing the number of messages and using a combination of KEM and signature, as well as Post-Quantum Cryptography cipher suites, for secure key exchange and authentication.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">We have two objectives here. Firstly, building on <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, we propose a version of the EDHOC protocol where the Initiator knows the Responder, but in a scenario where the Initiator authenticates with a signature (ML-DSA) and the Responder with a KEM (ML-KEM).
-Secondly, based on <span>[<a href="#I-D.pocero-authkem-edhoc" class="cite xref">I-D.pocero-authkem-edhoc</a>]</span>, we aim to propose a version of the protocol that requires, depending on the case, either only 3 or 4 mandatory messages, but with additional computational overhead for (at least) one of the two parties.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-1">This document aims to present new alternatives for rendering the Ephemeral Diffie-Hellman Over COSE (EDHOC) protocol quantum-resistant. The main goal is to reduce the number of messages exchanged during the handshake, using a combination of KEMs and signatures, as well as Post-Quantum Cryptography (PQC) cipher suites, for secure key-exchange and authentication.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">In this draft we:
+  - propose, build on <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, a version of quantum-resistant EDHOC where the Initiator knows the Responder, but in a scenario where the Initiator authenticates with a signature (ML-DSA) and the Responder with a KEM (ML-KEM).<a href="#section-1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-3.1">
+          <p id="section-1-3.1.1">propose, building on <span>[<a href="#I-D.pocero-authkem-edhoc" class="cite xref">I-D.pocero-authkem-edhoc</a>]</span>, a version of the protocol that requires, depending on the case, either only 3 or 4 mandatory messages. This second version reduces the message overhead, but comes at an additional computational overhead for (at least) one of the two parties.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-4">The two proposals in this draft can be viewed to extend (in the case of the first bullet-point) and respectively to provide an alternative (in the case of the second bullet-point) to the current proposal for quantum-resistant EDHOC.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <div id="terminology-and-requirements-language">
 <section id="section-1.1">
         <h3 id="name-terminology-and-requirement">
@@ -1270,8 +1271,9 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
         <h3 id="name-motivation">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-motivation" class="section-name selfRef">Motivation</a>
         </h3>
-<p id="section-2.1-1">In <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, the authors adopt an EDHOC approach for use cases where the Initiator already knows the identity of the Responder, in a post-quantum version using ephemeral and static KEMs for authentication. The Initiator, knowing the long-term public key of the Responder, can derive the shared-secret (ss_R) and compute a key, then encrypt part of the first message. It can thus send its identity directly and securely authenticate itself, since only the Responder with its long-term secret key can decrypt the first message. Knowing the Initiator's identity, the Responder can derive the second shared-secret (ss_I) and continue the key derivation schedule. Sending the encrypted second message allows it to securely confirm its identity to the Initiator.
-We propose here an approach for the same scenario, i.e., the Initiator already knows the Responder, but this time the Initiator will authenticate with a signature. As a result, the first message does not need to be partially encrypted. Instead, during the third message, the Initiator calculates a MAC and signs it. Upon receiving the encrypted third message, the Responder, after decryption, authenticates the Initiator in the usual EDHOC manner.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">In <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, the authors adopt an EDHOC approach for use cases where the Initiator already knows the identity of the Responder, in a post-quantum version using ephemeral and static KEMs for authentication. The Initiator, knowing the long-term public key of the Responder, can derive the shared-secret (ss_R) and compute a key, then encrypt part of the first message. It can thus send its identity directly and securely authenticate itself, since only the Responder with its long-term secret key can decrypt the first message. Knowing the Initiator's identity, the Responder can derive the second shared-secret (ss_I) and continue the key derivation schedule. Sending the encrypted second message allows it to securely confirm its identity to the Initiator.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The key motivation behind our current proposal is a desire to reduce the message-complexity of quantum-resistant EDHOC. We propose an extension to draft proposal <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, which allows the Initiator and Responder to authenticate using different mechanisms -- much as in the original EDHOC. In particular, while the Responder still authenticates using a KEM, in our proposal the Initiator will use a signature.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">This approach comes with the following benefit: there is no need to partially encrypt the first message. Instead, during the third message, the Initiator calculates a MAC and signs it. Upon receiving the encrypted third message, the Responder, after decryption, authenticates the Initiator in the usual EDHOC manner.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="pq-edhoc-ikr-protocol-overview">
@@ -1285,38 +1287,54 @@ We propose here an approach for the same scenario, i.e., the Initiator already k
 <a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-pq-edhoc-ikr-protocol-descr" class="section-name selfRef">PQ-EDHOC-IKR protocol description</a>
           </h4>
 <p id="section-2.2.1-1">We present here a high-level description of our PQ-EDHOC-IKR where the Initiator authenticates with a signature and the Responder with a KEM.<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-2">```
-   I                                                         R
-  ---                                                       ---
-   |   METHOD, SUITES_I, kem.pk_eph, kem.ct_R, C_I, EAD_1    |
-   +---------------------------------------------------------&gt;
-   |                        message_1                        |
-   |                                                         |
-   |  kem.ct_eph, Enc(KEYSTREAM_2, ID_CRED_R, MAC_2, EAD_2)  |
-   &lt;---------------------------------------------------------+
-   |                        message_2                        |
-   |                                                         |
-   |           AEAD(ID_CRED_I, Signature_3, EAD_3)           |
-   +---------------------------------------------------------&gt;
-   |                        message_3                        |
-   |                                                         |
-   |                       AEAD(EAD_4)                       |
-   &lt;- - - - - - - - - - - - - - - - - - - - - - - - - - - - -+
-   |                        message_4                        |<a href="#section-2.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-3">```<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-4">Figure 1: PK-EDHOC-IKR (I sign, R kem) message flow<a href="#section-2.2.1-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1-2">
+<pre>
+  I                                                         R
+ ---                                                       ---
+  |   METHOD, SUITES_I, kem.pk_eph, kem.ct_R, C_I, EAD_1    |
+  +---------------------------------------------------------&gt;
+  |                        message_1                        |
+  |                                                         |
+  |  kem.ct_eph, Enc(KEYSTREAM_2, ID_CRED_R, MAC_2, EAD_2)  |
+  &lt;---------------------------------------------------------+
+  |                        message_2                        |
+  |                                                         |
+  |           AEAD(ID_CRED_I, Signature_3, EAD_3)           |
+  +---------------------------------------------------------&gt;
+  |                        message_3                        |
+  |                                                         |
+  |                       AEAD(EAD_4)                       |
+  &lt;- - - - - - - - - - - - - - - - - - - - - - - - - - - - -+
+  |                        message_4                        |
+</pre><a href="#section-2.2.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1-3">Figure 1: PK-EDHOC-IKR (I sign, R kem) message flow<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
 <div id="formatting-and-sending-message1">
 <section id="section-2.2.1.1">
             <h5 id="name-formatting-and-sending-mess">
 <a href="#section-2.2.1.1" class="section-number selfRef">2.2.1.1. </a><a href="#name-formatting-and-sending-mess" class="section-name selfRef">Formatting and sending message_1</a>
             </h5>
-<p id="section-2.2.1.1-1">As in the usual EDHOC protocol, the first message (message_1) consists of:
-  - METHOD -&gt; as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> it is an integer specifying the authentication method the Initiator wants to use.
-  - SUITES_I -&gt; it consists of an ordered set of algorithms supported by the Initiator and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
-  - C_I (and also as C_R, which will appears later) -&gt; the Connection Identifiers chosen by the Initiator (C_I) and by the Responder (C_R) as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
-  - EAD_1 (and also EAD_2, EAD_3 and EAD_4, which will appear later) -&gt; External Authorization Data, respectively included in message_1, message_2, message_3 (and optionally) message_4, and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
-  - kem.pk_eph -&gt; the Ephemeral KEM public key generated by the Initiator.
-  - kem.ct_R -&gt; based on the Responder long-term KEM public key, the Initiator computes ss_R and kem.ct_R with the KEM.Encapsulation algorithm. He keeps secret ss_R to compute, later, PRK_3e2m, and sends kem.ct_R to the Responder.<a href="#section-2.2.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.1-1">As in the usual EDHOC protocol, the first message (message_1) consists of:<a href="#section-2.2.1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.1.1-2.1">
+                <p id="section-2.2.1.1-2.1.1"><code>METHOD</code> -&gt; as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> it is an integer specifying the authentication method the Initiator wants to use.<a href="#section-2.2.1.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-2.2.1.1-2.2">
+                <p id="section-2.2.1.1-2.2.1"><code>SUITES_I</code> -&gt; it consists of an ordered set of algorithms supported by the Initiator and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-2.2.1.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-2.2.1.1-2.3">
+                <p id="section-2.2.1.1-2.3.1"><code>C_I</code> (and also as <code>C_R</code>, which will appears later) -&gt; the Connection Identifiers chosen by the Initiator (C_I) and by the Responder (<code>C_R</code>) as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-2.2.1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-2.2.1.1-2.4">
+                <p id="section-2.2.1.1-2.4.1"><code>EAD_1</code> (and also <code>EAD_2</code>, <code>EAD_3</code> and <code>EAD_4</code>, which will appear later) -&gt; External Authorization Data, respectively included in <code>message_1</code>, <code>message_2</code>, <code>message_3</code> (and optionally) <code>message_4</code>, and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-2.2.1.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-2.2.1.1-2.5">
+                <p id="section-2.2.1.1-2.5.1"><code>kem.pk_eph</code> -&gt; the Ephemeral KEM public key generated by the Initiator.<a href="#section-2.2.1.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-2.2.1.1-2.6">
+                <p id="section-2.2.1.1-2.6.1"><code>kem.ct_R</code> -&gt; based on the Responder long-term KEM public key, the Initiator computes <code>ss_R</code> and <code>kem.ct_R</code> with the KEM.Encapsulation algorithm. He keeps secret <code>ss_R</code> to compute, later, <code>PRK_3e2m</code>, and sends <code>kem.ct_R</code> to the Responder.<a href="#section-2.2.1.1-2.6.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
 </section>
 </div>
 <div id="processing-message1-formatting-and-sending-message2">
@@ -1376,47 +1394,28 @@ We propose here an approach for the same scenario, i.e., the Initiator already k
 </div>
 </section>
 </div>
-<div id="security-considerations">
+<div id="second-protocol">
 <section id="section-3">
-      <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      <h2 id="name-second-protocol">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-second-protocol" class="section-name selfRef">Second protocol</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">Our second idea is to propose a tradeoff, allowing for a reduced number of messages in the quantum-resistant EDHOC handshake, which come at a slightly higher computational overhead.<a href="#section-3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-4">
+      <h2 id="name-security-considerations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-4-1">TODO Security<a href="#section-4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
-      <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
-      </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="references">
 <section id="section-5">
-      <h2 id="name-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-references" class="section-name selfRef">References</a>
+      <h2 id="name-iana-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-5-1">## Normative References<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2"><span>[<a href="#I-D.spm-lake-pqsuites" class="cite xref">I-D.spm-lake-pqsuites</a>]</span>
-        <span>[<a href="#I-D.pocero-authkem-edhoc" class="cite xref">I-D.pocero-authkem-edhoc</a>]</span>
-        <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>
-        <span>[<a href="#RFC5116" class="cite xref">RFC5116</a>]</span>
-        <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>
-        <span>[<a href="#RFC8742" class="cite xref">RFC8742</a>]</span>
-        <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>
-        <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>
-        <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>
-        <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span><a href="#section-5-2" class="pilcrow">¶</a></p>
-<div id="informative-references">
-<section id="section-5.1">
-        <h3 id="name-informative-references">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
-        </h3>
-<p id="section-5.1-1"><span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>
-          <span>[<a href="#RFC9794" class="cite xref">RFC9794</a>]</span><a href="#section-5.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
+<p id="section-5-1">This document has no IANA actions.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
@@ -1429,8 +1428,8 @@ We propose here an approach for the same scenario, i.e., the Initiator already k
 </div>
 <div id="sec-combined-references">
 <section id="section-7">
-      <h2 id="name-references-2">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references-2" class="section-name selfRef">References</a>
+      <h2 id="name-references">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <div id="sec-normative-references">
 <section id="section-7.1">
@@ -1491,8 +1490,8 @@ We propose here an approach for the same scenario, i.e., the Initiator already k
 </div>
 <div id="sec-informative-references">
 <section id="section-7.2">
-        <h3 id="name-informative-references-2">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references-2" class="section-name selfRef">Informative References</a>
+        <h3 id="name-informative-references">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC9053">[RFC9053]</dt>
