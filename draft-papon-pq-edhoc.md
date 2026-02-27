@@ -239,7 +239,8 @@ In this section we summarize the key derivation operations that appears througho
                |
   +----+   +---+---+   +--------+   +------+   +-----+
   |ss_R|-->|Extract|-->|PRK_3e2m|-->|Expand|-->|MAC_2|
-  +----+   +-------+   +---+----+   +------+   +-----+    PLAINTEXT_3
+  +----+   +-------+   +---+----+   +------+   +-----+
+                           |                              PLAINTEXT_3
                            |                                   |
                            |        +------+   +--------+   +--+-+
                            +--------|Expand|-->|K_3/IV_3|-->|AEAD|
@@ -249,12 +250,15 @@ In this section we summarize the key derivation operations that appears througho
                            |            |              +-------+----+
                            |            |              |CIPHERTEXT_3|
                            |            |              +------------+
+                           |            |
                            |   +--------+---------------------------+
                            |   |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
                            |   +------------------------------------+
+                           |
                            |       +------+   +-----+   +-----------+
                            +-------|Expand|-->|MAC_3|-->|SIGNATURE_3|
                            |       +------+   +-----+   +-----------+
+                           |
                            |                              PLAINTEXT_4
                            |                                   |
                            |        +------+   +--------+   +--+-+
@@ -265,9 +269,11 @@ In this section we summarize the key derivation operations that appears througho
                            |            |              +-------+----+
                            |            |              |CIPHERTEXT_4|
                            |            |              +------------+
+                           |            |
                            |   +--------+---------------------------+
                            |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
                            |   +--------+---------------------------+
+                           |            |
                            |            |
                            |        +---+--+   +-------+
                            +--------|Expand|-->|PRK_out|
