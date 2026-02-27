@@ -14,6 +14,9 @@ keyword:
   - Post-Quantum
   - Authentication Key Exchange
 
+abstract: 
+  TODO abstract
+  
 author:
   - fullname: Clément Papon
     organization: XLIM UMR CNRS 7252 - Limoges University
