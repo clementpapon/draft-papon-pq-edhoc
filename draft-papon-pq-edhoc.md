@@ -155,7 +155,7 @@ So the second message consists of:
 
 #### Processing `message_2`, formatting and sending `message_3`.
 
-On reception of the second message, the Initiator, using `kemp.ct_eph, can compute the ephemeral shared-secret `ss_eph`. As the Responder did, he computes `TH_2`, `PRK_2e` and `KEYSTREAM_2`. He can now decipher and retrieve : `PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2`.
+On reception of the second message, the Initiator, using `kemp.ct_eph`, can compute the ephemeral shared-secret `ss_eph`. As the Responder did, he computes `TH_2`, `PRK_2e` and `KEYSTREAM_2`. He can now decipher and retrieve : `PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2`.
 
 Thanks to `ID_CRED_R`, the Initiator verifies the validity of the long-term KEM public key of the Responder, `kemp.pk_R`, and computes `SALT_3e2m`and `PRK_3e2m`, using the shared-secret `ss_R`he generates at the beginning of the exchange.
 
@@ -281,6 +281,12 @@ In this section we summarize the key derivation operations that appears througho
 ~~~~~~~~~~
 Figure 2: PK-EDHOC-IKR (I sign, R kem) key derivation schedule.
 
+### Additional explainations
+TODO some other explainations.
+
+## Analysis
+
+TODO efficiency and optimization analysis.
 
 # Second protocol
 Our second idea is to propose a tradeoff, allowing for a reduced number of messages in the quantum-resistant EDHOC handshake, which come at a slightly higher computational overhead.
