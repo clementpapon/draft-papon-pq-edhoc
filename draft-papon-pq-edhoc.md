@@ -194,7 +194,7 @@ If the Responder decides of a fourth mandatory message, he then computes the fol
   - `K_4 = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length)`;
   - `IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)`.
 
-Using the AEAD encryption algorithm, he ciphers `PLAINTEXT_4 = EAD_4` and sends it to the Initiator. The later computes `TH_4`, `K_4`, `IV_4`, and deciphers `CIPHERTEXT_4` thanks to the AEAD decryption algorithm.
+Using the AEAD encryption algorithm, he ciphers `PLAINTEXT_4 = EAD_4` and sends it to the Initiator. The latter computes `TH_4`, `K_4`, `IV_4`, and deciphers `CIPHERTEXT_4` thanks to the AEAD decryption algorithm.
 
 
 
@@ -332,7 +332,7 @@ Concerning `PRK_out`, there is no modifications compared to the original EDHOC p
 In summary, we retain here the use case proposed by {{I-D.pocero-authkem-ikr-edhoc}}, where the Initiator already knows the Responder identity. Our protocol proposes a hybridization between the protocol proposed by {{I-D.pocero-authkem-ikr-edhoc}} and EDHOC method 1. In other words, Diffie-Hellman elements are replaced with KEMs, and the Initiator authenticates here using a signature (instead of a KEM).
 An important difference with the proposal of {{I-D.pocero-authkem-ikr-edhoc}} concerns the first message message_1, which in our version is simplified and remains closer to the standard EDHOC structure. Indeed, the Initiator authenticates via a signature at the third message. So he no longer needs to derive a key and encrypt part of the first message to securely send its identity.
 The second message also finds itself simplified. Since the Initiator does not use KEM in this situation, the Responder has no need to generate a shared-secret `ss_I` and send the KEM ciphertext `kem.ct_I`. The second message is therefore closer to the usual EDHOC structure.
-Finally, the third message is almost identical to the third message of the EDHOC method 1 protocol.
+Finally, the third message is almost 'identical' to the third message of the EDHOC method 1 protocol.
 It seems important to note that complete and secure authentication is ensured here entirely in three messages, and the fourth message is optional.
 Regarding the Key Derivation Schedule, the changes are minor compared to {{RFC9528}} (adaptation of notations, especially for the IKM to take into account the post-quantum nature of the cryptographic material) and {{I-D.pocero-authkem-ikr-edhoc}} (simply one less key derivation, since the Initiator uses a signature rather than a static KEM).
 We will discuss security considerations further in this document. We will also soon present a byte comparison for each message.
@@ -350,6 +350,10 @@ Things get complicated when trying to apply these modifications to the other thr
 As proposed in {{I-D.pocero-authkem-edhoc}}, we go from 3 to 4 or 5 mandatory messages to achieve complete mutual authentication.
 Here, we want to explore a different path. Our solution aims to strike a balance between the number of mandatory messages and the computations performed by each endpoint.
 
+The principle is as follows. Suppose that the Initiator authenticates with a signature and the Responder uses a KEM. In this case, we will need an obligatory fourth message (for the Initiator to authenticate the Responder via the MAC, as proposed in {{I-D.pocero-authkem-edhoc}}).
+To avoid this obligatory fourth message and return to three, we propose removing the MAC `MAC_2` used to authenticate the Responder (eliminating calculations on both sides) and replacing it with a signature from the Responder (adding calculations on both sides). To do this, the Responder signs an element (which should not be chosen randomly for security reasons and which must allow the Initiator to identify the session) and sends it directly in the second message.
+The Initiator can then immediately identify the Responder: it retrieves its identity from the encrypted message and verifies the signature. The rest of the protocol remains 'unchanged', and the calculation of `PRK_out` is possible directly after sending/receiving the third message (thus no more obligatory fourth message). The costs of calculations are compensated, but the delicate point remains the size of the second message (we will provide a bytes analysis for this message later).
+We decline this procedure when the Initiator wants to authenticate with a KEM and the Responder with a signature, or when both parties want to authenticate with KEMs. In these two latter cases, the number of mandatory messages compared to {{I-D.pocero-authkem-edhoc}} decreases from 5 to 4.
 
 ## First case: Initiator signs, Responder KEM and signs
 
@@ -491,7 +495,7 @@ If the Responder decides of a fourth mandatory message, he then computes the fol
   - `K_4 = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length)`;
   - `IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)`.
 
-Using the AEAD encryption algorithm, he ciphers `PLAINTEXT_4 = EAD_4`and sends it to the Initiator. The later computes `TH_4`, `K_4`, `IV_4`, and deciphers `CIPHERTEXT_4` thanks to the AEAD decryption algorithm.
+Using the AEAD encryption algorithm, he ciphers `PLAINTEXT_4 = EAD_4`and sends it to the Initiator. The latter computes `TH_4`, `K_4`, `IV_4`, and deciphers `CIPHERTEXT_4` thanks to the AEAD decryption algorithm.
 
 
 
