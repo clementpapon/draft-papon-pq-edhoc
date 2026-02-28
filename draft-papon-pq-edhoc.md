@@ -157,7 +157,7 @@ So the second message consists of:
 
 On reception of the second message, the Initiator, using `kemp.ct_eph`, can compute the ephemeral shared-secret `ss_eph`. As the Responder did, he computes `TH_2`, `PRK_2e` and `KEYSTREAM_2`. He can now decipher and retrieve : `PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2`.
 
-Thanks to `ID_CRED_R`, the Initiator verifies the validity of the long-term KEM public key of the Responder, `kemp.pk_R`, and computes `SALT_3e2m`and `PRK_3e2m`, using the shared-secret `ss_R`he generates at the beginning of the exchange.
+Thanks to `ID_CRED_R`, the Initiator verifies the validity of the long-term KEM public key of the Responder, `kemp.pk_R`, and computes `SALT_3e2m` and `PRK_3e2m`, using the shared-secret `ss_R` he generates at the beginning of the exchange.
 
 At this point the Initiator is abable to authenticate the Responder (at least, make sure he is talking to the endpoint he hopes to talk to). For that, he computes, as the Responder did, the MAC `MAC_2`. If it machtes with the one he received, then he properly authenticated the Responder. Otherwise he aborts.
 
@@ -179,7 +179,7 @@ Setting `PLAINTEXT_3 = (ID_CRED_I, SIGNATURE_3, EAD_3)`, the Initiator ciphers `
 
 #### Processing `message_3`
 
-On reception of `message_3`, the Responder computes `TH_3`, `K_3`, and `IV_3` as the Initiator did, and deciphers `CIPHERTEXT_3` with the AEAD decryption algorithm. With `PLAINTEXT_3`, he can compute `MAC_3`on his side, and verify the signature:
+On reception of `message_3`, the Responder computes `TH_3`, `K_3`, and `IV_3` as the Initiator did, and deciphers `CIPHERTEXT_3` with the AEAD decryption algorithm. With `PLAINTEXT_3`, he can compute `MAC_3` on his side, and verify the signature:
 
   - `DS.Verify(sign.pk_I, (ID_CRED_I, TH_3, EAD_3, MAC_3, sign_length), SIGNATURE_3)`
 
@@ -194,17 +194,17 @@ If the Responder decides of a fourth mandatory message, he then computes the fol
   - `K_4 = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length)`;
   - `IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)`.
 
-Using the AEAD encryption algorithm, he ciphers `PLAINTEXT_4 = EAD_4`and sends it to the Initiator. The later computes `TH_4`, `K_4`, `IV_4`, and deciphers `CIPHERTEXT_4` thanks to the AEAD decryption algorithm.
+Using the AEAD encryption algorithm, he ciphers `PLAINTEXT_4 = EAD_4` and sends it to the Initiator. The later computes `TH_4`, `K_4`, `IV_4`, and deciphers `CIPHERTEXT_4` thanks to the AEAD decryption algorithm.
 
 
 
 #### Computing the session key `PRK_out`
 
-It doesn't matter if there is a fourth mandatory message, in any case, both the Initiator and the Responder, in order to compute the key `PRK_out`, have to calcule the fourth transcript hash:
+It doesn't matter if there is a fourth mandatory message, in any case, both the Initiator and the Responder, in order to compute the key `PRK_out`, have to calculate the fourth transcript hash:
 
   - `TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I)`.
 
-With that element, using the EDHOC_KDF, they both obtain:
+With that element, using the EDHOC_KDF algorithm, they both obtain:
 
   - `PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)`
 
@@ -281,12 +281,62 @@ In this section we summarize the key derivation operations that appears througho
 ~~~~~~~~~~
 Figure 2: PQ-EDHOC-IKR (I sign, R kem) key derivation schedule.
 
-### Additional explainations
-TODO some other explainations.
+So we can summarize the different computations as in {{RFC9528}}:
+
+  - `PRK_2e      = EDHOC_Extract(TH_2, ss_eph)`;
+  - `KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length)`;
+  - `SALT_3e2m   = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length)`;
+  - `PRK_3e2m    = EDHOC_Extract(SALT_3e2m, ss_R)`;
+  - `MAC_2       = EDHOC_KDF(PRK_3e2m, 2, context_2, mac_length_2)` (with `context_2 = C_R, ID_CRED_R, TH_2, EAD_2`);
+  - `K_3         = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length)`;
+  - `IV_3        = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length)`;
+  - `MAC_3       = EDHOC_KDF(PRK_3e2m, 6, context_3, mac_length_3)` (with `context_3 = ID_CRED_I, TH_3, EAD_3`);
+  - `K_4         = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length)`;
+  - `IV_4        = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)`;
+  - `PRK_out     = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)`.
+
+
+### Additional explanations
+
+We detail here the main elements that differ from the original EDHOC protocol.
+
+
+#### Ephemeral KEM
+
+As explained in {{I-D.pocero-authkem-ikr-edhoc}}, the usual ephemeral Diffie-Hellman elements `(x,g^x)` and `(y,g^y)`, are here replaced by an ephemeral KEM:
+
+  - At first, the Initiator generates a ephemeral KEM key pair `(kem.sk_eph, kem.pk_eph)` using the `KEM.KeyGen(k)` algorithm (where `k` is a security parameter);
+  - On reception of the ephemeral KEM public key `kemp.pk_eph`, the Responder generates a pair `(ss_eph, kem.ct_eph)` with the `KEM.Encapsulation` algorihtm (with input `kem.pk_eph`). The element `ss_eph` is the ephemeral shared-secret, later used to derive a key, and `kem.ct_eph` is the ephemeral KEM ciphertext, used by the Initiator to retrieve the ephemeral shared-secret;
+  - On reception of the ephemeral KEM ciphertext, the Initiator recovers the ephemeral shared-secret `ss_eph` thanks to the `KEM.Decapsulation' algorithm (with input `kem.sk_eph` and `kem.ct_eph`).
+
+
+#### Authentication keys
+
+For the Initiator, the authentication key MUST be a static signing key pair `(sign.sk_I, sign.pk_I)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
+
+For the Responder, the authentication key MUST be a static KEM key pair `(kem.sk_R, kem.pk_R)' generated using a `KEM.KeyGen(k)` algorithm (where `k` is a security parameter).
+
+
+#### Key derivation
+
+In this version of the protocol, the EDHOC_Extract fonction is used to derive two keys, in a way that slightly differ from the original EDHOC protocol.
+
+  - `PRK_2e = EDHOC_Extract(TH_2, ss_eph) --> the salt SHALL be `TH_2` and the IKM SHALL be the ephemeral shared-secret `ss_eph`;
+  - `PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)` --> the salt SHALL be `SALT_3e2m` directly derived from `PRK_2e`, and the IKM SHALL be the 'static' shared-secret `ss_R`.
+
+Concerning `PRK_out`, there is no modifications compared to the original EDHOC protocol.
+
 
 ## Analysis
 
-TODO efficiency and optimization analysis.
+In summary, we retain here the use case proposed by {{I-D.pocero-authkem-ikr-edhoc}}, where the Initiator already knows the Responder identity. Our protocol proposes a hybridization between the protocol proposed by {{I-D.pocero-authkem-ikr-edhoc}} and EDHOC method 1. In other words, Diffie-Hellman elements are replaced with KEMs, and the Initiator authenticates here using a signature (instead of a KEM).
+An important difference with the proposal of {{I-D.pocero-authkem-ikr-edhoc}} concerns the first message message_1, which in our version is simplified and remains closer to the standard EDHOC structure. Indeed, the Initiator authenticates via a signature at the third message. So he no longer needs to derive a key and encrypt part of the first message to securely send its identity.
+The second message also finds itself simplified. Since the Initiator does not use KEM in this situation, the Responder has no need to generate a shared-secret `ss_I` and send the KEM ciphertext `kem.ct_I`. The second message is therefore closer to the usual EDHOC structure.
+Finally, the third message is almost identical to the third message of the EDHOC method 1 protocol.
+It seems important to note that complete and secure authentication is ensured here entirely in three messages, and the fourth message is optional.
+Regarding the Key Derivation Schedule, the changes are minor compared to {{RFC9528}} (adaptation of notations, especially for the IKM to take into account the post-quantum nature of the cryptographic material) and {{I-D.pocero-authkem-ikr-edhoc}} (simply one less key derivation, since the Initiator uses a signature rather than a static KEM).
+We will discuss security considerations further in this document. We will also soon present a byte comparison for each message.
+
 
 # KEM & Sign Authentication for Post-Quantum EDHOC
 
@@ -447,7 +497,7 @@ Using the AEAD encryption algorithm, he ciphers `PLAINTEXT_4 = EAD_4`and sends i
 
 #### Computing the session key `PRK_out`
 
-Here again, it doesn't matter if there is a fourth mandatory message, in any case, both the Initiator and the Responder, in order to compute the key `PRK_out`, have to calcule the fourth transcript hash as in the original EDHOC protocol:
+Here again, it doesn't matter if there is a fourth mandatory message, in any case, both the Initiator and the Responder, in order to compute the key `PRK_out`, have to calculate the fourth transcript hash as in the original EDHOC protocol:
 
   - `TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I)`.
 
@@ -735,7 +785,7 @@ Figure 6: PQ-EDHOC, I KEM & Signs - R Signs key derivation schedule.
 TODO an analysis of the tradeoff, the protocol advantage and disadvantage (no mac on the Initiator side, but a signature).
 
 
-## Thrid case: Initiator and Responder KEM and sign - version 1
+## Third case: Initiator and Responder KEM and sign - version 1
 
 We now present the equivalent of EDHOC method 3, which is in our case, an hybridation of the previous cases. We propose two variant of this version. We start here with the first one, where the Initiator authenticates with a KEM and a signature, and the Responder with only a KEM.
 
@@ -942,7 +992,7 @@ Figure 8: PQ-EDHOC, I KEM & Signs - R KEM key derivation schedule.
 TODO an analysis of the tradeoff, the protocol advantage and disadvantage (only one mac, but two signatures).
 
 
-## Thrid case: Initiator and Responder KEM and sign - version 2
+## Third case: Initiator and Responder KEM and sign - version 2
 
 We now present the second variant of the equivalent of EDHOC method 3. In this situation both the Initiator and the Responder authenticate with a KEM and a signature.
 
