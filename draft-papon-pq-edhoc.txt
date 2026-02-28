@@ -936,7 +936,7 @@ Table of Contents
 
    *  PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
-3.3.2.5.  Processing message_4`
+3.3.2.5.  Processing message_4
 
    In this situation the fourth message is mandatory.  It is used to
    send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
@@ -1187,7 +1187,7 @@ Table of Contents
 
    *  PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
-3.4.2.5.  Processing message_4`
+3.4.2.5.  Processing message_4
 
    In this situation the fourth message is mandatory.  It is used to
    send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
@@ -1458,7 +1458,7 @@ Table of Contents
 
    *  PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
 
-3.5.2.5.  Processing message_4`
+3.5.2.5.  Processing message_4
 
    In this situation the fourth message is mandatory.  It is used to
    send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
