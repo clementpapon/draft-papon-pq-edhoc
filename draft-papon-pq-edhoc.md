@@ -612,7 +612,7 @@ As previously explain the usual ephemeral Diffie-Hellman elements are replaced b
 
 For the Initiator, the authentication key MUST be a static signing key pair `(sign.sk_I, sign.pk_I)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
 
-For the Responder, the authentication key MUST be: (1) a static KEM key pair `(kem.sk_R, kem.pk_R)' generated using a `KEM.KeyGen(k)` algorithm (where `k` is a security parameter) **and** (2) a static signing key pair `(sign.sk_R, sign.pk_R)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
+For the Responder, the authentication key MUST be: (1) a static KEM key pair `(kem.sk_R, kem.pk_R)` generated using a `KEM.KeyGen(k)` algorithm (where `k` is a security parameter) **and** (2) a static signing key pair `(sign.sk_R, sign.pk_R)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
 
 
 #### Key derivation
@@ -688,7 +688,7 @@ The Responder selects its Connection Identifier `C_R` as specified in {{RFC9528}
 
   - `TH_2 = H(kem.ct_eph, H(message_1))`;
 
-  - `PRK_2e = EDHOC_Extract(TH_2, ss_eph)` --> the salt SHALL be `TH_2` and the IKM SHALL be the ephemeral shared-secret `ss_eph`;
+  - `PRK_2e = EDHOC_Extract(TH_2, ss_eph)`;
 
   - `KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length)`.
 
@@ -836,9 +836,60 @@ In this section we present the key derivation schedule of the previously describ
 ~~~~~~~~~~
 Figure 6: PQ-EDHOC, I KEM & Signs - R Signs key derivation schedule.
 
+So we can summarize the different computations as previously:
+
+~~~~~~~~~~
+  PRK_2e      = EDHOC_Extract(TH_2, ss_eph);
+  KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length);
+  MAC_2       = EDHOC_KDF(PRK_2e, 2, context_2, mac_length_2)
+              (with context_2 = C_R, ID_CRED_R, TH_2, EAD_2);
+  K_3         = EDHOC_KDF(PRK_2e, 3, TH_3, key_length);
+  IV_3        = EDHOC_KDF(PRK_2e, 4, TH_3, iv_length);
+  SALT_4e3m   = EDHOC_KDF(PRK_2e, 5, TH_4, hash_length);
+  PRK_4e3m    = EDHOC_Extract(SALT_4e3m, ss_I);
+  K_4         = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length);
+  IV_4        = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length);
+  PRK_out     = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
+~~~~~~~~~~
+
+### Additional explanations
+
+We detail here the main elements that differ from the original EDHOC protocol.
+
+
+#### Ephemeral KEM
+
+As previously explain the usual ephemeral Diffie-Hellman elements are replaced by an ephemeral KEM. In this protocol, it works exactly as we previously described.
+
+
+#### Authentication keys
+
+For the Initiator, the authentication key MUST be: (1) a static KEM key pair `(kem.sk_I, kem.pk_I)` generated using a `KEM.KeyGen(k)` algorithm (where `k` is a security parameter) **and** (2) a static signing key pair `(sign.sk_I, sign.pk_I)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
+
+For the Responder, the authentication key MUST be a static signing key pair `(sign.sk_R, sign.pk_R)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
+
+
+#### Key derivation
+
+In this version of the protocol, the key `PRK_2e` and `PRK_4e3m` are obtain thanks to EDHOC_Extract fonction:
+
+  - `PRK_2e = EDHOC_Extract(TH_2, ss_eph) --> the salt SHALL be `TH_2` and the IKM SHALL be the ephemeral shared-secret `ss_eph`;
+  - `PRK_4e3m = EDHOC_Extract(SALT_4e3m, ss_I)` --> the salt SHALL be `SALT_4e3m` directly derived from `PRK_2e`, and the IKM SHALL be the 'static' shared-secret `ss_I`.
+
+Concerning `PRK_out`, here again, there is no modifications compared to the original EDHOC protocol.
+We can note that in this two previous cases, the Key Derivation Schedule remains close to the standard EDHOC Key Derivation Schedule of method 1 and 2.
+
+
 ### Analysis
 
-TODO an analysis of the tradeoff, the protocol advantage and disadvantage (no mac on the Initiator side, but a signature).
+
+This is actually a mirror version of the previous protocol presented, in the sense that this time we assumed that the Responder has a pair of static signature keys `(sign.sk_R, sign.pk_R)` and that the Initiator has not only a pair of static signature keys `(sign.sk_I, sign.pk_I)` but also a pair of static KEM keys `(kem.sk_I, kem.pk_I)`.
+For the same reasosns, this is not an unusual case.
+
+From a technical point of view, messages `message_1`,`message_2` and `message_4` do not differ from those proposed in {{I-D.pocero-authkem-edhoc}}. Here again, two major differences are worth noting regarding the messages.
+Firstly, here we no more have a fifth message `message_5`. Secondly, our third message `message_3` contains an additional signature `SIGNATURE_3` (as this was the case for the previous protocol we propose, with `SIGNATURE_2`)(we will propose a byte analysis of this message later).
+Finally, from a calculational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_3`. In return, in the same vein, the Initiator must sign a message, and the Responder must verify this signature, in order to authenticate the Initiator, and send him the KEM ciphertext `kem.ct_I`.
+So compared to {{I-D.pocero-authkem-edhoc}}, we reduce the number of mandatory messages, from 5 to 4, and again we obtain a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
 ## Third case: Initiator and Responder KEM and sign - version 1
