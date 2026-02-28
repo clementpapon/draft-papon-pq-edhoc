@@ -284,19 +284,19 @@ Figure 2: PQ-EDHOC-IKR (I sign, R kem) key derivation schedule.
 So we can summarize the different computations as in {{RFC9528}}:
 
 ~~~~~~~~~~
-  `PRK_2e      = EDHOC_Extract(TH_2, ss_eph)`;
-  `KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length)`;
-  `SALT_3e2m   = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length)`;
-  `PRK_3e2m    = EDHOC_Extract(SALT_3e2m, ss_R)`;
-  `MAC_2       = EDHOC_KDF(PRK_3e2m, 2, context_2, mac_length_2)`
-                (with `context_2 = C_R, ID_CRED_R, TH_2, EAD_2`);
-  `K_3         = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length)`;
-  `IV_3        = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length)`;
-  `MAC_3       = EDHOC_KDF(PRK_3e2m, 6, context_3, mac_length_3)`
-                     (with `context_3 = ID_CRED_I, TH_3, EAD_3`);
-  `K_4         = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length)`;
-  `IV_4        = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)`;
-  `PRK_out     = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)`.
+  PRK_2e      = EDHOC_Extract(TH_2, ss_eph);
+  KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length);
+  SALT_3e2m   = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length);
+  PRK_3e2m    = EDHOC_Extract(SALT_3e2m, ss_R);
+  MAC_2       = EDHOC_KDF(PRK_3e2m, 2, context_2, mac_length_2)
+                (with context_2 = C_R, ID_CRED_R, TH_2, EAD_2);
+  K_3         = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length);
+  IV_3        = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length);
+  MAC_3       = EDHOC_KDF(PRK_3e2m, 6, context_3, mac_length_3)
+                     (with context_3 = ID_CRED_I, TH_3, EAD_3);
+  K_4         = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length);
+  IV_4        = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length);
+  PRK_out     = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
 ~~~~~~~~~~
 
 
@@ -582,9 +582,57 @@ In this section we present the key derivation schedule of the previously describ
 ~~~~~~~~~~
 Figure 4: PQ-EDHOC, I Signs - R KEM & Signs key derivation schedule.
 
+So we can summarize the different computations as previously:
+
+~~~~~~~~~~
+  PRK_2e      = EDHOC_Extract(TH_2, ss_eph);
+  KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length);
+  SALT_3e2m   = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length);
+  PRK_3e2m    = EDHOC_Extract(SALT_3e2m, ss_R);
+  K_3         = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length);
+  IV_3        = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length);
+  MAC_3       = EDHOC_KDF(PRK_3e2m, 6, context_3, mac_length_3)
+                     (with context_3 = ID_CRED_I, TH_3, EAD_3);
+  K_4         = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length);
+  IV_4        = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length);
+  PRK_out     = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
+~~~~~~~~~~
+
+### Additional explanations
+
+We detail here the main elements that differ from the original EDHOC protocol.
+
+
+#### Ephemeral KEM
+
+As previously explain the usual ephemeral Diffie-Hellman elements are replaced by an ephemeral KEM. In this protocol, it works exactly as we previously described.
+
+
+#### Authentication keys
+
+For the Initiator, the authentication key MUST be a static signing key pair `(sign.sk_I, sign.pk_I)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
+
+For the Responder, the authentication key MUST be: (1) a static KEM key pair `(kem.sk_R, kem.pk_R)' generated using a `KEM.KeyGen(k)` algorithm (where `k` is a security parameter) **and** (2) a static signing key pair `(sign.sk_R, sign.pk_R)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
+
+
+#### Key derivation
+
+In this version of the protocol, the key `PRK_2e` and `PRK_3e2m` are obtain thanks to EDHOC_Extract fonction:
+
+  - `PRK_2e = EDHOC_Extract(TH_2, ss_eph) --> the salt SHALL be `TH_2` and the IKM SHALL be the ephemeral shared-secret `ss_eph`;
+  - `PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)` --> the salt SHALL be `SALT_3e2m` directly derived from `PRK_2e`, and the IKM SHALL be the 'static' shared-secret `ss_R`.
+
+Concerning `PRK_out`, here again, there is no modifications compared to the original EDHOC protocol.
+
+
 ### Analysis
 
-TODO an analysis of the tradeoff, the protocol advantage and disadvantage (no mac on the Responder side, but a signature). Also said that this case is an intersting one, since usually the Responder has more capacities.
+In this version of the protocol, we assumed that the Initiator has a pair of static signature keys `(sign.sk_I, sign.pk_I)` and that the Responder has not only a pair of static signature keys `(sign.sk_R, sign.pk_R)` but also a pair of static KEM keys `(kem.sk_R, kem.pk_R)`.
+This is not an unusual case. We can suppose that each user, when registering in a Public Key Infrastructure (PKI), provides pairs of keys of both types (signature and KEM), which they update regularly. The difference in our protocol is that the Responder is forced to use both types during the same AKE.
+From a technical point of view, the first message `message_1` and the third message `message_3` do not differ from those proposed in {{I-D.pocero-authkem-edhoc}}. Two major differences are worth noting regarding the messages.
+Firstly, here we have only an **optional** fourth message `message_4`. Secondly, our second message `message_2` contains an additional signature `SIGNATURE_2` (we will propose a byte analysis of this message later).
+Finally, from a calculational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_2`. In return, the Responder must sign a message, and the Initiator must verify this signature.
+We thus have a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
 ## Second case: Initiator KEM and signs, Responder signs
