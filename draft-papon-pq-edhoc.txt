@@ -359,7 +359,7 @@ Table of Contents
    *  IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length).
 
    Using the AEAD encryption algorithm, he ciphers PLAINTEXT_4 = EAD_4
-   and sends it to the Initiator.  The later computes TH_4, K_4, IV_4,
+   and sends it to the Initiator.  The latter computes TH_4, K_4, IV_4,
    and deciphers CIPHERTEXT_4 thanks to the AEAD decryption algorithm.
 
 2.2.1.6.  Computing the session key PRK_out
@@ -543,7 +543,7 @@ Table of Contents
    does not use KEM in this situation, the Responder has no need to
    generate a shared-secret ss_I and send the KEM ciphertext kem.ct_I.
    The second message is therefore closer to the usual EDHOC structure.
-   Finally, the third message is almost identical to the third message
+   Finally, the third message is almost 'identical' to the third message
    of the EDHOC method 1 protocol.  It seems important to note that
    complete and secure authentication is ensured here entirely in three
    messages, and the fourth message is optional.  Regarding the Key
@@ -586,6 +586,31 @@ Table of Contents
    we want to explore a different path.  Our solution aims to strike a
    balance between the number of mandatory messages and the computations
    performed by each endpoint.
+
+   The principle is as follows.  Suppose that the Initiator
+   authenticates with a signature and the Responder uses a KEM.  In this
+   case, we will need an obligatory fourth message (for the Initiator to
+   authenticate the Responder via the MAC, as proposed in
+   [I-D.pocero-authkem-edhoc]).  To avoid this obligatory fourth message
+   and return to three, we propose removing the MAC MAC_2 used to
+   authenticate the Responder (eliminating calculations on both sides)
+   and replacing it with a signature from the Responder (adding
+   calculations on both sides).  To do this, the Responder signs an
+   element (which should not be chosen randomly for security reasons and
+   which must allow the Initiator to identify the session) and sends it
+   directly in the second message.  The Initiator can then immediately
+   identify the Responder: it retrieves its identity from the encrypted
+   message and verifies the signature.  The rest of the protocol remains
+   'unchanged', and the calculation of PRK_out is possible directly
+   after sending/receiving the third message (thus no more obligatory
+   fourth message).  The costs of calculations are compensated, but the
+   delicate point remains the size of the second message (we will
+   provide a bytes analysis for this message later).  We decline this
+   procedure when the Initiator wants to authenticate with a KEM and the
+   Responder with a signature, or when both parties want to authenticate
+   with KEMs.  In these two latter cases, the number of mandatory
+   messages compared to [I-D.pocero-authkem-edhoc] decreases from 5 to
+   4.
 
 3.2.  First case: Initiator signs, Responder KEM and signs
 
@@ -772,7 +797,7 @@ Table of Contents
    *  IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length).
 
    Using the AEAD encryption algorithm, he ciphers PLAINTEXT_4 =
-   EAD_4and sends it to the Initiator.  The later computes TH_4, K_4,
+   EAD_4and sends it to the Initiator.  The latter computes TH_4, K_4,
    IV_4, and deciphers CIPHERTEXT_4 thanks to the AEAD decryption
    algorithm.
 

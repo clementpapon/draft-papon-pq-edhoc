@@ -1535,7 +1535,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
                 <p id="section-2.2.1.5-2.3.1"><code>IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)</code>.<a href="#section-2.2.1.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-2.2.1.5-3">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = EAD_4</code> and sends it to the Initiator. The later computes <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and deciphers <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm.<a href="#section-2.2.1.5-3" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.5-3">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = EAD_4</code> and sends it to the Initiator. The latter computes <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and deciphers <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm.<a href="#section-2.2.1.5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="computing-the-session-key-prkout">
@@ -1734,7 +1734,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-2.3-1">In summary, we retain here the use case proposed by <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span>, where the Initiator already knows the Responder identity. Our protocol proposes a hybridization between the protocol proposed by <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span> and EDHOC method 1. In other words, Diffie-Hellman elements are replaced with KEMs, and the Initiator authenticates here using a signature (instead of a KEM).
 An important difference with the proposal of <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span> concerns the first message message_1, which in our version is simplified and remains closer to the standard EDHOC structure. Indeed, the Initiator authenticates via a signature at the third message. So he no longer needs to derive a key and encrypt part of the first message to securely send its identity.
 The second message also finds itself simplified. Since the Initiator does not use KEM in this situation, the Responder has no need to generate a shared-secret <code>ss_I</code> and send the KEM ciphertext <code>kem.ct_I</code>. The second message is therefore closer to the usual EDHOC structure.
-Finally, the third message is almost identical to the third message of the EDHOC method 1 protocol.
+Finally, the third message is almost 'identical' to the third message of the EDHOC method 1 protocol.
 It seems important to note that complete and secure authentication is ensured here entirely in three messages, and the fourth message is optional.
 Regarding the Key Derivation Schedule, the changes are minor compared to <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> (adaptation of notations, especially for the IKM to take into account the post-quantum nature of the cryptographic material) and <span>[<a href="#I-D.pocero-authkem-ikr-edhoc" class="cite xref">I-D.pocero-authkem-ikr-edhoc</a>]</span> (simply one less key derivation, since the Initiator uses a signature rather than a static KEM).
 We will discuss security considerations further in this document. We will also soon present a byte comparison for each message.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
@@ -1758,6 +1758,10 @@ These two changes do not affect the number of mandatory messages, since the fund
 Things get complicated when trying to apply these modifications to the other three methods. Continuing on this track, we replace ephemeral Diffie-Hellman elements with an ephemeral KEM. This does not affect the usual structure of EDHOC. However, if we want to take it further and also replace long-term Diffie-Hellman elements with a KEM, managing asymmetric keys for the latter poses a problem when trying to preserve the authentication structure of EDHOC, namely a MAC derived from a long-term secret.
 As proposed in <span>[<a href="#I-D.pocero-authkem-edhoc" class="cite xref">I-D.pocero-authkem-edhoc</a>]</span>, we go from 3 to 4 or 5 mandatory messages to achieve complete mutual authentication.
 Here, we want to explore a different path. Our solution aims to strike a balance between the number of mandatory messages and the computations performed by each endpoint.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">The principle is as follows. Suppose that the Initiator authenticates with a signature and the Responder uses a KEM. In this case, we will need an obligatory fourth message (for the Initiator to authenticate the Responder via the MAC, as proposed in <span>[<a href="#I-D.pocero-authkem-edhoc" class="cite xref">I-D.pocero-authkem-edhoc</a>]</span>).
+To avoid this obligatory fourth message and return to three, we propose removing the MAC <code>MAC_2</code> used to authenticate the Responder (eliminating calculations on both sides) and replacing it with a signature from the Responder (adding calculations on both sides). To do this, the Responder signs an element (which should not be chosen randomly for security reasons and which must allow the Initiator to identify the session) and sends it directly in the second message.
+The Initiator can then immediately identify the Responder: it retrieves its identity from the encrypted message and verifies the signature. The rest of the protocol remains 'unchanged', and the calculation of <code>PRK_out</code> is possible directly after sending/receiving the third message (thus no more obligatory fourth message). The costs of calculations are compensated, but the delicate point remains the size of the second message (we will provide a bytes analysis for this message later).
+We decline this procedure when the Initiator wants to authenticate with a KEM and the Responder with a signature, or when both parties want to authenticate with KEMs. In these two latter cases, the number of mandatory messages compared to <span>[<a href="#I-D.pocero-authkem-edhoc" class="cite xref">I-D.pocero-authkem-edhoc</a>]</span> decreases from 5 to 4.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="first-case-initiator-signs-responder-kem-and-signs">
@@ -1969,7 +1973,7 @@ With <code>PLAINTEXT_3</code>, he calculates <code>MAC_3</code>on his side, and 
                 <p id="section-3.2.2.5-2.3.1"><code>IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)</code>.<a href="#section-3.2.2.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-3.2.2.5-3">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = EAD_4</code>and sends it to the Initiator. The later computes <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and deciphers <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm.<a href="#section-3.2.2.5-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.2.5-3">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = EAD_4</code>and sends it to the Initiator. The latter computes <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and deciphers <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm.<a href="#section-3.2.2.5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="computing-the-session-key-prkout-1">
