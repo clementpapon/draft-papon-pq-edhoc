@@ -89,7 +89,18 @@ Table of Contents
        3.3.2.  Protocol description
        3.3.3.  Associated key derivation schedule
        3.3.4.  Analysis
-     3.4.  Thrid case: Initiator and Responder KEM and sign
+     3.4.  Thrid case: Initiator and Responder KEM and sign - version
+           1
+       3.4.1.  Protocol overview
+       3.4.2.  Protocol description
+       3.4.3.  Associated key derivation schedule
+       3.4.4.  Analysis
+     3.5.  Thrid case: Initiator and Responder KEM and sign - version
+           2
+       3.5.1.  Protocol overview
+       3.5.2.  Protocol description
+       3.5.3.  Associated key derivation schedule
+       3.5.4.  Analysis
    4.  Security Considerations
    5.  IANA Considerations
    6.  Acknowledgments
@@ -343,9 +354,9 @@ Table of Contents
 
    *  TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I);
 
-   *  K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length);
+   *  K_4 = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length);
 
-   *  IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length).
+   *  IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length).
 
    Using the AEAD encryption algorithm, he ciphers PLAINTEXT_4 =
    EAD_4and sends it to the Initiator.  The later computes TH_4, K_4,
@@ -657,9 +668,9 @@ Table of Contents
 
    *  TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I);
 
-   *  K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length);
+   *  K_4 = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length);
 
-   *  IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length).
+   *  IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length).
 
    Using the AEAD encryption algorithm, he ciphers PLAINTEXT_4 =
    EAD_4and sends it to the Initiator.  The later computes TH_4, K_4,
@@ -757,9 +768,9 @@ Table of Contents
 
 3.3.  Second case: Initiator KEM and signs, Responder signs
 
-   We describe below the equivalent of EDHOC method 1.  The Initiator
-   will authenticate with a signature, and the Responder with a KEM and
-   a signature.
+   We now invert the roles and describe below the equivalent of EDHOC
+   method 2.  The Initiator will authenticate with a KEM and a
+   signature, and the Responder only with a signature.
 
 3.3.1.  Protocol overview
 
@@ -870,9 +881,9 @@ Table of Contents
 
    *  TH_3 = H(TH_2, PLAINTEXT_2, ID_CRED_R);
 
-   *  K_3 = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length);
+   *  K_3 = EDHOC_KDF(PRK_2e, 3, TH_3, key_length);
 
-   *  IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length).
+   *  IV_3 = EDHOC_KDF(PRK_2e, 4, TH_3, iv_length).
 
    He then forms PLAINTEXT_3 = (ID_CRED_I, TH_3, EAD_3) ciphers it with
    the AEAD encryption algorithm negociated in SUITES_I.
@@ -923,7 +934,7 @@ Table of Contents
    EAD_4and sends it to the Initiator, along with kem.ct_I.  He then
    finishes the AKE by computing the final key PRK_out:
 
-   *  PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
+   *  PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
 3.3.2.5.  Processing message_4`
 
@@ -982,7 +993,7 @@ Table of Contents
                                 |                          +-----------+
                                 |
               +---------+   +---+--+
-              |SALT_3e2m|<--|Expand|
+              |SALT_4e3m|<--|Expand|
               +---+-----+   +---+--+                         PLAINTEXT_4
                   |                                               |
      +----+   +---+---+   +--------+   +------+   +--------+   +--+-+
@@ -1009,7 +1020,531 @@ Table of Contents
    TODO an analysis of the tradeoff, the protocol advantage and
    disadvantage (no mac on the Initiator side, but a signature).
 
-3.4.  Thrid case: Initiator and Responder KEM and sign
+3.4.  Thrid case: Initiator and Responder KEM and sign - version 1
+
+   We now present the equivalent of EDHOC method 3, which is in our
+   case, an hybridation of the previous cases.  We propose two variant
+   of this version.  We start here with the first one, where the
+   Initiator authenticates with a KEM and a signature, and the Responder
+   with only a KEM.
+
+3.4.1.  Protocol overview
+
+     I                                                             R
+    ---                                                           ---
+     |          METHOD, SUITES_I, kem.pk_eph, C_I, EAD_1           |
+     +------------------------------------------------------------->
+     |                          message_1                          |
+     |                                                             |
+     |       kem.ct_eph, Enc(KEYSTREAM_2, ID_CRED_R, EAD_2)        |
+     <-------------------------------------------------------------+
+     |                          message_2                          |
+     |                                                             |
+     |        kem.ct_R, AEAD(ID_CRED_I, EAD_3), Signature_3        |
+     +------------------------------------------------------------->
+     |                          message_3                          |
+     |                                                             |
+     |                kem.ct_I, AEAD(EAD_4, MAC_2)                 |
+     <-------------------------------------------------------------+
+     |                          message_4                          |
+
+   Figure 7: PQ-EDHOC, I KEM & Signs - R KEM message flow.
+
+3.4.2.  Protocol description
+
+3.4.2.1.  Formatting and sending message_1
+
+   As for our previous protocol version, the first message (message_1)
+   consists of:
+
+   *  METHOD --> as specified in [RFC9528] it is an integer specifying
+      the authentication method the Initiator wants to use;
+
+   *  SUITES_I --> it consists of an ordered set of algorithms supported
+      by the Initiator and formatted as specified in [RFC9528];
+
+   *  C_I (and also as C_R, which will appears later) --> the Connection
+      Identifiers chosen by the Initiator (C_I) and by the Responder
+      (C_R) as specified in [RFC9528];
+
+   *  EAD_1 (and also EAD_2, EAD_3 and EAD_4, which will appear later)
+      -> External Authorization Data, respectively included in
+      message_1, message_2, message_3 (and optionally) message_4, and
+      formatted as specified in [RFC9528];
+
+   *  kem.pk_eph --> the Ephemeral KEM public key generated by the
+      Initiator;
+
+3.4.2.2.  Processing message_1, formatting and sending message_2
+
+   On the reception of the first message, the Responder proceeds as in
+   the original EDHOC protocol with elements METHOD, SUITES_I, C_I and
+   EAD_1.  In a second step, using kem.pk_eph and the KEM.Encapsulation
+   algorithm, he computes the ephemeral ciphertext kem.ct_eph and the
+   ephemeral shared-secret ss_eph.
+
+   The Responder selects its Connection Identifier C_R as specified in
+   [RFC9528].  He then computes:
+
+   *  TH_2 = H(kem.ct_eph, H(message_1));
+
+   *  PRK_2e = EDHOC_Extract(TH_2, ss_eph) --> the salt SHALL be TH_2
+      and the IKM SHALL be the ephemeral shared-secret ss_eph;
+
+   *  KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length).
+
+   In this version the Responder authenticates with the fourth mandatory
+   message.  So he directly assembles PLAINTEXT_2:
+
+   *  PLAINTEXT_2 = (C_R, ID_CRED_R, TH_2, EAD_2)
+
+   then ciphers this message :
+
+   *  CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2
+
+   and finally sends message_2composed of CIPHERTEXT_2 and kem.ct_eph.
+
+3.4.2.3.  Processing message_2, formatting and sending message_3
+
+   On reception of the second message, the Initiator, using kemp.ct_eph,
+   can compute the ephemeral shared-secret ss_eph.  As the Responder
+   did, he computes TH_2, PRK_2e and KEYSTREAM_2.  He can now decipher
+   and retrieve : PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2.
+
+   Thanks to ID_CRED_R, the Initiator obtains the long-term KEM public
+   key of the Responder, kem.pk_R.  He then uses the KEM.Encapsulation
+   algorithm to generate ss_R and kem.ct_R.
+
+   He then computes the following elements:
+
+   *  SALT_3e2m = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length);
+
+   *  PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R);
+
+   *  TH_3 = H(TH_2, PLAINTEXT_2, ID_CRED_R);
+
+   *  K_3 = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length);
+
+   *  IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length).
+
+   He then forms PLAINTEXT_3 = (ID_CRED_I, TH_3, EAD_3) ciphers it with
+   the AEAD encryption algorithm negociated in SUITES_I.
+
+   Then, in order to authenticate, he signs the ciphertext:
+
+   *  SIGNATURE_3 = DS.Sign(sign.sk_I, (CIPHERTEXT_3, sign_length))
+
+   where sign.sk_I is the long-term signing private key of the
+   Initiator.  The third message is then composed of:
+
+   *  kem.ct_R;
+
+   *  CIPHERTEXT_3;
+
+   *  SIGNATURE_3.
+
+3.4.2.4.  Processing message_3, formatting and sending message_4.
+
+   On reception of message_3, the Responder computes TH_3.  He also used
+   the KEM.Decapsulationalgorithm with its long-term KEM private key
+   kem.sk_Rand the KEM ciphertext kem.ct_R, to obtain the shared-secret
+   ss_R.
+
+   He can now compute SALT_3e2m, PRK_3e2m, K_3, and IV_3 as the
+   Initiator did, and deciphers CIPHERTEXT_3 with the AEAD decryption
+   algorithm.  With PLAINTEXT_3, he obtains kem.pk_I and sign.pk_I, and
+   verifies the signature:
+
+   *  DS.Verify(sign.pk_I, (CIPHERTEXT_3, sign_length), SIGNATURE_3).
+
+   If the verification algorithm returns 1, the Initiator is properly
+   authenticated to the Initiator.  Otherwise the Responder aborts.
+
+   He then uses the KEM.Encapsulation algorithm to generate ss_I and
+   kem.ct_I.
+
+   Following that, he computes:
+
+   *  TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I);
+
+   *  SALT_4e3m = EDHOC_KDF(PRK_3e2m, 5, TH_4, hash_length);
+
+   *  PRK_4e3m = EDHOC_Extract(SALT_4e3m, ss_I);
+
+   *  K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length);
+
+   *  IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length).
+
+   The Responder now needs to authenticate.  For that, he computes a MAC
+   MAC_2:
+
+   *  MAC_2 = EDHOC_KDF(PRK_4e3m, 2, C_R, ID_CRED_R, TH_4, EAD_4,
+      mac_length_2).
+
+   Using the AEAD encryption algorithm, he ciphers PLAINTEXT_4 = (EAD_4,
+   MAC_2)and sends it to the Initiator, along with kem.ct_I.  He then
+   finishes the AKE by computing the final key PRK_out:
+
+   *  PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
+
+3.4.2.5.  Processing message_4`
+
+   In this situation the fourth message is mandatory.  It is used to
+   send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
+   shared before, since the Responder only learns the identity of the
+   Initiator with the third message).
+
+   When receiving this last message, the Initiator computes the shared-
+   secret ss_I thanks to the KEM.Decapsulation algorithm, and elements
+   kem.sk_I, kem.ct_I.  After that, he can compute TH_4, K_4, IV_4, and
+   decipher CIPHERTEXT_4 thanks to the AEAD decryption algorithm.  Once
+   he had checked the well formedness of PLAINTEXT_4, he can
+   authenticate the Responder by computing MAC_2on its own and comparing
+   with the one he finds in PLAINTEXT_4.  If everything goes well, he
+   finally computes PRK_out as the Responder did.
+
+3.4.3.  Associated key derivation schedule
+
+   In this section we present the key derivation schedule of the
+   previously described protocol version.
+
+             +--------------------------------+
+             |TH_2=H(kem.ct_eph, H(message_1))|
+             +------+----------------------+--+              PLAINTEXT_2
+                    |                      |                        |
+     +------+   +---+---+   +------+   +---+--+   +-----------+   +-+-+
+     |ss_eph|-->|Extract|-->|PRK_2e|-->|Expand|-->|KEYSTREAM_2|-->|XOR|
+     +------+   +-------+   +---+--+   +---+--+   +-----------+   +-+-+
+                                |                                   |
+                                |                                   v
+                                |                         +---------+--+
+                                |                         |CIPHERTEXT_2|
+                                |                         +------------+
+              +---------+   +---+--+
+              |SALT_3e2m|<--|Expand|
+              +---+-----+   +---+--+
+                  |               +------------------------------------+
+                  |               |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
+                  |               +-------+----------------------------+
+                  |                       |
+                  |                       |                  PLAINTEXT_3
+                  |                       |                       |
+     +----+   +---+---+   +--------+   +--+---+   +--------+   +--+-+
+     |ss_R|-->|Extract|-->|PRK_3e2m|-->|Expand|-->|K_3/IV_3|-->|AEAD|
+     +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                                |                                 |
+                                |                                 v
+                                |                         +-------+----+
+                                |                         |CIPHERTEXT_3|
+                                |                         +-------+----+
+                                |                                 |
+                                |                                 v
+                                |                          +-----------+
+                                |                          |SIGNATURE_3|
+                                |                          +-----------+
+              +---------+   +---+--+
+              |SALT_4e3m|<--|Expand|
+              +---+-----+   +---+--+
+                  |
+     +----+   +---+---+   +--------+   +------+   +-----+
+     |ss_I|-->|Extract|-->|PRK_4e3m|-->|Expand|-->|MAC_2|
+     +----+   +-------+   +---+----+   +------+   +-----+
+                              |
+                              |                              PLAINTEXT_4
+                              |                                   |
+                              |        +------+   +--------+   +--+-+
+                              +--------|Expand|-->|K_4/IV_4|-->|AEAD|
+                              |        +---+--+   +--------+   +--+-+
+                              |            |                      |
+                              |            |                      v
+                              |            |              +-------+----+
+                              |            |              |CIPHERTEXT_4|
+                              |            |              +------------+
+                              |            |
+                              |   +--------+---------------------------+
+                              |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
+                              |   +--------+---------------------------+
+                              |            |
+                              |        +---+--+   +-------+
+                              +--------|Expand|-->|PRK_out|
+                                       +------+   +-------+
+
+   Figure 8: PQ-EDHOC, I KEM & Signs - R KEM key derivation schedule.
+
+3.4.4.  Analysis
+
+   TODO an analysis of the tradeoff, the protocol advantage and
+   disadvantage (only one mac, but two signatures).
+
+3.5.  Thrid case: Initiator and Responder KEM and sign - version 2
+
+   We now present the second variant of the equivalent of EDHOC method
+   3.  In this situation both the Initiator and the Responder
+   authenticate with a KEM and a signature.
+
+3.5.1.  Protocol overview
+
+     I                                                             R
+    ---                                                           ---
+     |          METHOD, SUITES_I, kem.pk_eph, C_I, EAD_1           |
+     +------------------------------------------------------------->
+     |                          message_1                          |
+     |                                                             |
+     | kem.ct_eph, Enc(KEYSTREAM_2, ID_CRED_R, EAD_2), SIGNATURE_2 |
+     <-------------------------------------------------------------+
+     |                          message_2                          |
+     |                                                             |
+     |        kem.ct_R, AEAD(ID_CRED_I, EAD_3), Signature_3        |
+     +------------------------------------------------------------->
+     |                          message_3                          |
+     |                                                             |
+     |                    kem.ct_I, AEAD(EAD_4)                    |
+     <-------------------------------------------------------------+
+     |                          message_4                          |
+
+   Figure 9: PQ-EDHOC, I KEM & Signs - R KEM & Signs message flow.
+
+3.5.2.  Protocol description
+
+3.5.2.1.  Formatting and sending message_1
+
+   As for our previous protocol version, the first message (message_1)
+   consists of:
+
+   *  METHOD --> as specified in [RFC9528] it is an integer specifying
+      the authentication method the Initiator wants to use;
+
+   *  SUITES_I --> it consists of an ordered set of algorithms supported
+      by the Initiator and formatted as specified in [RFC9528];
+
+   *  C_I (and also as C_R, which will appears later) --> the Connection
+      Identifiers chosen by the Initiator (C_I) and by the Responder
+      (C_R) as specified in [RFC9528];
+
+   *  EAD_1 (and also EAD_2, EAD_3 and EAD_4, which will appear later)
+      -> External Authorization Data, respectively included in
+      message_1, message_2, message_3 (and optionally) message_4, and
+      formatted as specified in [RFC9528];
+
+   *  kem.pk_eph --> the Ephemeral KEM public key generated by the
+      Initiator;
+
+3.5.2.2.  Processing message_1, formatting and sending message_2
+
+   On the reception of the first message, the Responder proceeds as in
+   the original EDHOC protocol with elements METHOD, SUITES_I, C_I and
+   EAD_1.  In a second step, using kem.pk_eph and the KEM.Encapsulation
+   algorithm, he computes the ephemeral ciphertext kem.ct_eph and the
+   ephemeral shared-secret ss_eph.
+
+   The Responder selects its Connection Identifier C_R as specified in
+   [RFC9528].  He then computes:
+
+   *  TH_2 = H(kem.ct_eph, H(message_1));
+
+   *  PRK_2e = EDHOC_Extract(TH_2, ss_eph) --> the salt SHALL be TH_2
+      and the IKM SHALL be the ephemeral shared-secret ss_eph;
+
+   *  KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length).
+
+   In this version, the Responder authenticates with message_2 thanks to
+   a signature.  So he assembles PLAINTEXT_2:
+
+   *  PLAINTEXT_2 = (C_R, ID_CRED_R, TH_2, EAD_2)
+
+   then ciphers this message :
+
+   *  CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2
+
+   and finally signs this ciphertext:
+
+   *  SIGNATURE_2 = DS.Sign(sign.sk_R, (CIPHERTEXT_2, sign_length))
+
+   where sign.sk_R is the long-term signing private key of the
+   Responder.
+
+   So the second message then consists of:
+
+   *  kem.ct_eph --> the ephemeral ciphertext obtained with kem.pk_eph;
+
+   *  CIPHERTEXT_2;
+
+   *  SIGNATURE_2.
+
+3.5.2.3.  Processing message_2, formatting and sending message_3
+
+   On reception of the second message, the Initiator, using kemp.ct_eph,
+   can compute the ephemeral shared-secret ss_eph.  As the Responder
+   did, he computes TH_2, PRK_2e and KEYSTREAM_2.  He can now decipher
+   and retrieve : PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2.
+
+   Thanks to ID_CRED_R, the Initiator obtains the long-term public keys
+   of the Responder, kemp.pk_R and sign.pk_R.  At first, he checks the
+   validity of the signature of the Responder:
+
+   *  DS.Verify(sign.pk_R, (CIPHERTEXT_2, sign_length), SIGNATURE_2).
+
+   If the verification algorithm returns 1, the Initiator properly
+   authenticated the Responder.  Otherwise he aborts.
+
+   Using the KEM encapsulation algorihtm KEM.Encapsulation, and the
+   long-term input material kem.pk_R of the Responder, the Initiator
+   generated the couple (ss_R, kem.ct_R).
+
+   The shared-secret ss_R will then serve as IKM for the computation of
+   PRK_3e2m:
+
+   *  SALT_3e2m = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length);
+
+   *  PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R).
+
+   It is now the turn of the Initiator to authenticate himself.  To do
+   so, he computes the following elements:
+
+   *  TH_3 = H(TH_2, PLAINTEXT_2, ID_CRED_R);
+
+   *  K_3 = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length);
+
+   *  IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length);
+
+   assembles PLAINTEXT_3 = (ID_CRED_I, TH_3, EAD_3), and ciphers
+   PLAINTEXT_3 with the AEAD encryption algorithm negociated in
+   SUITES_I.
+
+   Then comes the signature:
+
+   *  SIGNATURE_3 = DS.Sign(sign.sk_I, (CIPHERTEXT_3, sign_length))
+
+   where sign.sk_I is the long-term signing private key of the
+   Initiator.
+
+   The third message is then composed of:
+
+   *  kem.ct_R;
+
+   *  CIPHERTEXT_3;
+
+   *  SIGNATURE_3.
+
+3.5.2.4.  Processing message_3, formatting and sending message_4.
+
+   On reception of message_3, the Responder computes TH_3, K_3 and IV_3,
+   and deciphers CIPHERTEXT_3 with the AEAD decryption algorithm.  With
+   PLAINTEXT_3, he obtains the Initiator's long-term public keys
+   kem.pk_I and sign.pk_I, and so he verifies the signature:
+
+   *  DS.Verify(sign.pk_I, (CIPHERTEXT_3, sign_length), SIGNATURE_3).
+
+   If the verification algorithm returns 1, the Initiator is properly
+   authenticated to the Initiator.  Otherwise the Responder aborts.  He
+   then uses the KEM.Encapsulation algorithm to generate ss_I and
+   kem.ct_I.
+
+   Following that, he computes:
+
+   *  TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I);
+
+   *  SALT_4e3m = EDHOC_KDF(PRK_3e2m, 5, TH_4, hash_length);
+
+   *  PRK_4e3m = EDHOC_Extract(SALT_4e3m, ss_I);
+
+   *  K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length);
+
+   *  IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length).
+
+   Using the AEAD encryption algorithm, he ciphers PLAINTEXT_4 =
+   EAD_4and sends it to the Initiator, along with kem.ct_I.  He then
+   finishes the AKE by computing the final key PRK_out:
+
+   *  PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
+
+3.5.2.5.  Processing message_4`
+
+   In this situation the fourth message is mandatory.  It is used to
+   send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
+   shared before, since the Responder only learns the identity of the
+   Initiator with the third message).
+
+   When receiving this last message, the Initiator computes the shared-
+   secret ss_I thanks to the KEM.Decapsulation algorithm, and elements
+   kem.sk_I, kem.ct_I.  After that, he can compute TH_4, K_4, IV_4, and
+   decipher CIPHERTEXT_4 thanks to the AEAD decryption algorithm.  Once
+   he had checked the well formedness of PLAINTEXT_4, he can finally
+   compute PRK_out as the Responder did.
+
+3.5.3.  Associated key derivation schedule
+
+   In this section we present the key derivation schedule of the
+   previously described protocol version.
+
+             +--------------------------------+
+             |TH_2=H(kem.ct_eph, H(message_1))|
+             +------+----------------------+--+              PLAINTEXT_2
+                    |                      |                        |
+     +------+   +---+---+   +------+   +---+--+   +-----------+   +-+-+
+     |ss_eph|-->|Extract|-->|PRK_2e|-->|Expand|-->|KEYSTREAM_2|-->|XOR|
+     +------+   +-------+   +---+--+   +---+--+   +-----------+   +-+-+
+                                |                                   |
+                                |                                   v
+                                |                         +---------+--+
+                                |                         |CIPHERTEXT_2|
+                                |                         +---------+--+
+                                |                                   |
+                                |                                   v
+                                |                          +-----------+
+                                |                          |SIGNATURE_2|
+                                |                          +-----------+
+                                |
+              +---------+   +---+--+
+              |SALT_3e2m|<--|Expand|
+              +---+-----+   +---+--+
+                  |               +------------------------------------+
+                  |               |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
+                  |               +-------+----------------------------+
+                  |                       |
+                  |                       |                  PLAINTEXT_3
+                  |                       |                       |
+     +----+   +---+---+   +--------+   +--+---+   +--------+   +--+-+
+     |ss_R|-->|Extract|-->|PRK_3e2m|-->|Expand|-->|K_3/IV_3|-->|AEAD|
+     +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                                |                                 |
+                                |                                 v
+                                |                         +-------+----+
+                                |                         |CIPHERTEXT_3|
+                                |                         +-------+----+
+                                |                                 |
+                                |                                 v
+                                |                          +-----------+
+                                |                          |SIGNATURE_3|
+                                |                          +-----------+
+              +---------+   +---+--+
+              |SALT_4e3m|<--|Expand|
+              +---+-----+   +---+--+                         PLAINTEXT_4
+                  |                                               |
+     +----+   +---+---+   +--------+   +------+   +--------+   +--+-+
+     |ss_I|-->|Extract|-->|PRK_4e3m|-->|Expand|-->|K_4/IV_4|-->|AEAD|
+     +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                              |            |                      |
+                              |            |                      v
+                              |            |              +-------+----+
+                              |            |              |CIPHERTEXT_4|
+                              |            |              +------------+
+                              |            |
+                              |   +--------+---------------------------+
+                              |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
+                              |   +--------+---------------------------+
+                              |            |
+                              |        +---+--+   +-------+
+                              +--------|Expand|-->|PRK_out|
+                                       +------+   +-------+
+
+   Figure 8: PQ-EDHOC, I KEM & Signs - R KEM & Sings key derivation
+   schedule.
+
+3.5.4.  Analysis
+
+   TODO an analysis of the tradeoff, the protocol advantage and
+   disadvantage (no more mac, but two signatures).
 
 4.  Security Considerations
 

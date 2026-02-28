@@ -1230,7 +1230,38 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
-                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-thrid-case-initiator-and-re" class="internal xref">Thrid case: Initiator and Responder KEM and sign</a></p>
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-thrid-case-initiator-and-re" class="internal xref">Thrid case: Initiator and Responder KEM and sign - version 1</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.1">
+                    <p id="section-toc.1-1.3.2.4.2.1.1"><a href="#section-3.4.1" class="auto internal xref">3.4.1</a>.  <a href="#name-protocol-overview-3" class="internal xref">Protocol overview</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.2">
+                    <p id="section-toc.1-1.3.2.4.2.2.1"><a href="#section-3.4.2" class="auto internal xref">3.4.2</a>.  <a href="#name-protocol-description-3" class="internal xref">Protocol description</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.3">
+                    <p id="section-toc.1-1.3.2.4.2.3.1"><a href="#section-3.4.3" class="auto internal xref">3.4.3</a>.  <a href="#name-associated-key-derivation-sch" class="internal xref">Associated key derivation schedule</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.4">
+                    <p id="section-toc.1-1.3.2.4.2.4.1"><a href="#section-3.4.4" class="auto internal xref">3.4.4</a>.  <a href="#name-analysis-4" class="internal xref">Analysis</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-thrid-case-initiator-and-res" class="internal xref">Thrid case: Initiator and Responder KEM and sign - version 2</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.1">
+                    <p id="section-toc.1-1.3.2.5.2.1.1"><a href="#section-3.5.1" class="auto internal xref">3.5.1</a>.  <a href="#name-protocol-overview-4" class="internal xref">Protocol overview</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.2">
+                    <p id="section-toc.1-1.3.2.5.2.2.1"><a href="#section-3.5.2" class="auto internal xref">3.5.2</a>.  <a href="#name-protocol-description-4" class="internal xref">Protocol description</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.3">
+                    <p id="section-toc.1-1.3.2.5.2.3.1"><a href="#section-3.5.3" class="auto internal xref">3.5.3</a>.  <a href="#name-associated-key-derivation-sche" class="internal xref">Associated key derivation schedule</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.4">
+                    <p id="section-toc.1-1.3.2.5.2.4.1"><a href="#section-3.5.4" class="auto internal xref">3.5.4</a>.  <a href="#name-analysis-5" class="internal xref">Analysis</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1498,10 +1529,10 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
                 <p id="section-2.2.1.5-2.1.1"><code>TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I)</code>;<a href="#section-2.2.1.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.2.1.5-2.2">
-                <p id="section-2.2.1.5-2.2.1"><code>K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length)</code>;<a href="#section-2.2.1.5-2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-2.2.1.5-2.2.1"><code>K_4 = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length)</code>;<a href="#section-2.2.1.5-2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.2.1.5-2.3">
-                <p id="section-2.2.1.5-2.3.1"><code>IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length)</code>.<a href="#section-2.2.1.5-2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-2.2.1.5-2.3.1"><code>IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)</code>.<a href="#section-2.2.1.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-2.2.1.5-3">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = EAD_4</code>and sends it to the Initiator. The later computes <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and deciphers <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm.<a href="#section-2.2.1.5-3" class="pilcrow">¶</a></p>
@@ -1845,10 +1876,10 @@ With <code>PLAINTEXT_3</code>, he calculates <code>MAC_3</code>on his side, and 
                 <p id="section-3.2.2.5-2.1.1"><code>TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I)</code>;<a href="#section-3.2.2.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2.2.5-2.2">
-                <p id="section-3.2.2.5-2.2.1"><code>K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length)</code>;<a href="#section-3.2.2.5-2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2.2.5-2.2.1"><code>K_4 = EDHOC_KDF(PRK_3e2m, 8, TH_4, key_length)</code>;<a href="#section-3.2.2.5-2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2.2.5-2.3">
-                <p id="section-3.2.2.5-2.3.1"><code>IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length)</code>.<a href="#section-3.2.2.5-2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2.2.5-2.3.1"><code>IV_4 = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length)</code>.<a href="#section-3.2.2.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-3.2.2.5-3">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = EAD_4</code>and sends it to the Initiator. The later computes <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and deciphers <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm.<a href="#section-3.2.2.5-3" class="pilcrow">¶</a></p>
@@ -1962,7 +1993,7 @@ With <code>PLAINTEXT_3</code>, he calculates <code>MAC_3</code>on his side, and 
         <h3 id="name-second-case-initiator-kem-a">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-second-case-initiator-kem-a" class="section-name selfRef">Second case: Initiator KEM and signs, Responder signs</a>
         </h3>
-<p id="section-3.3-1">We describe below the equivalent of EDHOC method 1. The Initiator will authenticate with a signature, and the Responder with a KEM and a signature.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">We now invert the roles and describe below the equivalent of EDHOC method 2. The Initiator will authenticate with a KEM and a signature, and the Responder only with a signature.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <div id="protocol-overview-1">
 <section id="section-3.3.1">
           <h4 id="name-protocol-overview-2">
@@ -2086,10 +2117,10 @@ He can then compute <code>MAC_2</code> on its own, and check the validity of the
                 <p id="section-3.3.2.3-6.1.1"><code>TH_3 = H(TH_2, PLAINTEXT_2, ID_CRED_R)</code>;<a href="#section-3.3.2.3-6.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.3.2.3-6.2">
-                <p id="section-3.3.2.3-6.2.1"><code>K_3 = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length)</code>;<a href="#section-3.3.2.3-6.2.1" class="pilcrow">¶</a></p>
+                <p id="section-3.3.2.3-6.2.1"><code>K_3 = EDHOC_KDF(PRK_2e, 3, TH_3, key_length)</code>;<a href="#section-3.3.2.3-6.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.3.2.3-6.3">
-                <p id="section-3.3.2.3-6.3.1"><code>IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length)</code>.<a href="#section-3.3.2.3-6.3.1" class="pilcrow">¶</a></p>
+                <p id="section-3.3.2.3-6.3.1"><code>IV_3 = EDHOC_KDF(PRK_2e, 4, TH_3, iv_length)</code>.<a href="#section-3.3.2.3-6.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-3.3.2.3-7">He then forms <code>PLAINTEXT_3 = (ID_CRED_I, TH_3, EAD_3)</code> ciphers it with the AEAD encryption algorithm negociated in <code>SUITES_I</code>.<a href="#section-3.3.2.3-7" class="pilcrow">¶</a></p>
@@ -2147,7 +2178,7 @@ With <code>PLAINTEXT_3</code>, the Responder also gets the Initiator's long-term
 He then finishes the AKE by computing the final key <code>PRK_out</code>:<a href="#section-3.3.2.4-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.3.2.4-7.1">
-                <p id="section-3.3.2.4-7.1.1"><code>PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)</code>.<a href="#section-3.3.2.4-7.1.1" class="pilcrow">¶</a></p>
+                <p id="section-3.3.2.4-7.1.1"><code>PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length)</code>.<a href="#section-3.3.2.4-7.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </section>
@@ -2210,7 +2241,7 @@ After that, he can compute <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code
                              |                          +-----------+
                              |
            +---------+   +---+--+
-           |SALT_3e2m|&lt;--|Expand|
+           |SALT_4e3m|&lt;--|Expand|
            +---+-----+   +---+--+                         PLAINTEXT_4
                |                                               |
   +----+   +---+---+   +--------+   +------+   +--------+   +--+-+
@@ -2244,11 +2275,603 @@ After that, he can compute <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code
 </div>
 </section>
 </div>
-<div id="thrid-case-initiator-and-responder-kem-and-sign">
+<div id="thrid-case-initiator-and-responder-kem-and-sign-version-1">
 <section id="section-3.4">
         <h3 id="name-thrid-case-initiator-and-re">
-<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-thrid-case-initiator-and-re" class="section-name selfRef">Thrid case: Initiator and Responder KEM and sign</a>
-      </h3>
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-thrid-case-initiator-and-re" class="section-name selfRef">Thrid case: Initiator and Responder KEM and sign - version 1</a>
+        </h3>
+<p id="section-3.4-1">We now present the equivalent of EDHOC method 3, which is in our case, an hybridation of the previous cases. We propose two variant of this version. We start here with the first one, where the Initiator authenticates with a KEM and a signature, and the Responder with only a KEM.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<div id="protocol-overview-2">
+<section id="section-3.4.1">
+          <h4 id="name-protocol-overview-3">
+<a href="#section-3.4.1" class="section-number selfRef">3.4.1. </a><a href="#name-protocol-overview-3" class="section-name selfRef">Protocol overview</a>
+          </h4>
+<div class="alignLeft art-text artwork" id="section-3.4.1-1">
+<pre>
+  I                                                             R
+ ---                                                           ---
+  |          METHOD, SUITES_I, kem.pk_eph, C_I, EAD_1           |
+  +-------------------------------------------------------------&gt;
+  |                          message_1                          |
+  |                                                             |
+  |       kem.ct_eph, Enc(KEYSTREAM_2, ID_CRED_R, EAD_2)        |
+  &lt;-------------------------------------------------------------+
+  |                          message_2                          |
+  |                                                             |
+  |        kem.ct_R, AEAD(ID_CRED_I, EAD_3), Signature_3        |
+  +-------------------------------------------------------------&gt;
+  |                          message_3                          |
+  |                                                             |
+  |                kem.ct_I, AEAD(EAD_4, MAC_2)                 |
+  &lt;-------------------------------------------------------------+
+  |                          message_4                          |
+</pre><a href="#section-3.4.1-1" class="pilcrow">¶</a>
+</div>
+<p id="section-3.4.1-2">Figure 7: PQ-EDHOC, I KEM &amp; Signs - R KEM message flow.<a href="#section-3.4.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="protocol-description-2">
+<section id="section-3.4.2">
+          <h4 id="name-protocol-description-3">
+<a href="#section-3.4.2" class="section-number selfRef">3.4.2. </a><a href="#name-protocol-description-3" class="section-name selfRef">Protocol description</a>
+          </h4>
+<div id="formatting-and-sending-message1-3">
+<section id="section-3.4.2.1">
+            <h5 id="name-formatting-and-sending-message">
+<a href="#section-3.4.2.1" class="section-number selfRef">3.4.2.1. </a><a href="#name-formatting-and-sending-message" class="section-name selfRef">Formatting and sending <code>message_1</code></a>
+            </h5>
+<p id="section-3.4.2.1-1">As for our previous protocol version, the first message (<code>message_1</code>) consists of:<a href="#section-3.4.2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.1-2.1">
+                <p id="section-3.4.2.1-2.1.1"><code>METHOD</code> --&gt; as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> it is an integer specifying the authentication method the Initiator wants to use;<a href="#section-3.4.2.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.1-2.2">
+                <p id="section-3.4.2.1-2.2.1"><code>SUITES_I</code> --&gt; it consists of an ordered set of algorithms supported by the Initiator and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>;<a href="#section-3.4.2.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.1-2.3">
+                <p id="section-3.4.2.1-2.3.1"><code>C_I</code> (and also as <code>C_R</code>, which will appears later) --&gt; the Connection Identifiers chosen by the Initiator (C_I) and by the Responder (<code>C_R</code>) as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>;<a href="#section-3.4.2.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.1-2.4">
+                <p id="section-3.4.2.1-2.4.1"><code>EAD_1</code> (and also <code>EAD_2</code>, <code>EAD_3</code> and <code>EAD_4</code>, which will appear later) -&gt; External Authorization Data, respectively included in <code>message_1</code>, <code>message_2</code>, <code>message_3</code> (and optionally) <code>message_4</code>, and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>;<a href="#section-3.4.2.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.1-2.5">
+                <p id="section-3.4.2.1-2.5.1"><code>kem.pk_eph</code> --&gt; the Ephemeral KEM public key generated by the Initiator;<a href="#section-3.4.2.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</section>
+</div>
+<div id="processing-message1-formatting-and-sending-message2-3">
+<section id="section-3.4.2.2">
+            <h5 id="name-processing-message_1-formattin">
+<a href="#section-3.4.2.2" class="section-number selfRef">3.4.2.2. </a><a href="#name-processing-message_1-formattin" class="section-name selfRef">Processing <code>message_1</code>, formatting and sending <code>message_2</code></a>
+            </h5>
+<p id="section-3.4.2.2-1">On the reception of the first message, the Responder proceeds as in the original EDHOC protocol with elements <code>METHOD</code>, <code>SUITES_I</code>, <code>C_I</code> and <code>EAD_1</code>.
+In a second step, using <code>kem.pk_eph</code> and the <code>KEM.Encapsulation</code> algorithm, he computes the ephemeral ciphertext <code>kem.ct_eph</code> and the ephemeral shared-secret <code>ss_eph</code>.<a href="#section-3.4.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.2-2">The Responder selects its Connection Identifier <code>C_R</code> as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. He then computes:<a href="#section-3.4.2.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.2-3.1">
+                <p id="section-3.4.2.2-3.1.1"><code>TH_2 = H(kem.ct_eph, H(message_1))</code>;<a href="#section-3.4.2.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.2-3.2">
+                <p id="section-3.4.2.2-3.2.1"><code>PRK_2e = EDHOC_Extract(TH_2, ss_eph)</code> --&gt; the salt <span class="bcp14">SHALL</span> be <code>TH_2</code> and the IKM <span class="bcp14">SHALL</span> be the ephemeral shared-secret <code>ss_eph</code>;<a href="#section-3.4.2.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.2-3.3">
+                <p id="section-3.4.2.2-3.3.1"><code>KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length)</code>.<a href="#section-3.4.2.2-3.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.2-4">In this version the Responder authenticates with the fourth mandatory message. So he directly assembles <code>PLAINTEXT_2</code>:<a href="#section-3.4.2.2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.2-5.1">
+                <p id="section-3.4.2.2-5.1.1"><code>PLAINTEXT_2 = (C_R, ID_CRED_R, TH_2, EAD_2)</code><a href="#section-3.4.2.2-5.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.2-6">then ciphers this message :<a href="#section-3.4.2.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.2-7.1">
+                <p id="section-3.4.2.2-7.1.1"><code>CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2</code><a href="#section-3.4.2.2-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.2-8">and finally sends <code>message_2</code>composed of <code>CIPHERTEXT_2</code> and <code>kem.ct_eph</code>.<a href="#section-3.4.2.2-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="processing-message2-formatting-and-sending-message3-3">
+<section id="section-3.4.2.3">
+            <h5 id="name-processing-message_2-formattin">
+<a href="#section-3.4.2.3" class="section-number selfRef">3.4.2.3. </a><a href="#name-processing-message_2-formattin" class="section-name selfRef">Processing <code>message_2</code>, formatting and sending <code>message_3</code></a>
+            </h5>
+<p id="section-3.4.2.3-1">On reception of the second message, the Initiator, using <code>kemp.ct_eph</code>, can compute the ephemeral shared-secret <code>ss_eph</code>. As the Responder did, he computes <code>TH_2</code>, <code>PRK_2e</code> and <code>KEYSTREAM_2</code>. He can now decipher and retrieve : <code>PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2</code>.<a href="#section-3.4.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.3-2">Thanks to <code>ID_CRED_R</code>, the Initiator obtains the long-term KEM public key of the Responder, <code>kem.pk_R</code>. He then uses the <code>KEM.Encapsulation</code> algorithm to generate <code>ss_R</code> and <code>kem.ct_R</code>.<a href="#section-3.4.2.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.3-3">He then computes the following elements:<a href="#section-3.4.2.3-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.3-4.1">
+                <p id="section-3.4.2.3-4.1.1"><code>SALT_3e2m = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length)</code>;<a href="#section-3.4.2.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.3-4.2">
+                <p id="section-3.4.2.3-4.2.1"><code>PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)</code>;<a href="#section-3.4.2.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.3-4.3">
+                <p id="section-3.4.2.3-4.3.1"><code>TH_3 = H(TH_2, PLAINTEXT_2, ID_CRED_R)</code>;<a href="#section-3.4.2.3-4.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.3-4.4">
+                <p id="section-3.4.2.3-4.4.1"><code>K_3 = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length)</code>;<a href="#section-3.4.2.3-4.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.3-4.5">
+                <p id="section-3.4.2.3-4.5.1"><code>IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length)</code>.<a href="#section-3.4.2.3-4.5.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.3-5">He then forms <code>PLAINTEXT_3 = (ID_CRED_I, TH_3, EAD_3)</code> ciphers it with the AEAD encryption algorithm negociated in <code>SUITES_I</code>.<a href="#section-3.4.2.3-5" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.3-6">Then, in order to authenticate, he signs the ciphertext:<a href="#section-3.4.2.3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.3-7.1">
+                <p id="section-3.4.2.3-7.1.1"><code>SIGNATURE_3 = DS.Sign(sign.sk_I, (CIPHERTEXT_3, sign_length))</code><a href="#section-3.4.2.3-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.3-8">where <code>sign.sk_I</code> is the long-term signing private key of the Initiator. The third message is then composed of:<a href="#section-3.4.2.3-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.3-9.1">
+                <p id="section-3.4.2.3-9.1.1"><code>kem.ct_R</code>;<a href="#section-3.4.2.3-9.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.3-9.2">
+                <p id="section-3.4.2.3-9.2.1"><code>CIPHERTEXT_3</code>;<a href="#section-3.4.2.3-9.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.3-9.3">
+                <p id="section-3.4.2.3-9.3.1"><code>SIGNATURE_3</code>.<a href="#section-3.4.2.3-9.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</section>
+</div>
+<div id="processing-message3-formatting-and-sending-message4-1">
+<section id="section-3.4.2.4">
+            <h5 id="name-processing-message_3-formatt">
+<a href="#section-3.4.2.4" class="section-number selfRef">3.4.2.4. </a><a href="#name-processing-message_3-formatt" class="section-name selfRef">Processing <code>message_3</code>, formatting and sending <code>message_4</code>.</a>
+            </h5>
+<p id="section-3.4.2.4-1">On reception of <code>message_3</code>, the Responder computes <code>TH_3</code>. He also used the <code>KEM.Decapsulation</code>algorithm with its long-term KEM private key <code>kem.sk_R</code>and the KEM ciphertext <code>kem.ct_R</code>, to obtain the shared-secret <code>ss_R</code>.<a href="#section-3.4.2.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.4-2">He can now compute <code>SALT_3e2m</code>, <code>PRK_3e2m</code>, <code>K_3</code>, and <code>IV_3</code> as the Initiator did, and deciphers <code>CIPHERTEXT_3</code> with the AEAD decryption algorithm.
+With <code>PLAINTEXT_3</code>, he obtains <code>kem.pk_I</code> and <code>sign.pk_I</code>, and verifies the signature:<a href="#section-3.4.2.4-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.4-3.1">
+                <p id="section-3.4.2.4-3.1.1"><code>DS.Verify(sign.pk_I, (CIPHERTEXT_3, sign_length), SIGNATURE_3)</code>.<a href="#section-3.4.2.4-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.4-4">If the verification algorithm returns 1, the Initiator is properly authenticated to the Initiator. Otherwise the Responder aborts.<a href="#section-3.4.2.4-4" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.4-5">He then uses the <code>KEM.Encapsulation</code> algorithm to generate <code>ss_I</code> and <code>kem.ct_I</code>.<a href="#section-3.4.2.4-5" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.4-6">Following that, he computes:<a href="#section-3.4.2.4-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.4-7.1">
+                <p id="section-3.4.2.4-7.1.1"><code>TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I)</code>;<a href="#section-3.4.2.4-7.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.4-7.2">
+                <p id="section-3.4.2.4-7.2.1"><code>SALT_4e3m = EDHOC_KDF(PRK_3e2m, 5, TH_4, hash_length)</code>;<a href="#section-3.4.2.4-7.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.4-7.3">
+                <p id="section-3.4.2.4-7.3.1"><code>PRK_4e3m = EDHOC_Extract(SALT_4e3m, ss_I)</code>;<a href="#section-3.4.2.4-7.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.4-7.4">
+                <p id="section-3.4.2.4-7.4.1"><code>K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length)</code>;<a href="#section-3.4.2.4-7.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.4.2.4-7.5">
+                <p id="section-3.4.2.4-7.5.1"><code>IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length)</code>.<a href="#section-3.4.2.4-7.5.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.4-8">The Responder now needs to authenticate. For that, he computes a MAC <code>MAC_2</code>:<a href="#section-3.4.2.4-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.4-9.1">
+                <p id="section-3.4.2.4-9.1.1"><code>MAC_2 = EDHOC_KDF(PRK_4e3m, 2, C_R, ID_CRED_R, TH_4, EAD_4, mac_length_2)</code>.<a href="#section-3.4.2.4-9.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.4.2.4-10">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = (EAD_4, MAC_2)</code>and sends it to the Initiator, along with <code>kem.ct_I</code>.
+He then finishes the AKE by computing the final key <code>PRK_out</code>:<a href="#section-3.4.2.4-10" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.2.4-11.1">
+                <p id="section-3.4.2.4-11.1.1"><code>PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length)</code>.<a href="#section-3.4.2.4-11.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</section>
+</div>
+<div id="processing-message4-1">
+<section id="section-3.4.2.5">
+            <h5 id="name-processing-message_4-2">
+<a href="#section-3.4.2.5" class="section-number selfRef">3.4.2.5. </a><a href="#name-processing-message_4-2" class="section-name selfRef">Processing <code>message_4</code>`</a>
+            </h5>
+<p id="section-3.4.2.5-1">In this situation the fourth message is mandatory. It is used to send the KEM ciphertext <code>kem.ct_I</code> to the Initiator (it cannot be shared before, since the Responder only learns the identity of the Initiator with the third message).<a href="#section-3.4.2.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.2.5-2">When receiving this last message, the Initiator computes the shared-secret <code>ss_I</code> thanks to the <code>KEM.Decapsulation</code> algorithm, and elements <code>kem.sk_I</code>, <code>kem.ct_I</code>.
+After that, he can compute <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and decipher <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm. Once he had checked the well formedness of <code>PLAINTEXT_4</code>, he can authenticate the Responder by computing <code>MAC_2</code>on its own and comparing with the one he finds in <code>PLAINTEXT_4</code>. If everything goes well, he finally computes <code>PRK_out</code> as the Responder did.<a href="#section-3.4.2.5-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="associated-key-derivation-schedule-2">
+<section id="section-3.4.3">
+          <h4 id="name-associated-key-derivation-sch">
+<a href="#section-3.4.3" class="section-number selfRef">3.4.3. </a><a href="#name-associated-key-derivation-sch" class="section-name selfRef">Associated key derivation schedule</a>
+          </h4>
+<p id="section-3.4.3-1">In this section we present the key derivation schedule of the previously described protocol version.<a href="#section-3.4.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.4.3-2">
+<pre>
+          +--------------------------------+
+          |TH_2=H(kem.ct_eph, H(message_1))|
+          +------+----------------------+--+              PLAINTEXT_2
+                 |                      |                        |
+  +------+   +---+---+   +------+   +---+--+   +-----------+   +-+-+
+  |ss_eph|--&gt;|Extract|--&gt;|PRK_2e|--&gt;|Expand|--&gt;|KEYSTREAM_2|--&gt;|XOR|
+  +------+   +-------+   +---+--+   +---+--+   +-----------+   +-+-+
+                             |                                   |
+                             |                                   v
+                             |                         +---------+--+
+                             |                         |CIPHERTEXT_2|
+                             |                         +------------+
+           +---------+   +---+--+
+           |SALT_3e2m|&lt;--|Expand|
+           +---+-----+   +---+--+
+               |               +------------------------------------+
+               |               |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
+               |               +-------+----------------------------+
+               |                       |
+               |                       |                  PLAINTEXT_3
+               |                       |                       |
+  +----+   +---+---+   +--------+   +--+---+   +--------+   +--+-+
+  |ss_R|--&gt;|Extract|--&gt;|PRK_3e2m|--&gt;|Expand|--&gt;|K_3/IV_3|--&gt;|AEAD|
+  +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                             |                                 |
+                             |                                 v
+                             |                         +-------+----+
+                             |                         |CIPHERTEXT_3|
+                             |                         +-------+----+
+                             |                                 |
+                             |                                 v
+                             |                          +-----------+
+                             |                          |SIGNATURE_3|
+                             |                          +-----------+
+           +---------+   +---+--+
+           |SALT_4e3m|&lt;--|Expand|
+           +---+-----+   +---+--+
+               |
+  +----+   +---+---+   +--------+   +------+   +-----+
+  |ss_I|--&gt;|Extract|--&gt;|PRK_4e3m|--&gt;|Expand|--&gt;|MAC_2|
+  +----+   +-------+   +---+----+   +------+   +-----+
+                           |
+                           |                              PLAINTEXT_4
+                           |                                   |
+                           |        +------+   +--------+   +--+-+
+                           +--------|Expand|--&gt;|K_4/IV_4|--&gt;|AEAD|
+                           |        +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_4|
+                           |            |              +------------+
+                           |            |
+                           |   +--------+---------------------------+
+                           |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
+                           |   +--------+---------------------------+
+                           |            |
+                           |        +---+--+   +-------+
+                           +--------|Expand|--&gt;|PRK_out|
+                                    +------+   +-------+
+</pre><a href="#section-3.4.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3.4.3-3">Figure 8: PQ-EDHOC, I KEM &amp; Signs - R KEM key derivation schedule.<a href="#section-3.4.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="analysis-3">
+<section id="section-3.4.4">
+          <h4 id="name-analysis-4">
+<a href="#section-3.4.4" class="section-number selfRef">3.4.4. </a><a href="#name-analysis-4" class="section-name selfRef">Analysis</a>
+          </h4>
+<p id="section-3.4.4-1">TODO an analysis of the tradeoff, the protocol advantage and disadvantage (only one mac, but two signatures).<a href="#section-3.4.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="thrid-case-initiator-and-responder-kem-and-sign-version-2">
+<section id="section-3.5">
+        <h3 id="name-thrid-case-initiator-and-res">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-thrid-case-initiator-and-res" class="section-name selfRef">Thrid case: Initiator and Responder KEM and sign - version 2</a>
+        </h3>
+<p id="section-3.5-1">We now present the second variant of the equivalent of EDHOC method 3. In this situation both the Initiator and the Responder authenticate with a KEM and a signature.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<div id="protocol-overview-3">
+<section id="section-3.5.1">
+          <h4 id="name-protocol-overview-4">
+<a href="#section-3.5.1" class="section-number selfRef">3.5.1. </a><a href="#name-protocol-overview-4" class="section-name selfRef">Protocol overview</a>
+          </h4>
+<div class="alignLeft art-text artwork" id="section-3.5.1-1">
+<pre>
+  I                                                             R
+ ---                                                           ---
+  |          METHOD, SUITES_I, kem.pk_eph, C_I, EAD_1           |
+  +-------------------------------------------------------------&gt;
+  |                          message_1                          |
+  |                                                             |
+  | kem.ct_eph, Enc(KEYSTREAM_2, ID_CRED_R, EAD_2), SIGNATURE_2 |
+  &lt;-------------------------------------------------------------+
+  |                          message_2                          |
+  |                                                             |
+  |        kem.ct_R, AEAD(ID_CRED_I, EAD_3), Signature_3        |
+  +-------------------------------------------------------------&gt;
+  |                          message_3                          |
+  |                                                             |
+  |                    kem.ct_I, AEAD(EAD_4)                    |
+  &lt;-------------------------------------------------------------+
+  |                          message_4                          |
+</pre><a href="#section-3.5.1-1" class="pilcrow">¶</a>
+</div>
+<p id="section-3.5.1-2">Figure 9: PQ-EDHOC, I KEM &amp; Signs - R KEM &amp; Signs message flow.<a href="#section-3.5.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="protocol-description-3">
+<section id="section-3.5.2">
+          <h4 id="name-protocol-description-4">
+<a href="#section-3.5.2" class="section-number selfRef">3.5.2. </a><a href="#name-protocol-description-4" class="section-name selfRef">Protocol description</a>
+          </h4>
+<div id="formatting-and-sending-message1-4">
+<section id="section-3.5.2.1">
+            <h5 id="name-formatting-and-sending-message_">
+<a href="#section-3.5.2.1" class="section-number selfRef">3.5.2.1. </a><a href="#name-formatting-and-sending-message_" class="section-name selfRef">Formatting and sending <code>message_1</code></a>
+            </h5>
+<p id="section-3.5.2.1-1">As for our previous protocol version, the first message (<code>message_1</code>) consists of:<a href="#section-3.5.2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.1-2.1">
+                <p id="section-3.5.2.1-2.1.1"><code>METHOD</code> --&gt; as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> it is an integer specifying the authentication method the Initiator wants to use;<a href="#section-3.5.2.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.1-2.2">
+                <p id="section-3.5.2.1-2.2.1"><code>SUITES_I</code> --&gt; it consists of an ordered set of algorithms supported by the Initiator and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>;<a href="#section-3.5.2.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.1-2.3">
+                <p id="section-3.5.2.1-2.3.1"><code>C_I</code> (and also as <code>C_R</code>, which will appears later) --&gt; the Connection Identifiers chosen by the Initiator (C_I) and by the Responder (<code>C_R</code>) as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>;<a href="#section-3.5.2.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.1-2.4">
+                <p id="section-3.5.2.1-2.4.1"><code>EAD_1</code> (and also <code>EAD_2</code>, <code>EAD_3</code> and <code>EAD_4</code>, which will appear later) -&gt; External Authorization Data, respectively included in <code>message_1</code>, <code>message_2</code>, <code>message_3</code> (and optionally) <code>message_4</code>, and formatted as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>;<a href="#section-3.5.2.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.1-2.5">
+                <p id="section-3.5.2.1-2.5.1"><code>kem.pk_eph</code> --&gt; the Ephemeral KEM public key generated by the Initiator;<a href="#section-3.5.2.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</section>
+</div>
+<div id="processing-message1-formatting-and-sending-message2-4">
+<section id="section-3.5.2.2">
+            <h5 id="name-processing-message_1-formatting">
+<a href="#section-3.5.2.2" class="section-number selfRef">3.5.2.2. </a><a href="#name-processing-message_1-formatting" class="section-name selfRef">Processing <code>message_1</code>, formatting and sending <code>message_2</code></a>
+            </h5>
+<p id="section-3.5.2.2-1">On the reception of the first message, the Responder proceeds as in the original EDHOC protocol with elements <code>METHOD</code>, <code>SUITES_I</code>, <code>C_I</code> and <code>EAD_1</code>.
+In a second step, using <code>kem.pk_eph</code> and the <code>KEM.Encapsulation</code> algorithm, he computes the ephemeral ciphertext <code>kem.ct_eph</code> and the ephemeral shared-secret <code>ss_eph</code>.<a href="#section-3.5.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.2-2">The Responder selects its Connection Identifier <code>C_R</code> as specified in <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>. He then computes:<a href="#section-3.5.2.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.2-3.1">
+                <p id="section-3.5.2.2-3.1.1"><code>TH_2 = H(kem.ct_eph, H(message_1))</code>;<a href="#section-3.5.2.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.2-3.2">
+                <p id="section-3.5.2.2-3.2.1"><code>PRK_2e = EDHOC_Extract(TH_2, ss_eph)</code> --&gt; the salt <span class="bcp14">SHALL</span> be <code>TH_2</code> and the IKM <span class="bcp14">SHALL</span> be the ephemeral shared-secret <code>ss_eph</code>;<a href="#section-3.5.2.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.2-3.3">
+                <p id="section-3.5.2.2-3.3.1"><code>KEYSTREAM_2 = EDHOC_KDF(PRK_2e, 0, TH_2, plaintext_length)</code>.<a href="#section-3.5.2.2-3.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.2-4">In this version, the Responder authenticates with <code>message_2</code> thanks to a signature. So he assembles <code>PLAINTEXT_2</code>:<a href="#section-3.5.2.2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.2-5.1">
+                <p id="section-3.5.2.2-5.1.1"><code>PLAINTEXT_2 = (C_R, ID_CRED_R, TH_2, EAD_2)</code><a href="#section-3.5.2.2-5.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.2-6">then ciphers this message :<a href="#section-3.5.2.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.2-7.1">
+                <p id="section-3.5.2.2-7.1.1"><code>CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2</code><a href="#section-3.5.2.2-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.2-8">and finally signs this ciphertext:<a href="#section-3.5.2.2-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.2-9.1">
+                <p id="section-3.5.2.2-9.1.1"><code>SIGNATURE_2 = DS.Sign(sign.sk_R, (CIPHERTEXT_2, sign_length))</code><a href="#section-3.5.2.2-9.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.2-10">where <code>sign.sk_R</code> is the long-term signing private key of the Responder.<a href="#section-3.5.2.2-10" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.2-11">So the second message then consists of:<a href="#section-3.5.2.2-11" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.2-12.1">
+                <p id="section-3.5.2.2-12.1.1"><code>kem.ct_eph</code> --&gt; the ephemeral ciphertext obtained with <code>kem.pk_eph</code>;<a href="#section-3.5.2.2-12.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.2-12.2">
+                <p id="section-3.5.2.2-12.2.1"><code>CIPHERTEXT_2</code>;<a href="#section-3.5.2.2-12.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.2-12.3">
+                <p id="section-3.5.2.2-12.3.1"><code>SIGNATURE_2</code>.<a href="#section-3.5.2.2-12.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</section>
+</div>
+<div id="processing-message2-formatting-and-sending-message3-4">
+<section id="section-3.5.2.3">
+            <h5 id="name-processing-message_2-formatting">
+<a href="#section-3.5.2.3" class="section-number selfRef">3.5.2.3. </a><a href="#name-processing-message_2-formatting" class="section-name selfRef">Processing <code>message_2</code>, formatting and sending <code>message_3</code></a>
+            </h5>
+<p id="section-3.5.2.3-1">On reception of the second message, the Initiator, using <code>kemp.ct_eph</code>, can compute the ephemeral shared-secret <code>ss_eph</code>. As the Responder did, he computes <code>TH_2</code>, <code>PRK_2e</code> and <code>KEYSTREAM_2</code>. He can now decipher and retrieve : <code>PLAINTEXT_2 = CIPHERTEXT_2 XOR KEYSTREAM_2</code>.<a href="#section-3.5.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.3-2">Thanks to <code>ID_CRED_R</code>, the Initiator obtains the long-term public keys of the Responder, <code>kemp.pk_R</code> and <code>sign.pk_R</code>.
+At first, he checks the validity of the signature of the Responder:<a href="#section-3.5.2.3-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.3-3.1">
+                <p id="section-3.5.2.3-3.1.1"><code>DS.Verify(sign.pk_R, (CIPHERTEXT_2, sign_length), SIGNATURE_2)</code>.<a href="#section-3.5.2.3-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.3-4">If the verification algorithm returns 1, the Initiator properly authenticated the Responder. Otherwise he aborts.<a href="#section-3.5.2.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.3-5">Using the KEM encapsulation algorihtm <code>KEM.Encapsulation</code>, and the long-term input material <code>kem.pk_R</code> of the Responder, the Initiator generated the couple <code>(ss_R, kem.ct_R)</code>.<a href="#section-3.5.2.3-5" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.3-6">The shared-secret <code>ss_R</code> will then serve as IKM for the computation of <code>PRK_3e2m</code>:<a href="#section-3.5.2.3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.3-7.1">
+                <p id="section-3.5.2.3-7.1.1"><code>SALT_3e2m = EDHOC_KDF(PRK_2e, 1, TH_2, hash_length)</code>;<a href="#section-3.5.2.3-7.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.3-7.2">
+                <p id="section-3.5.2.3-7.2.1"><code>PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)</code>.<a href="#section-3.5.2.3-7.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.3-8">It is now the turn of the Initiator to authenticate himself. To do so, he computes the following elements:<a href="#section-3.5.2.3-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.3-9.1">
+                <p id="section-3.5.2.3-9.1.1"><code>TH_3 = H(TH_2, PLAINTEXT_2, ID_CRED_R)</code>;<a href="#section-3.5.2.3-9.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.3-9.2">
+                <p id="section-3.5.2.3-9.2.1"><code>K_3 = EDHOC_KDF(PRK_3e2m, 3, TH_3, key_length)</code>;<a href="#section-3.5.2.3-9.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.3-9.3">
+                <p id="section-3.5.2.3-9.3.1"><code>IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length)</code>;<a href="#section-3.5.2.3-9.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.3-10">assembles <code>PLAINTEXT_3 = (ID_CRED_I, TH_3, EAD_3)</code>, and ciphers <code>PLAINTEXT_3</code> with the AEAD encryption algorithm negociated in <code>SUITES_I</code>.<a href="#section-3.5.2.3-10" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.3-11">Then comes the signature:<a href="#section-3.5.2.3-11" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.3-12.1">
+                <p id="section-3.5.2.3-12.1.1"><code>SIGNATURE_3 = DS.Sign(sign.sk_I, (CIPHERTEXT_3, sign_length))</code><a href="#section-3.5.2.3-12.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.3-13">where <code>sign.sk_I</code> is the long-term signing private key of the Initiator.<a href="#section-3.5.2.3-13" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.3-14">The third message is then composed of:<a href="#section-3.5.2.3-14" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.3-15.1">
+                <p id="section-3.5.2.3-15.1.1"><code>kem.ct_R</code>;<a href="#section-3.5.2.3-15.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.3-15.2">
+                <p id="section-3.5.2.3-15.2.1"><code>CIPHERTEXT_3</code>;<a href="#section-3.5.2.3-15.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.3-15.3">
+                <p id="section-3.5.2.3-15.3.1"><code>SIGNATURE_3</code>.<a href="#section-3.5.2.3-15.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</section>
+</div>
+<div id="processing-message3-formatting-and-sending-message4-2">
+<section id="section-3.5.2.4">
+            <h5 id="name-processing-message_3-formatti">
+<a href="#section-3.5.2.4" class="section-number selfRef">3.5.2.4. </a><a href="#name-processing-message_3-formatti" class="section-name selfRef">Processing <code>message_3</code>, formatting and sending <code>message_4</code>.</a>
+            </h5>
+<p id="section-3.5.2.4-1">On reception of <code>message_3</code>, the Responder computes <code>TH_3</code>, <code>K_3</code> and <code>IV_3</code>, and deciphers <code>CIPHERTEXT_3</code> with the AEAD decryption algorithm.
+With <code>PLAINTEXT_3</code>, he obtains the Initiator's long-term public keys <code>kem.pk_I</code> and <code>sign.pk_I</code>, and so he verifies the signature:<a href="#section-3.5.2.4-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.4-2.1">
+                <p id="section-3.5.2.4-2.1.1"><code>DS.Verify(sign.pk_I, (CIPHERTEXT_3, sign_length), SIGNATURE_3)</code>.<a href="#section-3.5.2.4-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.4-3">If the verification algorithm returns 1, the Initiator is properly authenticated to the Initiator. Otherwise the Responder aborts.
+He then uses the <code>KEM.Encapsulation</code> algorithm to generate <code>ss_I</code> and <code>kem.ct_I</code>.<a href="#section-3.5.2.4-3" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.4-4">Following that, he computes:<a href="#section-3.5.2.4-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.4-5.1">
+                <p id="section-3.5.2.4-5.1.1"><code>TH_4 = H(TH_3, PLAINTEXT_3, ID_CRED_I)</code>;<a href="#section-3.5.2.4-5.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.4-5.2">
+                <p id="section-3.5.2.4-5.2.1"><code>SALT_4e3m = EDHOC_KDF(PRK_3e2m, 5, TH_4, hash_length)</code>;<a href="#section-3.5.2.4-5.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.4-5.3">
+                <p id="section-3.5.2.4-5.3.1"><code>PRK_4e3m = EDHOC_Extract(SALT_4e3m, ss_I)</code>;<a href="#section-3.5.2.4-5.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.4-5.4">
+                <p id="section-3.5.2.4-5.4.1"><code>K_4 = EDHOC_KDF(PRK_4e3m, 8, TH_4, key_length)</code>;<a href="#section-3.5.2.4-5.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.5.2.4-5.5">
+                <p id="section-3.5.2.4-5.5.1"><code>IV_4 = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length)</code>.<a href="#section-3.5.2.4-5.5.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-3.5.2.4-6">Using the AEAD encryption algorithm, he ciphers <code>PLAINTEXT_4 = EAD_4</code>and sends it to the Initiator, along with <code>kem.ct_I</code>.
+He then finishes the AKE by computing the final key <code>PRK_out</code>:<a href="#section-3.5.2.4-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2.4-7.1">
+                <p id="section-3.5.2.4-7.1.1"><code>PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)</code>.<a href="#section-3.5.2.4-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</section>
+</div>
+<div id="processing-message4-2">
+<section id="section-3.5.2.5">
+            <h5 id="name-processing-message_4-3">
+<a href="#section-3.5.2.5" class="section-number selfRef">3.5.2.5. </a><a href="#name-processing-message_4-3" class="section-name selfRef">Processing <code>message_4</code>`</a>
+            </h5>
+<p id="section-3.5.2.5-1">In this situation the fourth message is mandatory. It is used to send the KEM ciphertext <code>kem.ct_I</code> to the Initiator (it cannot be shared before, since the Responder only learns the identity of the Initiator with the third message).<a href="#section-3.5.2.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.2.5-2">When receiving this last message, the Initiator computes the shared-secret <code>ss_I</code> thanks to the <code>KEM.Decapsulation</code> algorithm, and elements <code>kem.sk_I</code>, <code>kem.ct_I</code>.
+After that, he can compute <code>TH_4</code>, <code>K_4</code>, <code>IV_4</code>, and decipher <code>CIPHERTEXT_4</code> thanks to the AEAD decryption algorithm. Once he had checked the well formedness of <code>PLAINTEXT_4</code>, he can finally compute <code>PRK_out</code> as the Responder did.<a href="#section-3.5.2.5-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="associated-key-derivation-schedule-3">
+<section id="section-3.5.3">
+          <h4 id="name-associated-key-derivation-sche">
+<a href="#section-3.5.3" class="section-number selfRef">3.5.3. </a><a href="#name-associated-key-derivation-sche" class="section-name selfRef">Associated key derivation schedule</a>
+          </h4>
+<p id="section-3.5.3-1">In this section we present the key derivation schedule of the previously described protocol version.<a href="#section-3.5.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.5.3-2">
+<pre>
+          +--------------------------------+
+          |TH_2=H(kem.ct_eph, H(message_1))|
+          +------+----------------------+--+              PLAINTEXT_2
+                 |                      |                        |
+  +------+   +---+---+   +------+   +---+--+   +-----------+   +-+-+
+  |ss_eph|--&gt;|Extract|--&gt;|PRK_2e|--&gt;|Expand|--&gt;|KEYSTREAM_2|--&gt;|XOR|
+  +------+   +-------+   +---+--+   +---+--+   +-----------+   +-+-+
+                             |                                   |
+                             |                                   v
+                             |                         +---------+--+
+                             |                         |CIPHERTEXT_2|
+                             |                         +---------+--+
+                             |                                   |
+                             |                                   v
+                             |                          +-----------+
+                             |                          |SIGNATURE_2|
+                             |                          +-----------+
+                             |
+           +---------+   +---+--+
+           |SALT_3e2m|&lt;--|Expand|
+           +---+-----+   +---+--+
+               |               +------------------------------------+
+               |               |TH_3=H(TH_2, PLAINTEXT_2, ID_CRED_R)|
+               |               +-------+----------------------------+
+               |                       |
+               |                       |                  PLAINTEXT_3
+               |                       |                       |
+  +----+   +---+---+   +--------+   +--+---+   +--------+   +--+-+
+  |ss_R|--&gt;|Extract|--&gt;|PRK_3e2m|--&gt;|Expand|--&gt;|K_3/IV_3|--&gt;|AEAD|
+  +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                             |                                 |
+                             |                                 v
+                             |                         +-------+----+
+                             |                         |CIPHERTEXT_3|
+                             |                         +-------+----+
+                             |                                 |
+                             |                                 v
+                             |                          +-----------+
+                             |                          |SIGNATURE_3|
+                             |                          +-----------+
+           +---------+   +---+--+
+           |SALT_4e3m|&lt;--|Expand|
+           +---+-----+   +---+--+                         PLAINTEXT_4
+               |                                               |
+  +----+   +---+---+   +--------+   +------+   +--------+   +--+-+
+  |ss_I|--&gt;|Extract|--&gt;|PRK_4e3m|--&gt;|Expand|--&gt;|K_4/IV_4|--&gt;|AEAD|
+  +----+   +-------+   +---+----+   +---+--+   +--------+   +--+-+
+                           |            |                      |
+                           |            |                      v
+                           |            |              +-------+----+
+                           |            |              |CIPHERTEXT_4|
+                           |            |              +------------+
+                           |            |
+                           |   +--------+---------------------------+
+                           |   |TH_4=H(TH_3, PLAINTEXT_3, ID_CRED_I)|
+                           |   +--------+---------------------------+
+                           |            |
+                           |        +---+--+   +-------+
+                           +--------|Expand|--&gt;|PRK_out|
+                                    +------+   +-------+
+</pre><a href="#section-3.5.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3.5.3-3">Figure 8: PQ-EDHOC, I KEM &amp; Signs - R KEM &amp; Sings key derivation schedule.<a href="#section-3.5.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="analysis-4">
+<section id="section-3.5.4">
+          <h4 id="name-analysis-5">
+<a href="#section-3.5.4" class="section-number selfRef">3.5.4. </a><a href="#name-analysis-5" class="section-name selfRef">Analysis</a>
+          </h4>
+<p id="section-3.5.4-1">TODO an analysis of the tradeoff, the protocol advantage and disadvantage (no more mac, but two signatures).<a href="#section-3.5.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
