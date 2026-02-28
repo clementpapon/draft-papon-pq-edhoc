@@ -657,7 +657,7 @@ He then finishes the AKE by computing the final key `PRK_out`:
   - `PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length)`.
 
 
-#### Processing `message_4``
+#### Processing `message_4`
 
 In this situation the fourth message is mandatory. It is used to send the KEM ciphertext `kem.ct_I` to the Initiator (it cannot be shared before, since the Responder only learns the identity of the Initiator with the third message).
 
@@ -861,7 +861,7 @@ He then finishes the AKE by computing the final key `PRK_out`:
   - `PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length)`.
 
 
-#### Processing `message_4``
+#### Processing `message_4`
 
 In this situation the fourth message is mandatory. It is used to send the KEM ciphertext `kem.ct_I` to the Initiator (it cannot be shared before, since the Responder only learns the identity of the Initiator with the third message).
 
@@ -1083,7 +1083,7 @@ He then finishes the AKE by computing the final key `PRK_out`:
   - `PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length)`.
 
 
-#### Processing `message_4``
+#### Processing `message_4`
 
 In this situation the fourth message is mandatory. It is used to send the KEM ciphertext `kem.ct_I` to the Initiator (it cannot be shared before, since the Responder only learns the identity of the Initiator with the third message).
 
