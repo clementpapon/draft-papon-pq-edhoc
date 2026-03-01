@@ -69,52 +69,54 @@ Table of Contents
      1.2.  Definitions
        1.2.1.  KEMs (Key Encapsulation Mechanisms)
        1.2.2.  Digital Signature
-     1.3.  Motivation
-     1.4.  PQ-EDHOC-IKR protocol overview
-       1.4.1.  PQ-EDHOC-IKR protocol description
-       1.4.2.  Key Derivation Schedule
-       1.4.3.  Additional explanations
-     1.5.  Analysis
-   2.  KEM & Sign Authentication for Post-Quantum EDHOC
+   2.  Post-Quantum EDHOC when the Initiator knows the Responder
+           (PQ-EDHOC-IKR)
      2.1.  Motivation
-     2.2.  First case: Initiator signs, Responder KEM and signs
-       2.2.1.  Protocol overview
-       2.2.2.  Protocol description
-       2.2.3.  Associated key derivation schedule
-       2.2.4.  Additional explanations
-       2.2.5.  Analysis
-     2.3.  Second case: Initiator KEM and signs, Responder signs
-       2.3.1.  Protocol overview
-       2.3.2.  Protocol description
-       2.3.3.  Associated key derivation schedule
-       2.3.4.  Additional explanations
-       2.3.5.  Analysis
-     2.4.  Third case: Initiator and Responder KEM and sign - version
+     2.2.  PQ-EDHOC-IKR protocol overview
+       2.2.1.  PQ-EDHOC-IKR protocol description
+       2.2.2.  Key Derivation Schedule
+       2.2.3.  Additional explanations
+     2.3.  Analysis
+   3.  KEM & Sign Authentication for Post-Quantum EDHOC
+     3.1.  Motivation
+     3.2.  First case: Initiator signs, Responder KEM and signs
+       3.2.1.  Protocol overview
+       3.2.2.  Protocol description
+       3.2.3.  Associated key derivation schedule
+       3.2.4.  Additional explanations
+       3.2.5.  Analysis
+     3.3.  Second case: Initiator KEM and signs, Responder signs
+       3.3.1.  Protocol overview
+       3.3.2.  Protocol description
+       3.3.3.  Associated key derivation schedule
+       3.3.4.  Additional explanations
+       3.3.5.  Analysis
+     3.4.  Third case: Initiator and Responder KEM and sign - version
            1
-       2.4.1.  Protocol overview
-       2.4.2.  Protocol description
-       2.4.3.  Associated key derivation schedule
-       2.4.4.  Additional explanations
-       2.4.5.  Analysis
-     2.5.  Third case: Initiator and Responder KEM and sign - version
+       3.4.1.  Protocol overview
+       3.4.2.  Protocol description
+       3.4.3.  Associated key derivation schedule
+       3.4.4.  Additional explanations
+       3.4.5.  Analysis
+     3.5.  Third case: Initiator and Responder KEM and sign - version
            2
-       2.5.1.  Protocol overview
-       2.5.2.  Protocol description
-       2.5.3.  Associated key derivation schedule
-       2.5.4.  Additional explanations
-       2.5.5.  Analysis
-   3.  Security Considerations
-     3.1.  Security Considerations of PQ-EDHOC-IKR (I Signs - R KEM)
-     3.2.  Security Considerations of PQ-EDHOC KEM and/or Sign
-       3.2.1.  Initiator signs and Responder KEM & Signs
-       3.2.2.  Initiator KEM & Signs and Responder Signs
-       3.2.3.  Initiator KEM & Signs and Responder KEM
-       3.2.4.  Initiator and Responder KEM & Signs
-   4.  IANA Considerations
-   5.  Acknowledgments
-   6.  References
-     6.1.  Normative References
-     6.2.  Informative References
+       3.5.1.  Protocol overview
+       3.5.2.  Protocol description
+       3.5.3.  Associated key derivation schedule
+       3.5.4.  Additional explanations
+       3.5.5.  Analysis
+   4.  Security Considerations
+     4.1.  Security Considerations of PQ-EDHOC-IKR (I Signs - R KEM)
+     4.2.  Security Considerations of PQ-EDHOC KEM and/or Sign
+       4.2.1.  Initiator signs and Responder KEM & Signs
+       4.2.2.  Initiator KEM & Signs and Responder Signs
+       4.2.3.  Initiator KEM & Signs and Responder KEM
+       4.2.4.  Initiator and Responder KEM & Signs
+   5.  IANA Considerations
+   6.  Acknowledgments
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
    Authors' Addresses
 
 1.  Introduction
@@ -203,7 +205,10 @@ Table of Contents
    verify the validity of the signature on the message under the public
    key.
 
-1.3.  Motivation
+2.  Post-Quantum EDHOC when the Initiator knows the Responder (PQ-EDHOC-
+    IKR)
+
+2.1.  Motivation
 
    In [I-D.pocero-authkem-ikr-edhoc], the authors adopt an EDHOC
    approach for use cases where the Initiator already knows the identity
@@ -232,9 +237,9 @@ Table of Contents
    the encrypted third message, the Responder, after decryption,
    authenticates the Initiator in the usual EDHOC manner.
 
-1.4.  PQ-EDHOC-IKR protocol overview
+2.2.  PQ-EDHOC-IKR protocol overview
 
-1.4.1.  PQ-EDHOC-IKR protocol description
+2.2.1.  PQ-EDHOC-IKR protocol description
 
    We present here a high-level description of our PQ-EDHOC-IKR where
    the Initiator authenticates with a signature and the Responder with a
@@ -260,7 +265,7 @@ Table of Contents
 
    Figure 1: PQ-EDHOC-IKR (I sign, R kem) message flow.
 
-1.4.1.1.  Formatting and sending message_1
+2.2.1.1.  Formatting and sending message_1
 
    As in the usual EDHOC protocol, the first message (message_1)
    consists of:
@@ -288,7 +293,7 @@ Table of Contents
       algorithm.  He keeps secret ss_R to compute, later, PRK_3e2m, and
       sends kem.ct_R to the Responder.
 
-1.4.1.2.  Processing message_1, formatting and sending message_2
+2.2.1.2.  Processing message_1, formatting and sending message_2
 
    On the reception of the first message, the Responder first recovers
    ss_R thanks to his long-term KEM secret key kem.sk_R and kem.ct_R,
@@ -330,7 +335,7 @@ Table of Contents
 
    *  CIPHERTEXT_2 = PLAINTEXT_2 XOR KEYSTREAM_2.
 
-1.4.1.3.  Processing message_2, formatting and sending message_3
+2.2.1.3.  Processing message_2, formatting and sending message_3
 
    On reception of the second message, the Initiator, using kemp.ct_eph,
    can compute the ephemeral shared-secret ss_eph.  As the Responder
@@ -373,7 +378,7 @@ Table of Contents
    ciphers PLAINTEXT_3 with the AEAD encryption algorithm negociated in
    SUITES_I.
 
-1.4.1.4.  Processing message_3
+2.2.1.4.  Processing message_3
 
    On reception of message_3, the Responder computes TH_3, K_3, and IV_3
    as the Initiator did, and deciphers CIPHERTEXT_3 with the AEAD
@@ -387,7 +392,7 @@ Table of Contents
    If the verification algorithm returns 1, the Responder properly
    authenticated the Initiator.  Otherwise he aborts.
 
-1.4.1.5.  Optionally formatting, sending and receiving message_4
+2.2.1.5.  Optionally formatting, sending and receiving message_4
 
    If the Responder decides of a fourth mandatory message, he then
    computes the following elements:
@@ -402,7 +407,7 @@ Table of Contents
    and sends it to the Initiator.  The latter computes TH_4, K_4, IV_4,
    and deciphers CIPHERTEXT_4 thanks to the AEAD decryption algorithm.
 
-1.4.1.6.  Computing the session key PRK_out
+2.2.1.6.  Computing the session key PRK_out
 
    It doesn't matter if there is a fourth mandatory message, in any
    case, both the Initiator and the Responder, in order to compute the
@@ -417,7 +422,7 @@ Table of Contents
    which is the desired session key, and the authentication process is
    fully achieved.
 
-1.4.2.  Key Derivation Schedule
+2.2.2.  Key Derivation Schedule
 
    In this section we summarize the key derivation operations that
    appears throughout the protocol.
@@ -503,12 +508,12 @@ Table of Contents
      IV_4        = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length);
      PRK_out     = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
 
-1.4.3.  Additional explanations
+2.2.3.  Additional explanations
 
    We detail here the main elements that differ from the original EDHOC
    protocol.
 
-1.4.3.1.  Ephemeral KEM
+2.2.3.1.  Ephemeral KEM
 
    As explained in [I-D.pocero-authkem-ikr-edhoc], the usual ephemeral
    Diffie-Hellman elements (x,g^x) and (y,g^y), are here replaced by an
@@ -529,7 +534,7 @@ Table of Contents
       recovers the ephemeral shared-secret ss_eph thanks to the
       KEM.Decapsulation' algorithm (with inputkem.sk_ephandkem.ct_eph`).
 
-1.4.3.2.  Authentication keys
+2.2.3.2.  Authentication keys
 
    For the Initiator, the authentication key MUST be a static signing
    key pair (sign.sk_I, sign.pk_I) generated using a DS.KeyGen(k)
@@ -539,7 +544,7 @@ Table of Contents
    pair (kem.sk_R, kem.pk_R) generated using a KEM.KeyGen(k) algorithm
    (where k is a security parameter).
 
-1.4.3.3.  Key derivation
+2.2.3.3.  Key derivation
 
    In this version of the protocol, the EDHOC_Extract fonction is used
    to derive two keys, in a way that slightly differ from the original
@@ -555,7 +560,7 @@ Table of Contents
    Concerning PRK_out, there is no modifications compared to the
    original EDHOC protocol.
 
-1.5.  Analysis
+2.3.  Analysis
 
    In summary, we retain here the use case proposed by
    [I-D.pocero-authkem-ikr-edhoc], where the Initiator already knows the
@@ -585,9 +590,9 @@ Table of Contents
    discuss security considerations further in this document.  We will
    also soon present a byte comparison for each message.
 
-2.  KEM & Sign Authentication for Post-Quantum EDHOC
+3.  KEM & Sign Authentication for Post-Quantum EDHOC
 
-2.1.  Motivation
+3.1.  Motivation
 
    Our second idea is to propose a tradeoff, allowing for a reduced
    number of messages in the quantum-resistant EDHOC handshake, which
@@ -642,13 +647,13 @@ Table of Contents
    messages compared to [I-D.pocero-authkem-edhoc] decreases from 5 to
    4.
 
-2.2.  First case: Initiator signs, Responder KEM and signs
+3.2.  First case: Initiator signs, Responder KEM and signs
 
    We describe below the equivalent of EDHOC method 1.  The Initiator
    will authenticate with a signature, and the Responder with a KEM and
    a signature.
 
-2.2.1.  Protocol overview
+3.2.1.  Protocol overview
 
      I                                                             R
     ---                                                           ---
@@ -670,9 +675,9 @@ Table of Contents
 
    Figure 3: PQ-EDHOC, I Signs - R KEM & Signs message flow.
 
-2.2.2.  Protocol description
+3.2.2.  Protocol description
 
-2.2.2.1.  Formatting and sending message_1
+3.2.2.1.  Formatting and sending message_1
 
    As in the usual EDHOC protocol, the first message (message_1)
    consists of:
@@ -695,7 +700,7 @@ Table of Contents
    *  kem.pk_eph --> the Ephemeral KEM public key generated by the
       Initiator.
 
-2.2.2.2.  Processing message_1, formatting and sending message_2
+3.2.2.2.  Processing message_1, formatting and sending message_2
 
    On the reception of the first message, the Responder proceeds as in
    the original EDHOC protocol with elements METHOD, SUITES_I, C_I and
@@ -740,7 +745,7 @@ Table of Contents
    could be subject to slight changes.  However, it serves here to
    illustrate the principle proposed here.
 
-2.2.2.3.  Processing message_2, formatting and sending message_3
+3.2.2.3.  Processing message_2, formatting and sending message_3
 
    On reception of the second message, the Initiator, using kemp.ct_eph,
    can compute the ephemeral shared-secret ss_eph.  As the Responder
@@ -795,7 +800,7 @@ Table of Contents
 
    *  kem.ct_R.
 
-2.2.2.4.  Processing message_3
+3.2.2.4.  Processing message_3
 
    On reception of message_3, the Responder computes TH_3.  He also used
    the KEM.Decapsulation algorithm with its long-term KEM private key
@@ -814,7 +819,7 @@ Table of Contents
    If the verification algorithm returns 1, the Initiator is properly
    authenticated to the Initiator.  Otherwise the Responder aborts.
 
-2.2.2.5.  Optionally formatting, sending and receiving message_4
+3.2.2.5.  Optionally formatting, sending and receiving message_4
 
    If the Responder decides of a fourth mandatory message, he then
    computes the following elements:
@@ -829,7 +834,7 @@ Table of Contents
    and sends it to the Initiator.  The latter computes TH_4, K_4, IV_4,
    and deciphers CIPHERTEXT_4 thanks to the AEAD decryption algorithm.
 
-2.2.2.6.  Computing the session key PRK_out
+3.2.2.6.  Computing the session key PRK_out
 
    Here again, it doesn't matter if there is a fourth mandatory message,
    in any case, both the Initiator and the Responder, in order to
@@ -845,7 +850,7 @@ Table of Contents
    which is the desired session key, and the authentication process is
    fully achieved.
 
-2.2.3.  Associated key derivation schedule
+3.2.3.  Associated key derivation schedule
 
    In this section we present the key derivation schedule of the
    previously described protocol version.
@@ -925,18 +930,18 @@ Table of Contents
      IV_4        = EDHOC_KDF(PRK_3e2m, 9, TH_4, iv_length);
      PRK_out     = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
 
-2.2.4.  Additional explanations
+3.2.4.  Additional explanations
 
    We detail here the main elements that differ from the original EDHOC
    protocol.
 
-2.2.4.1.  Ephemeral KEM
+3.2.4.1.  Ephemeral KEM
 
    As previously explain the usual ephemeral Diffie-Hellman elements are
    replaced by an ephemeral KEM.  In this protocol, it works exactly as
    we previously described.
 
-2.2.4.2.  Authentication keys
+3.2.4.2.  Authentication keys
 
    For the Initiator, the authentication key MUST be a static signing
    key pair (sign.sk_I, sign.pk_I) generated using a DS.KeyGen(k)
@@ -948,7 +953,7 @@ Table of Contents
    signing key pair (sign.sk_R, sign.pk_R) generated using a
    DS.KeyGen(k) algorithm (where k is a security parameter).
 
-2.2.4.3.  Key derivation
+3.2.4.3.  Key derivation
 
    In this version of the protocol, the keys PRK_2e and PRK_3e2m are
    obtain thanks to EDHOC_Extract fonction:
@@ -963,7 +968,7 @@ Table of Contents
    Concerning PRK_out, here again, there is no modifications compared to
    the original EDHOC protocol.
 
-2.2.5.  Analysis
+3.2.5.  Analysis
 
    In this version of the protocol, we assumed that the Initiator has a
    pair of static signature keys (sign.sk_I, sign.pk_I) and that the
@@ -989,13 +994,13 @@ Table of Contents
    size of messages, calculation capabilities, and the number of
    messages.
 
-2.3.  Second case: Initiator KEM and signs, Responder signs
+3.3.  Second case: Initiator KEM and signs, Responder signs
 
    We now invert the roles and describe below the equivalent of EDHOC
    method 2.  The Initiator will authenticate with a KEM and a
    signature, and the Responder only with a signature.
 
-2.3.1.  Protocol overview
+3.3.1.  Protocol overview
 
      I                                                             R
     ---                                                           ---
@@ -1017,9 +1022,9 @@ Table of Contents
 
    Figure 5: PQ-EDHOC, I KEM & Signs - R Signs message flow.
 
-2.3.2.  Protocol description
+3.3.2.  Protocol description
 
-2.3.2.1.  Formatting and sending message_1
+3.3.2.1.  Formatting and sending message_1
 
    As for our previous protocol version, the first message (message_1)
    consists of:
@@ -1042,7 +1047,7 @@ Table of Contents
    *  kem.pk_eph --> the Ephemeral KEM public key generated by the
       Initiator.
 
-2.3.2.2.  Processing message_1, formatting and sending message_2
+3.3.2.2.  Processing message_1, formatting and sending message_2
 
    On the reception of the first message, the Responder proceeds as in
    the original EDHOC protocol with elements METHOD, SUITES_I, C_I and
@@ -1081,7 +1086,7 @@ Table of Contents
    So, so far, except the ephemeral KEM material, everything works like
    in the usual EDHOC method 2 protocol.
 
-2.3.2.3.  Processing message_2, formatting and sending message_3
+3.3.2.3.  Processing message_2, formatting and sending message_3
 
    On reception of the second message, the Initiator, using kemp.ct_eph,
    can compute the ephemeral shared-secret ss_eph.  As the Responder
@@ -1125,7 +1130,7 @@ Table of Contents
    Initiator, here again, for security considerations during the
    security analysis, could be subject to slight changes.
 
-2.3.2.4.  Processing message_3, formatting and sending message_4
+3.3.2.4.  Processing message_3, formatting and sending message_4
 
    On reception of message_3, the Responder computes TH_3, K_3 and IV_3,
    and deciphers CIPHERTEXT_3 with the AEAD decryption algorithm.  With
@@ -1158,7 +1163,7 @@ Table of Contents
 
    *  PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
-2.3.2.5.  Processing message_4
+3.3.2.5.  Processing message_4
 
    In this situation the fourth message is mandatory.  It is used to
    send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
@@ -1172,7 +1177,7 @@ Table of Contents
    he had checked the well formedness of PLAINTEXT_4, he can finally
    compute PRK_out as the Responder did.
 
-2.3.3.  Associated key derivation schedule
+3.3.3.  Associated key derivation schedule
 
    In this section we present the key derivation schedule of the
    previously described protocol version.
@@ -1251,18 +1256,18 @@ Table of Contents
      IV_4        = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length);
      PRK_out     = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
-2.3.4.  Additional explanations
+3.3.4.  Additional explanations
 
    We detail here the main elements that differ from the original EDHOC
    protocol.
 
-2.3.4.1.  Ephemeral KEM
+3.3.4.1.  Ephemeral KEM
 
    As previously explain the usual ephemeral Diffie-Hellman elements are
    replaced by an ephemeral KEM.  In this protocol, it works exactly as
    we previously described.
 
-2.3.4.2.  Authentication keys
+3.3.4.2.  Authentication keys
 
    For the Initiator, the authentication key MUST be: (1) a static KEM
    key pair (kem.sk_I, kem.pk_I) generated using a KEM.KeyGen(k)
@@ -1274,7 +1279,7 @@ Table of Contents
    key pair (sign.sk_R, sign.pk_R) generated using a DS.KeyGen(k)
    algorithm (where k is a security parameter).
 
-2.3.4.3.  Key derivation
+3.3.4.3.  Key derivation
 
    In this version of the protocol, the keys PRK_2e and PRK_4e3m are
    obtain thanks to EDHOC_Extract fonction:
@@ -1291,7 +1296,7 @@ Table of Contents
    cases, the Key Derivation Schedule remains close to the standard
    EDHOC Key Derivation Schedule of method 1 and 2.
 
-2.3.5.  Analysis
+3.3.5.  Analysis
 
    This is actually a mirror version of the previous protocol presented,
    in the sense that this time we assumed that the Responder has a pair
@@ -1320,7 +1325,7 @@ Table of Contents
    between the size of messages, calculation capabilities, and the
    number of messages.
 
-2.4.  Third case: Initiator and Responder KEM and sign - version 1
+3.4.  Third case: Initiator and Responder KEM and sign - version 1
 
    We now present the equivalent of EDHOC method 3, which is in our
    case, an hybridation of the previous cases.  We propose two variant
@@ -1330,7 +1335,7 @@ Table of Contents
    hybrid between a protocol proposed in [I-D.pocero-authkem-edhoc] and
    one of the protocols we have proposed above.
 
-2.4.1.  Protocol overview
+3.4.1.  Protocol overview
 
      I                                                             R
     ---                                                           ---
@@ -1352,9 +1357,9 @@ Table of Contents
 
    Figure 7: PQ-EDHOC, I KEM & Signs - R KEM message flow.
 
-2.4.2.  Protocol description
+3.4.2.  Protocol description
 
-2.4.2.1.  Formatting and sending message_1
+3.4.2.1.  Formatting and sending message_1
 
    As for our previous protocol version, the first message (message_1)
    consists of:
@@ -1377,7 +1382,7 @@ Table of Contents
    *  kem.pk_eph --> the Ephemeral KEM public key generated by the
       Initiator.
 
-2.4.2.2.  Processing message_1, formatting and sending message_2
+3.4.2.2.  Processing message_1, formatting and sending message_2
 
    On the reception of the first message, the Responder proceeds as in
    the original EDHOC protocol with elements METHOD, SUITES_I, C_I and
@@ -1405,7 +1410,7 @@ Table of Contents
 
    and finally sends message_2composed of CIPHERTEXT_2 and kem.ct_eph.
 
-2.4.2.3.  Processing message_2, formatting and sending message_3
+3.4.2.3.  Processing message_2, formatting and sending message_3
 
    On reception of the second message, the Initiator, using kemp.ct_eph,
    can compute the ephemeral shared-secret ss_eph.  As the Responder
@@ -1444,7 +1449,7 @@ Table of Contents
 
    *  SIGNATURE_3.
 
-2.4.2.4.  Processing message_3, formatting and sending message_4
+3.4.2.4.  Processing message_3, formatting and sending message_4
 
    On reception of message_3, the Responder computes TH_3.  He also used
    the KEM.Decapsulation algorithm with its long-term KEM private key
@@ -1488,7 +1493,7 @@ Table of Contents
 
    *  PRK_out = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
-2.4.2.5.  Processing message_4
+3.4.2.5.  Processing message_4
 
    In this situation the fourth message is mandatory.  It is used to
    send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
@@ -1504,7 +1509,7 @@ Table of Contents
    comparing with the one he finds in PLAINTEXT_4.  If everything goes
    well, he finally computes PRK_out as the Responder did.
 
-2.4.3.  Associated key derivation schedule
+3.4.3.  Associated key derivation schedule
 
    In this section we present the key derivation schedule of the
    previously described protocol version.
@@ -1588,18 +1593,18 @@ Table of Contents
                    (with context_2 = C_R, ID_CRED_R, TH_4, EAD_4);
      PRK_out     = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
-2.4.4.  Additional explanations
+3.4.4.  Additional explanations
 
    We detail here the main elements that differ from the original EDHOC
    protocol.
 
-2.4.4.1.  Ephemeral KEM
+3.4.4.1.  Ephemeral KEM
 
    As previously explain the usual ephemeral Diffie-Hellman elements are
    replaced by an ephemeral KEM.  In this protocol, it works exactly as
    we previously described.
 
-2.4.4.2.  Authentication keys
+3.4.4.2.  Authentication keys
 
    For the Initiator, the authentication key MUST be: (1) a static KEM
    key pair (kem.sk_I, kem.pk_I) generated using a KEM.KeyGen(k)
@@ -1611,7 +1616,7 @@ Table of Contents
    pair (kem.sk_R, kem.pk_R) generated using a KEM.KeyGen(k) algorithm
    (where k is a security parameter).
 
-2.4.4.3.  Key derivation
+3.4.4.3.  Key derivation
 
    In this version of the protocol, the keys PRK_2e, PRK_3e2m and
    PRK_4e3m are obtain thanks to EDHOC_Extract fonction:
@@ -1630,7 +1635,7 @@ Table of Contents
    Concerning PRK_out, here again, there is no modifications compared to
    the original EDHOC protocol.
 
-2.4.5.  Analysis
+3.4.5.  Analysis
 
    This variant combines our PQ-EDHOC I KEM & Signs - R Signs protocol
    with the version where the Initiator and Responder authenticate using
@@ -1662,14 +1667,14 @@ Table of Contents
    tradeoff between the size of messages, calculation capabilities, and
    the number of messages.
 
-2.5.  Third case: Initiator and Responder KEM and sign - version 2
+3.5.  Third case: Initiator and Responder KEM and sign - version 2
 
    We now present the second variant of the equivalent of EDHOC method
    3.  In this situation both the Initiator and the Responder
    authenticate with a KEM and a signature, which makes this protocol a
    hybrid of two of the protocols we presented previously.
 
-2.5.1.  Protocol overview
+3.5.1.  Protocol overview
 
      I                                                             R
     ---                                                           ---
@@ -1691,9 +1696,9 @@ Table of Contents
 
    Figure 9: PQ-EDHOC, I KEM & Signs - R KEM & Signs message flow.
 
-2.5.2.  Protocol description
+3.5.2.  Protocol description
 
-2.5.2.1.  Formatting and sending message_1
+3.5.2.1.  Formatting and sending message_1
 
    As for our previous protocol version, the first message (message_1)
    consists of:
@@ -1716,7 +1721,7 @@ Table of Contents
    *  kem.pk_eph --> the Ephemeral KEM public key generated by the
       Initiator.
 
-2.5.2.2.  Processing message_1, formatting and sending message_2
+3.5.2.2.  Processing message_1, formatting and sending message_2
 
    On the reception of the first message, the Responder proceeds as in
    the original EDHOC protocol with elements METHOD, SUITES_I, C_I and
@@ -1757,7 +1762,7 @@ Table of Contents
 
    *  SIGNATURE_2.
 
-2.5.2.3.  Processing message_2, formatting and sending message_3
+3.5.2.3.  Processing message_2, formatting and sending message_3
 
    On reception of the second message, the Initiator, using kemp.ct_eph,
    can compute the ephemeral shared-secret ss_eph.  As the Responder
@@ -1812,7 +1817,7 @@ Table of Contents
 
    *  SIGNATURE_3.
 
-2.5.2.4.  Processing message_3, formatting and sending message_4
+3.5.2.4.  Processing message_3, formatting and sending message_4
 
    On reception of message_3, the Responder computes TH_3, K_3 and IV_3,
    and deciphers CIPHERTEXT_3 with the AEAD decryption algorithm.  With
@@ -1844,7 +1849,7 @@ Table of Contents
 
    *  PRK_out = EDHOC_KDF(PRK_3e2m, 7, TH_4, hash_length).
 
-2.5.2.5.  Processing message_4
+3.5.2.5.  Processing message_4
 
    In this situation the fourth message is mandatory.  It is used to
    send the KEM ciphertext kem.ct_I to the Initiator (it cannot be
@@ -1858,7 +1863,7 @@ Table of Contents
    he had checked the well formedness of PLAINTEXT_4, he can finally
    compute PRK_out as the Responder did.
 
-2.5.3.  Associated key derivation schedule
+3.5.3.  Associated key derivation schedule
 
    In this section we present the key derivation schedule of the
    previously described protocol version.
@@ -1941,18 +1946,18 @@ Table of Contents
      IV_4        = EDHOC_KDF(PRK_4e3m, 9, TH_4, iv_length);
      PRK_out     = EDHOC_KDF(PRK_4e3m, 7, TH_4, hash_length).
 
-2.5.4.  Additional explanations
+3.5.4.  Additional explanations
 
    We detail here the main elements that differ from the original EDHOC
    protocol.
 
-2.5.4.1.  Ephemeral KEM
+3.5.4.1.  Ephemeral KEM
 
    As previously explain the usual ephemeral Diffie-Hellman elements are
    replaced by an ephemeral KEM.  In this protocol, it works exactly as
    we previously described.
 
-2.5.4.2.  Authentication keys
+3.5.4.2.  Authentication keys
 
    For the Initiator, the authentication key MUST be: (1) a static KEM
    key pair (kem.sk_I, kem.pk_I) generated using a KEM.KeyGen(k)
@@ -1966,7 +1971,7 @@ Table of Contents
    signing key pair (sign.sk_R, sign.pk_R) generated using a
    DS.KeyGen(k) algorithm (where k is a security parameter).
 
-2.5.4.3.  Key derivation
+3.5.4.3.  Key derivation
 
    In this version of the protocol, the keys PRK_2e, PRK_3e2m and
    PRK_4e3m are obtain thanks to EDHOC_Extract fonction:
@@ -1985,7 +1990,7 @@ Table of Contents
    Concerning PRK_out, here again, there is no modifications compared to
    the original EDHOC protocol.
 
-2.5.5.  Analysis
+3.5.5.  Analysis
 
    We conclude all these descriptions, with a last one variant which
    combines our PQ-EDHOC I KEM & Signs - R Signs protocol with our PQ-
@@ -2022,33 +2027,33 @@ Table of Contents
    size of messages, calculation capabilities, and the number of
    messages.
 
-3.  Security Considerations
+4.  Security Considerations
 
    TODO Security
 
-3.1.  Security Considerations of PQ-EDHOC-IKR (I Signs - R KEM)
+4.1.  Security Considerations of PQ-EDHOC-IKR (I Signs - R KEM)
 
-3.2.  Security Considerations of PQ-EDHOC KEM and/or Sign
+4.2.  Security Considerations of PQ-EDHOC KEM and/or Sign
 
-3.2.1.  Initiator signs and Responder KEM & Signs
+4.2.1.  Initiator signs and Responder KEM & Signs
 
-3.2.2.  Initiator KEM & Signs and Responder Signs
+4.2.2.  Initiator KEM & Signs and Responder Signs
 
-3.2.3.  Initiator KEM & Signs and Responder KEM
+4.2.3.  Initiator KEM & Signs and Responder KEM
 
-3.2.4.  Initiator and Responder KEM & Signs
+4.2.4.  Initiator and Responder KEM & Signs
 
-4.  IANA Considerations
+5.  IANA Considerations
 
    This document has no IANA actions.
 
-5.  Acknowledgments
+6.  Acknowledgments
 
    TODO acknowledge.
 
-6.  References
+7.  References
 
-6.1.  Normative References
+7.1.  Normative References
 
    [I-D.pocero-authkem-edhoc]
               Fraile, L. P., Koulamas, C., Fournaris, A. P., and E.
@@ -2114,7 +2119,7 @@ Table of Contents
               DOI 10.17487/RFC9528, March 2024,
               <https://www.rfc-editor.org/rfc/rfc9528>.
 
-6.2.  Informative References
+7.2.  Informative References
 
    [RFC9053]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
               Initial Algorithms", RFC 9053, DOI 10.17487/RFC9053,
