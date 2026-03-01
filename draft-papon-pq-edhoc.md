@@ -84,6 +84,7 @@ A Digital Signature (DS) scheme consists of three algorithms:
 
 In practice, if Alice and Bob use a DS scheme, Alice generates the public and private keys, and sends the public key to Bob. Later, Alice sends a message together with a signature to Bob. Bob can then verify the validity of the signature on the message under the public key.
 
+# Post-Quantum EDHOC when the Initiator knows the Responder (PQ-EDHOC-IKR)
 
 ## Motivation
 
