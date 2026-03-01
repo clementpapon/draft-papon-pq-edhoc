@@ -2029,9 +2029,33 @@ Table of Contents
 
 4.  Security Considerations
 
-   TODO Security
+   Firstly, we analyze the security of the first protocol, i.e., in the
+   case where the Initiator knows the Responder.  Then we provide a
+   security analysis of the other four protocols which show more
+   similarities between them.
 
 4.1.  Security Considerations of PQ-EDHOC-IKR (I Signs - R KEM)
+
+   This protocol is relatively close to the one proposed in
+   [I-D.pocero-authkem-ikr-edhoc].  At the end of the handshake, each
+   endpoint securely acquires the session key PRK_out with mutual
+   authentication.  This authentication is ensured by the Responder's
+   MAC and the Initiator's signature on its own MAC, similar to EDHOC
+   method 1.  Regarding the property of Identity Protection, it seems
+   that, by construction, our protocol guarantees this property against
+   passive attackers for the Responder and active attackers for the
+   Initiator.  In fact, the same attacks as in EDHOC by an active
+   attacker allow learning the identity of the Responder.  However,
+   since all information about identities is encrypted from the second
+   message onwards, this ensures Identity Protection against passive/
+   active attackers for Responder/Initiator.  Morevoer, we want to point
+   out a disputed aspect regarding this property.  We think it might be
+   possible to reuse the security game introduced by (Cottier and
+   Poincheval), reused in (LI-EDHOC) and adapted in (EDHOC-PSK) to prove
+   Identity Protection.  However, this security game seems difficult to
+   adapt to the protocol proposed in [I-D.pocero-authkem-ikr-edhoc].  We
+   suggest a more global approach for this property, possibly based on
+   (PPAKE).
 
 4.2.  Security Considerations of PQ-EDHOC KEM and/or Sign
 
