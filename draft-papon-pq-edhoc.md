@@ -159,7 +159,7 @@ On reception of the second message, the Initiator, using `kemp.ct_eph`, can comp
 
 Thanks to `ID_CRED_R`, the Initiator verifies the validity of the long-term KEM public key of the Responder, `kemp.pk_R`, and computes `SALT_3e2m` and `PRK_3e2m`, using the shared-secret `ss_R` he generates at the beginning of the exchange.
 
-At this point the Initiator is abable to authenticate the Responder (at least, make sure he is talking to the endpoint he hopes to talk to). For that, he computes, as the Responder did, the MAC `MAC_2`. If it machtes with the one he received, then he properly authenticated the Responder. Otherwise he aborts.
+At this point the Initiator is able to authenticate the Responder (at least, make sure he is talking to the endpoint he hopes to talk to). For that, he computes, as the Responder did, the MAC `MAC_2`. If it matches with the one he received, then he properly authenticated the Responder. Otherwise he aborts.
 
 It is now up to the Initiator to authenticate himself. To do so, the Initiator computes the following elements:
 
@@ -186,7 +186,7 @@ On reception of `message_3`, the Responder computes `TH_3`, `K_3`, and `IV_3` as
 where `sign.pk_I` is the long-term signing public key of the Initiator. If the verification algorithm returns 1, the Responder properly authenticated the Initiator. Otherwise he aborts.
 
 
-#### Optionally formatting, sending and recieving `message_4`
+#### Optionally formatting, sending and receiving `message_4`
 
 If the Responder decides of a fourth mandatory message, he then computes the following elements:
 
@@ -310,7 +310,7 @@ We detail here the main elements that differ from the original EDHOC protocol.
 As explained in {{I-D.pocero-authkem-ikr-edhoc}}, the usual ephemeral Diffie-Hellman elements `(x,g^x)` and `(y,g^y)`, are here replaced by an ephemeral KEM:
 
   - At first, the Initiator generates a ephemeral KEM key pair `(kem.sk_eph, kem.pk_eph)` using the `KEM.KeyGen(k)` algorithm (where `k` is a security parameter);
-  - On reception of the ephemeral KEM public key `kemp.pk_eph`, the Responder generates a pair `(ss_eph, kem.ct_eph)` with the `KEM.Encapsulation` algorihtm (with input `kem.pk_eph`). The element `ss_eph` is the ephemeral shared-secret, later used to derive a key, and `kem.ct_eph` is the ephemeral KEM ciphertext, used by the Initiator to retrieve the ephemeral shared-secret;
+  - On reception of the ephemeral KEM public key `kemp.pk_eph`, the Responder generates a pair `(ss_eph, kem.ct_eph)` with the `KEM.Encapsulation` algorithm (with input `kem.pk_eph`). The element `ss_eph` is the ephemeral shared-secret, later used to derive a key, and `kem.ct_eph` is the ephemeral KEM ciphertext, used by the Initiator to retrieve the ephemeral shared-secret;
   - On reception of the ephemeral KEM ciphertext, the Initiator recovers the ephemeral shared-secret `ss_eph` thanks to the `KEM.Decapsulation' algorithm (with input `kem.sk_eph` and `kem.ct_eph`).
 
 
@@ -318,7 +318,7 @@ As explained in {{I-D.pocero-authkem-ikr-edhoc}}, the usual ephemeral Diffie-Hel
 
 For the Initiator, the authentication key MUST be a static signing key pair `(sign.sk_I, sign.pk_I)` generated using a `DS.KeyGen(k)` algorithm (where `k` is a security parameter).
 
-For the Responder, the authentication key MUST be a static KEM key pair `(kem.sk_R, kem.pk_R)' generated using a `KEM.KeyGen(k)` algorithm (where `k` is a security parameter).
+For the Responder, the authentication key MUST be a static KEM key pair `(kem.sk_R, kem.pk_R)` generated using a `KEM.KeyGen(k)` algorithm (where `k` is a security parameter).
 
 
 #### Key derivation
@@ -348,7 +348,7 @@ We will discuss security considerations further in this document. We will also s
 
 Our second idea is to propose a tradeoff, allowing for a reduced number of messages in the quantum-resistant EDHOC handshake, which come at a slightly higher computational overhead compared to {{I-D.pocero-authkem-edhoc}}.
 
-Starting from the standard EDHOC protocol, method 0 allows for mutual authentication via signature between both users. As proposed in {{I-D.pocero-authkem-edhoc}}, replacing classical signatures with post-quantum resistant signatures such as ML-DSA and ephemeral Diffie-Hellman elements with a KEM like ML-KEM seems reasonable to make EDHOC post-quantum resistant (even if this still need to be proved).
+Starting from the standard EDHOC protocol, method 0 allows for mutual authentication via signature between both users. As proposed in {{I-D.pocero-authkem-edhoc}}, replacing classical signatures with post-quantum resistant signatures such as ML-DSA and ephemeral Diffie-Hellman elements with a KEM like ML-KEM seems reasonable to make EDHOC post-quantum resistant (even if this still needs to be proved).
 These two changes do not affect the number of mandatory messages, since the fundamental structure of the protocol is preserved (however a post-quantum signature will likely be more computationally expensive, just like a KEM).
 Things get complicated when trying to apply these modifications to the other three methods. Continuing on this track, we replace ephemeral Diffie-Hellman elements with an ephemeral KEM. This does not affect the usual structure of EDHOC. However, if we want to take it further and also replace long-term Diffie-Hellman elements with a KEM, managing asymmetric keys for the latter poses a problem when trying to preserve the authentication structure of EDHOC, namely a MAC derived from a long-term secret.
 As proposed in {{I-D.pocero-authkem-edhoc}}, we go from 3 to 4 or 5 mandatory messages to achieve complete mutual authentication.
@@ -438,7 +438,7 @@ So the second message then consists of:
   - `CIPHERTEXT_2`;
   - `SIGNATURE_2`.
 
-**Important note:** let us mention that the element signed by the Responder, for security considerations during the security analysis, coulb be subject to slight changes. However, it serves here to illustrate the principle proposed here.
+**Important note:** let us mention that the element signed by the Responder, for security considerations during the security analysis, could be subject to slight changes. However, it serves here to illustrate the principle proposed here.
 
 #### Processing `message_2`, formatting and sending `message_3`
 
@@ -451,7 +451,7 @@ At first, he checks the validity of the signature of the Responder:
 
 If the verification algorithm returns 1, the Initiator properly authenticated the Responder. Otherwise he aborts.
 
-Assuming everything goes well, using the KEM encapsulation algorihtm `KEM.Encapsulation`, and the long-term input material `kem.pk_R` of the Responder, the Initiator generated the couple `(ss_R, kem.ct_R)`.
+Assuming everything goes well, using the KEM encapsulation algorithm `KEM.Encapsulation`, and the long-term input material `kem.pk_R` of the Responder, the Initiator generated the couple `(ss_R, kem.ct_R)`.
 
 The shared-secret `ss_R` will then serve as IKM for the computation of `PRK_3e2m`:
 
@@ -466,7 +466,7 @@ It is now the turn of the Initiator to authenticate himself. To do so, he comput
   - `IV_3 = EDHOC_KDF(PRK_3e2m, 4, TH_3, iv_length)`;
   - `MAC_3 = EDHOC_KDF(PRK_3e2m, 6, ID_CRED_I, TH_3, EAD_3, mac_length_3)`
 
-as in the original EDHOC procotol. Then comes the signature:
+as in the original EDHOC protocol. Then comes the signature:
 
   - `SIGNATURE_3 = DS.Sign(sign.sk_I, (ID_CRED_I, TH_3, EAD_3, MAC_3, sign_length))`
 
@@ -481,7 +481,7 @@ The third message is then composed of:
 
 #### Processing `message_3`
 
-On reception of `message_3`, the Responder computes `TH_3`. He also used the `KEM.Decapsulation`algorithm with its long-term KEM private key `kem.sk_R`and the KEM ciphertext `kem.ct_R`, to obtain the shared-secret `ss_R`.
+On reception of `message_3`, the Responder computes `TH_3`. He also used the `KEM.Decapsulation` algorithm with its long-term KEM private key `kem.sk_R` and the KEM ciphertext `kem.ct_R`, to obtain the shared-secret `ss_R`.
 
 He can now compute `SALT_3e2m`, `PRK_3e2m`, `K_3`, and `IV_3` as the Initiator did, and deciphers `CIPHERTEXT_3` with the AEAD decryption algorithm.
 With `PLAINTEXT_3`, he calculates `MAC_3` on his side, and verifies the signature:
@@ -491,7 +491,7 @@ With `PLAINTEXT_3`, he calculates `MAC_3` on his side, and verifies the signatur
 where `sign.pk_I` is the long-term signing public key of the Initiator. If the verification algorithm returns 1, the Initiator is properly authenticated to the Initiator. Otherwise the Responder aborts.
 
 
-#### Optionally formatting, sending and recieving `message_4`
+#### Optionally formatting, sending and receiving `message_4`
 
 If the Responder decides of a fourth mandatory message, he then computes the following elements:
 
@@ -631,7 +631,7 @@ In this version of the protocol, we assumed that the Initiator has a pair of sta
 This is not an unusual case. We can suppose that each user, when registering in a Public Key Infrastructure (PKI), provides pairs of keys of both types (signature and KEM), which they update regularly. The difference in our protocol is that the Responder is forced to use both types during the same AKE.
 From a technical point of view, the first message `message_1` and the third message `message_3` do not differ from those proposed in {{I-D.pocero-authkem-edhoc}}. Two major differences are worth noting regarding the messages.
 Firstly, here we have only an **optional** fourth message `message_4`. Secondly, our second message `message_2` contains an additional signature `SIGNATURE_2` (we will propose a byte analysis of this message later).
-Finally, from a calculational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_2`. In return, the Responder must sign a message, and the Initiator must verify this signature.
+Finally, from a computational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_2`. In return, the Responder must sign a message, and the Initiator must verify this signature.
 We thus have a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
@@ -737,7 +737,7 @@ where `sign.sk_I` is the long-term signing private key of the Initiator. The thi
   - `CIPHERTEXT_3`;
   - `SIGNATURE_3`.
 
-**Important note:** let us mention that the element signed by the Initiator, here again, for security considerations during the security analysis, coulb be subject to slight changes.
+**Important note:** let us mention that the element signed by the Initiator, here again, for security considerations during the security analysis, could be subject to slight changes.
 
 #### Processing `message_3`, formatting and sending `message_4`
 
@@ -884,11 +884,11 @@ We can note that in this two previous cases, the Key Derivation Schedule remains
 
 
 This is actually a mirror version of the previous protocol presented, in the sense that this time we assumed that the Responder has a pair of static signature keys `(sign.sk_R, sign.pk_R)` and that the Initiator has not only a pair of static signature keys `(sign.sk_I, sign.pk_I)` but also a pair of static KEM keys `(kem.sk_I, kem.pk_I)`.
-For the same reasosns, this is not an unusual case.
+For the same reasons, this is not an unusual case.
 
 From a technical point of view, messages `message_1`,`message_2` and `message_4` do not differ from those proposed in {{I-D.pocero-authkem-edhoc}}. Here again, two major differences are worth noting regarding the messages.
 Firstly, here we no more have a fifth message `message_5`. Secondly, our third message `message_3` contains an additional signature `SIGNATURE_3` (as this was the case for the previous protocol we propose, with `SIGNATURE_2`)(we will propose a byte analysis of this message later).
-Finally, from a calculational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_3`. In return, in the same vein, the Initiator must sign a message, and the Responder must verify this signature, in order to authenticate the Initiator, and send him the KEM ciphertext `kem.ct_I`.
+Finally, from a computational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_3`. In return, in the same vein, the Initiator must sign a message, and the Responder must verify this signature, in order to authenticate the Initiator, and send him the KEM ciphertext `kem.ct_I`.
 So compared to {{I-D.pocero-authkem-edhoc}}, we reduce the number of mandatory messages, from 5 to 4, and again we obtain a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
@@ -987,7 +987,7 @@ where `sign.sk_I` is the long-term signing private key of the Initiator. The thi
 
 #### Processing `message_3`, formatting and sending `message_4`
 
-On reception of `message_3`, the Responder computes `TH_3`. He also used the `KEM.Decapsulation`algorithm with its long-term KEM private key `kem.sk_R` and the KEM ciphertext `kem.ct_R`, to obtain the shared-secret `ss_R`.
+On reception of `message_3`, the Responder computes `TH_3`. He also used the `KEM.Decapsulation` algorithm with its long-term KEM private key `kem.sk_R` and the KEM ciphertext `kem.ct_R`, to obtain the shared-secret `ss_R`.
 
 He can now compute `SALT_3e2m`, `PRK_3e2m`, `K_3`, and `IV_3` as the Initiator did, and deciphers `CIPHERTEXT_3` with the AEAD decryption algorithm.
 With `PLAINTEXT_3`, he obtains `kem.pk_I` and `sign.pk_I`, and verifies the signature:
@@ -1133,7 +1133,7 @@ For the Responder, the authentication key MUST be a static KEM key pair `(kem.sk
 In this version of the protocol, the keys `PRK_2e`, `PRK_3e2m` and `PRK_4e3m` are obtain thanks to EDHOC_Extract fonction:
 
   - `PRK_2e = EDHOC_Extract(TH_2, ss_eph)` --> the salt SHALL be `TH_2` and the IKM SHALL be the ephemeral shared-secret `ss_eph`;
-  - `PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)` --> the salt SHALL be `SALT_3e2m` directly derived from `PRK_3e2m`, and the IKM SHALL be the 'static' shared-secret `ss_R`.
+  - `PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)` --> the salt SHALL be `SALT_3e2m` directly derived from `PRK_2e`, and the IKM SHALL be the 'static' shared-secret `ss_R`.
   - `PRK_4e3m = EDHOC_Extract(SALT_4e3m, ss_I)` --> the salt SHALL be `SALT_4e3m` directly derived from `PRK_3e2m`, and the IKM SHALL be the 'static' shared-secret `ss_I`.
 
 Concerning `PRK_out`, here again, there is no modifications compared to the original EDHOC protocol.
@@ -1231,7 +1231,7 @@ At first, he checks the validity of the signature of the Responder:
 
 If the verification algorithm returns 1, the Initiator properly authenticated the Responder. Otherwise he aborts.
 
-Using the KEM encapsulation algorihtm `KEM.Encapsulation`, and the long-term input material `kem.pk_R` of the Responder, the Initiator generated the pair `(ss_R, kem.ct_R)`.
+Using the KEM encapsulation algorithm `KEM.Encapsulation`, and the long-term input material `kem.pk_R` of the Responder, the Initiator generated the pair `(ss_R, kem.ct_R)`.
 
 The shared-secret `ss_R` will then serve as IKM for the computation of `PRK_3e2m`:
 
@@ -1399,7 +1399,7 @@ For the Responder, the authentication key MUST be: (1) a static KEM key pair `(k
 In this version of the protocol, the keys `PRK_2e`, `PRK_3e2m` and `PRK_4e3m` are obtain thanks to EDHOC_Extract fonction:
 
   - `PRK_2e = EDHOC_Extract(TH_2, ss_eph)` --> the salt SHALL be `TH_2` and the IKM SHALL be the ephemeral shared-secret `ss_eph`;
-  - `PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)` --> the salt SHALL be `SALT_3e2m` directly derived from `PRK_3e2m`, and the IKM SHALL be the 'static' shared-secret `ss_R`.
+  - `PRK_3e2m = EDHOC_Extract(SALT_3e2m, ss_R)` --> the salt SHALL be `SALT_3e2m` directly derived from `PRK_2e`, and the IKM SHALL be the 'static' shared-secret `ss_R`.
   - `PRK_4e3m = EDHOC_Extract(SALT_4e3m, ss_I)` --> the salt SHALL be `SALT_4e3m` directly derived from `PRK_3e2m`, and the IKM SHALL be the 'static' shared-secret `ss_I`.
 
 Concerning `PRK_out`, here again, there is no modifications compared to the original EDHOC protocol.
