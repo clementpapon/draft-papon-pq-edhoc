@@ -1457,22 +1457,16 @@ We suggest a more global approach for this property, possibly based on (PPAKE).
 
 ## Security Considerations of PQ-EDHOC KEM and/or Sign
 
-### Initiator signs and Responder KEM & Signs
+Compared to the protocols proposed in {{I-D.pocero-authkem-edhoc}}, where authentication is achieved via KEMs and MACs, we eliminate here, depending on the case, one or more MACs. Authentication is then replaced by one or more signatures, as in EDHOC method 0 for example.
+In all cases, the handshake ensures the obtaining of a common secret key `PRK_out` with mutual authentication.
+Our protocols, always keeping in mind our above point, guarantee by construction the property of Identity Protection.
 
-### Initiator KEM & Signs and Responder Signs
-
-### Initiator KEM & Signs and Responder KEM
-
-### Initiator and Responder KEM & Signs
+TODO : explain what kind of security the KEM & Signs approach brings in the Key Derivation Schedule + EAD + PFS.
 
 
 # IANA Considerations
 
 This document has no IANA actions.
-
-
-# Acknowledgments
-TODO acknowledge.
 
 --- back
 
