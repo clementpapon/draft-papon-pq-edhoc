@@ -108,15 +108,10 @@ Table of Contents
    4.  Security Considerations
      4.1.  Security Considerations of PQ-EDHOC-IKR (I Signs - R KEM)
      4.2.  Security Considerations of PQ-EDHOC KEM and/or Sign
-       4.2.1.  Initiator signs and Responder KEM & Signs
-       4.2.2.  Initiator KEM & Signs and Responder Signs
-       4.2.3.  Initiator KEM & Signs and Responder KEM
-       4.2.4.  Initiator and Responder KEM & Signs
    5.  IANA Considerations
-   6.  Acknowledgments
-   7.  References
-     7.1.  Normative References
-     7.2.  Informative References
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
    Authors' Addresses
 
 1.  Introduction
@@ -2059,25 +2054,25 @@ Table of Contents
 
 4.2.  Security Considerations of PQ-EDHOC KEM and/or Sign
 
-4.2.1.  Initiator signs and Responder KEM & Signs
+   Compared to the protocols proposed in [I-D.pocero-authkem-edhoc],
+   where authentication is achieved via KEMs and MACs, we eliminate
+   here, depending on the case, one or more MACs.  Authentication is
+   then replaced by one or more signatures, as in EDHOC method 0 for
+   example.  In all cases, the handshake ensures the obtaining of a
+   common secret key PRK_out with mutual authentication.  Our protocols,
+   always keeping in mind our above point, guarantee by construction the
+   property of Identity Protection.
 
-4.2.2.  Initiator KEM & Signs and Responder Signs
-
-4.2.3.  Initiator KEM & Signs and Responder KEM
-
-4.2.4.  Initiator and Responder KEM & Signs
+   TODO : explain what kind of security the KEM & Signs approach brings
+   in the Key Derivation Schedule + EAD + PFS.
 
 5.  IANA Considerations
 
    This document has no IANA actions.
 
-6.  Acknowledgments
+6.  References
 
-   TODO acknowledge.
-
-7.  References
-
-7.1.  Normative References
+6.1.  Normative References
 
    [I-D.pocero-authkem-edhoc]
               Fraile, L. P., Koulamas, C., Fournaris, A. P., and E.
@@ -2143,7 +2138,7 @@ Table of Contents
               DOI 10.17487/RFC9528, March 2024,
               <https://www.rfc-editor.org/rfc/rfc9528>.
 
-7.2.  Informative References
+6.2.  Informative References
 
    [RFC9053]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
               Initial Algorithms", RFC 9053, DOI 10.17487/RFC9053,
