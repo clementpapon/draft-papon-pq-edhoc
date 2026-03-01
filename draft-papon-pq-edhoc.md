@@ -65,12 +65,25 @@ Readers are expected to be familiar with the terms and concepts described in EDH
 ## Definitions
 
 ### KEMs (Key Encapsulation Mechanisms)
-TODO
+
+A Key Encapsulation Mechanism (KEM) consists of three algorithms:
+
+  - `KEM.KeyGen`: a probabilistic key generation algorithm, which takes as input a security parameter `k` and outputs a key pair `(kem.sk, kem.pk)`, where `kem.sk` is secret and `kem.pk` is public.
+  - `KEM.Encapsulation`: a probabilistic encapsulation algorithm, which takes as input a KEM public key `kem.pk`, and generates a pair `(ss, kem.ct)`, where `ss` is the shared-secret and `kem.ct` is a ciphertext.
+  - `KEM.Decapsulation`: a deterministic decapsulation algorithm, which takes as input a KEM secret key `kem.sk` and a KEM ciphertext `kem.ct`, and outputs the shared-secret `ss` (associated to `kem.ct`).
+
+In practice, if Alice and Bob use a KEM, Alice generates the public and private keys, sends the public key to Bob, who generates the shared-secret and ciphertext. He then returns the latter to Alice, who can subsequently recover the same shared-secret using her private key and the ciphertext.
 
 ### Digital Signature
-TODO
 
-# Post-Quantum EDHOC when the Initiator knows the Responder (PQ-EDHOC-IKR)
+A Digital Signature (DS) scheme consists of three algorithms:
+
+  - `DS.KeyGen`: a probabilistic key generation algorithm, which takes as input a security parameter `k` and outputs a key pair `(sign.sk, sign.pk)`, where `sign.sk` is secret and `sign.pk` is public.
+  - `DS.Sign`: a probabilistic algorithm, which takes as input a signing secret key `sign.sk` and a message `m`, and generates a signature `s`.
+  - `DS.Verify`: a deterministic algorithm, which takes as input a signing public key `sign.pk`, a message `m` and a signature `s`, and outputs `1` if the signature is valid for the message, and `0` otherwise.
+
+In practice, if Alice and Bob use a DS scheme, Alice generates the public and private keys, and sends the public key to Bob. Later, Alice sends a message together with a signature to Bob. Bob can then verify the validity of the signature on the message under the public key.
+
 
 ## Motivation
 
@@ -632,6 +645,7 @@ This is not an unusual case. We can suppose that each user, when registering in 
 From a technical point of view, the first message `message_1` and the third message `message_3` do not differ from those proposed in {{I-D.pocero-authkem-edhoc}}. Two major differences are worth noting regarding the messages.
 Firstly, here we have only an **optional** fourth message `message_4`. Secondly, our second message `message_2` contains an additional signature `SIGNATURE_2` (we will propose a byte analysis of this message later).
 Finally, from a computational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_2`. In return, the Responder must sign a message, and the Initiator must verify this signature.
+Regarding the Key Derivation Schedule, aside from the IKM which adapts to post-quantum cryptographic material, we remain close to the one of EDHOC's method 1.
 We thus have a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
@@ -887,8 +901,9 @@ This is actually a mirror version of the previous protocol presented, in the sen
 For the same reasons, this is not an unusual case.
 
 From a technical point of view, messages `message_1`,`message_2` and `message_4` do not differ from those proposed in {{I-D.pocero-authkem-edhoc}}. Here again, two major differences are worth noting regarding the messages.
-Firstly, here we no more have a fifth message `message_5`. Secondly, our third message `message_3` contains an additional signature `SIGNATURE_3` (as this was the case for the previous protocol we propose, with `SIGNATURE_2`)(we will propose a byte analysis of this message later).
+Firstly, here we no more have a fifth mandatory message `message_5`. Secondly, our third message `message_3` contains an additional signature `SIGNATURE_3` (as this was the case for the previous protocol we propose, with `SIGNATURE_2`)(we will propose a byte analysis of this message later).
 Finally, from a computational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_3`. In return, in the same vein, the Initiator must sign a message, and the Responder must verify this signature, in order to authenticate the Initiator, and send him the KEM ciphertext `kem.ct_I`.
+Regarding the Key Derivation Schedule, aside from the IKM which adapts to post-quantum cryptographic material, we remain close to the one of EDHOC's method 2.
 So compared to {{I-D.pocero-authkem-edhoc}}, we reduce the number of mandatory messages, from 5 to 4, and again we obtain a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
@@ -1141,7 +1156,14 @@ Concerning `PRK_out`, here again, there is no modifications compared to the orig
 
 ### Analysis
 
-TODO an analysis of the tradeoff, the protocol advantage and disadvantage (only one mac, but two signatures).
+This variant combines our PQ-EDHOC I KEM & Signs - R Signs protocol with the version where the Initiator and Responder authenticate using a KEM, as presented in {{I-D.pocero-authkem-edhoc}}.
+The advantage of this alternative is that it preserves Responder authentication via a KEM and simply asks the Initiator to sign its identity. Additionally, there is no longer need to calculate the MAC `MAC_3`.
+In this variant, we assumed that the Initiator has a pair of static signature keys `(sign.sk_I, sign.pk_I)` and also a pair of static KEM keys `(kem.sk_I, kem.pk_I)`, and that the Responder has only a pair of static KEM keys `(kem.sk_R, kem.pk_R)`. As already explain, this is not an unusual case.
+From a technical point of view, messages `message_1`,`message_2` and `message_4` do not differ from those proposed in {{I-D.pocero-authkem-edhoc}}. Again, two major differences are worth noting regarding the messages.
+Firstly, here we no more have a fifth mandatory message `message_5`. Secondly, our third message `message_3` contains an additional signature `SIGNATURE_3` (as this was the case for protocols that we have proposed above, with `SIGNATURE_2` or `SIGNATURE_3`)(we will propose a byte analysis of this message later).
+Finally, from a computational point of view, both the Initiator and the Responder no longer need to calculate the MAC `MAC_3`. In return, here again, the Initiator must sign a message, and the Responder must verify this signature, in order to authenticate the Initiator, and send him the KEM ciphertext `kem.ct_I`.
+Regarding the Key Derivation Schedule, aside from the IKM which adapts to post-quantum cryptographic material, we remain close to the one of EDHOC's method 3.
+So compared to {{I-D.pocero-authkem-edhoc}}, we reduce the number of mandatory messages, from 5 to 4, and again we obtain a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
 ## Third case: Initiator and Responder KEM and sign - version 2
@@ -1407,13 +1429,32 @@ Concerning `PRK_out`, here again, there is no modifications compared to the orig
 
 ### Analysis
 
-TODO an analysis of the tradeoff, the protocol advantage and disadvantage (no more mac, but two signatures).
+
+We conclude all these descriptions, with a last one variant which combines our PQ-EDHOC I KEM & Signs - R Signs protocol with our PQ-EDHOC I Signs - R KEM & Signs protocol. In this situation, both the Initiator and the Responder will authenticate using a signature, and there will be no longer MACs `MAC_2` and `MAC_3` to compute.
+In this variant, we assumed that the Initiator has a pair of static signature keys `(sign.sk_I, sign.pk_I)` and also a pair of static KEM keys `(kem.sk_I, kem.pk_I)`, and that the Responder has a pair of static signature keys `(sign.sk_R, sign.pk_R)` and also a pair of static KEM keys `(kem.sk_R, kem.pk_R)`. As already explain, this is not an unusual case.
+From a technical point of view, only message `message_1` remains unchanged as the one proposed in {{I-D.pocero-authkem-edhoc}}. Here, four major differences are worth noting regarding the messages.
+Firstly, here we no more have a fifth mandatory message `message_5`. Secondly, our second and third messages `message_2` and `message_3` contain each an additional signature `SIGNATURE_2` and `SIGNATURE_3` respectively. Moreover, the plaintext `PLAINTEXT_4` no longer includes `MAC_2`, which implies that the ciphertext `CIPHERTEXT_4` is lighter, and so is our fourth message `message_4` (we will propose a byte analysis of these messages later).
+Finally, from a computational point of view, both the Initiator and the Responder no longer need to calculate the MACs `MAC_2` and `MAC_3`. In return, both the Initiator and the Responder must sign a message and verify signature, in order to authenticate themselves.
+This allows the Initiator to authenticate the Responder directly when he receives the second message, and vice versa for the Responder when he receives the third message. That is why we no longer need `MAC_2` and `MAC_3` in the fourth and fifth messages.
+Regarding the Key Derivation Schedule, aside from the IKM which adapts to post-quantum cryptographic material, we remain close to the one of EDHOC's method 3.
+So compared to {{I-D.pocero-authkem-edhoc}}, we reduce the number of mandatory messages, from 5 to 4, and again we obtain a tradeoff between the size of messages, calculation capabilities, and the number of messages.
 
 
 # Security Considerations
 
-
 TODO Security
+
+## Security Considerations of PQ-EDHOC-IKR (I Signs - R KEM)
+
+## Security Considerations of PQ-EDHOC KEM and/or Sign
+
+### Initiator signs and Responder KEM & Signs
+
+### Initiator KEM & Signs and Responder Signs
+
+### Initiator KEM & Signs and Responder KEM
+
+### Initiator and Responder KEM & Signs
 
 
 # IANA Considerations
